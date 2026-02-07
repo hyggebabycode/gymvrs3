@@ -52,123 +52,6 @@ async function hashPassword(password) {
 }
 
 // =====================================================
-// GOOGLE LOGIN HANDLER
-// =====================================================
-async function loginWithGoogle() {
-  const btnText = document.getElementById("google-btn-text");
-  if (btnText) btnText.textContent = "Đang kết nối với Google...";
-
-  try {
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.origin + '/auth.html',
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        },
-      },
-    });
-
-    if (error) throw error;
-  } catch (error) {
-    console.error('Google login error:', error);
-    showAlert('Lỗi khi đăng nhập với Google: ' + error.message, 'error');
-    if (btnText) btnText.textContent = "Đăng nhập với Google";
-  }
-}
-
-// Handle OAuth callback
-async function handleOAuthCallback() {
-  try {
-    const { data: { session }, error } = await supabaseClient.auth.getSession();
-    
-    if (error) throw error;
-    
-    if (session) {
-      const oauthUser = session.user;
-      
-      // Check if user exists in our database
-      const { data: existingUser, error: queryError } = await supabaseClient
-        .from('users')
-        .select('*')
-        .eq('email', oauthUser.email)
-        .single();
-
-      let userData;
-
-      if (existingUser) {
-        // User exists, use existing data
-        userData = existingUser;
-        
-        // Update last login
-        await supabaseClient
-          .from('users')
-          .update({ updated_at: new Date().toISOString() })
-          .eq('id', existingUser.id);
-      } else {
-        // Create new user from Google data
-        const newUserData = {
-          email: oauthUser.email,
-          full_name: oauthUser.user_metadata.full_name || oauthUser.user_metadata.name || 'User',
-          avatar_url: oauthUser.user_metadata.avatar_url || oauthUser.user_metadata.picture || null,
-          role: 'user',
-          is_active: true,
-          password_hash: 'oauth_user', // Placeholder for OAuth users
-        };
-
-        const { data: newUser, error: insertError } = await supabaseClient
-          .from('users')
-          .insert([newUserData])
-          .select()
-          .single();
-
-        if (insertError) throw insertError;
-        userData = newUser;
-      }
-
-      // Store user info in localStorage
-      localStorage.setItem('gymheart_user', JSON.stringify(userData));
-      localStorage.setItem('gymheart_token', 'oauth_token_' + userData.id);
-
-      showAlert('Đăng nhập thành công! Đang chuyển hướng...', 'success');
-
-      // Redirect based on role
-      setTimeout(() => {
-        switch (userData.role) {
-          case 'admin':
-            window.location.href = 'admin-dashboard.html';
-            break;
-          case 'coach':
-            window.location.href = 'coach-dashboard.html';
-            break;
-          case 'user':
-            window.location.href = 'user-dashboard.html';
-            break;
-          default:
-            window.location.href = 'index.html';
-        }
-      }, 1500);
-    }
-  } catch (error) {
-    console.error('OAuth callback error:', error);
-    showAlert('Lỗi xác thực: ' + error.message, 'error');
-  }
-}
-
-// Check for OAuth callback on page load
-if (window.location.pathname.includes('auth.html')) {
-  supabaseClient.auth.getSession().then(({ data: { session } }) => {
-    if (session) {
-      handleOAuthCallback();
-    }
-  });
-}
-
-// Export Google login function
-window.loginWithGoogle = loginWithGoogle;
-
-// =====================================================
 // LOGIN HANDLER
 // =====================================================
 document.getElementById("login-form")?.addEventListener("submit", async (e) => {
@@ -187,8 +70,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
       .from("users")
       .select("*")
       .eq("email", email)
-      .eq("is_active", true)
-      .single();
+      .eq("is_active", true);
 
     console.log("Query result:", { users, error }); // Debug log
 
@@ -199,28 +81,30 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
       return;
     }
 
-    if (!users) {
+    if (!users || users.length === 0) {
       showAlert("Email hoặc mật khẩu không đúng!", "error");
       btnText.textContent = "Đăng nhập";
       return;
     }
 
+    const user = users[0];
+
     // Check password (plaintext comparison for demo)
-    if (users.password_hash !== password) {
+    if (user.password_hash !== password) {
       showAlert("Email hoặc mật khẩu không đúng!", "error");
       btnText.textContent = "Đăng nhập";
       return;
     }
 
     // Store user info in localStorage
-    localStorage.setItem("gymheart_user", JSON.stringify(users));
-    localStorage.setItem("gymheart_token", "demo_token_" + users.id);
+    localStorage.setItem("gymheart_user", JSON.stringify(user));
+    localStorage.setItem("gymheart_token", "demo_token_" + user.id);
 
     showAlert("Đăng nhập thành công! Đang chuyển hướng...", "success");
 
     // Redirect based on role
     setTimeout(() => {
-      switch (users.role) {
+      switch (user.role) {
         case "admin":
           window.location.href = "admin-dashboard.html";
           break;
