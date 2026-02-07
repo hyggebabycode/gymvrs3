@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lịch Tập Gym Cá Nhân - FitnessHeart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f42559",
+                        "rose-soft": "#fff1f3",
+                        "background-light": "#fcf8f9",
+                        "background-dark": "#221014",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        .day-cell {
+            aspect-ratio: 1/1;
+        }
+        .heart-bg {
+            clip-path: path('M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z');
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex flex-1 justify-center border-b border-primary/10 bg-white dark:bg-background-dark">
+<div class="layout-content-container flex flex-col w-full max-w-[1200px] flex-1">
+<header class="flex items-center justify-between whitespace-nowrap px-6 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8">
+<span class="material-symbols-outlined text-3xl">favorite</span>
+</div>
+<h2 class="text-primary text-xl font-bold leading-tight tracking-[-0.015em]">FitnessHeart</h2>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-700 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Bảng điều khiển</a>
+<a class="text-slate-700 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Khóa học</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary" href="#">Lịch tập</a>
+<a class="text-slate-700 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Cộng đồng</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjt-dUPs_n8yAuHEXu9jSVl00fWL0MYtCL8KZ4jkGNJgt5iy2IgWoSOyn2IX7MPoAgSVcQjodNSd_-dajS4xfal2wvPhx3LyMykrFX4kmOWYR9LULRodHqVczVcLQTk59fmnTq5z8-y3obe53LuYtjyvY9jCY1rXXWVBzSqicpqBK4qjMstBI6ipRQ5_MD0SsZ6IDRoCKRxaqNGQoYGAZvof_HYIVDYuQqwSWlivafEg6XrZXZbkBYgLcg3a_p5XTHNq7ebLiTNB7y");'></div>
+</div>
+</header>
+</div>
+</div>
+<main class="flex flex-1 justify-center py-8 px-6">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white">Lịch Tập Của Tôi</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Lên kế hoạch và theo dõi hành trình thay đổi bản thân</p>
+</div>
+<div class="flex items-center gap-3">
+<select class="form-select bg-white dark:bg-slate-900 border-primary/20 rounded-xl text-sm focus:ring-primary focus:border-primary">
+<option>Tất cả bài tập</option>
+<option>Cardio</option>
+<option>Yoga</option>
+<option>Gym / Strength</option>
+<option>HIIT</option>
+</select>
+<button class="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-lg">add</span>
+<span>Thêm lịch</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-2xl border border-primary/10 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-primary/5 flex items-center justify-between">
+<h2 class="text-xl font-bold text-slate-800 dark:text-slate-100">Tháng 5, 2024</h2>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-primary/5 rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-2 hover:bg-primary/5 rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="p-4 sm:p-6">
+<div class="calendar-grid mb-2">
+<div class="text-center text-xs font-bold text-slate-400 uppercase py-2">T2</div>
+<div class="text-center text-xs font-bold text-slate-400 uppercase py-2">T3</div>
+<div class="text-center text-xs font-bold text-slate-400 uppercase py-2">T4</div>
+<div class="text-center text-xs font-bold text-slate-400 uppercase py-2">T5</div>
+<div class="text-center text-xs font-bold text-slate-400 uppercase py-2">T6</div>
+<div class="text-center text-xs font-bold text-slate-400 uppercase py-2">T7</div>
+<div class="text-center text-xs font-bold text-primary uppercase py-2">CN</div>
+</div>
+<div class="calendar-grid gap-2">
+<div class="day-cell flex items-center justify-center text-slate-300 dark:text-slate-700 text-sm">29</div>
+<div class="day-cell flex items-center justify-center text-slate-300 dark:text-slate-700 text-sm">30</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium">1</span>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium">2</span>
+<div class="absolute bottom-2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 cursor-pointer group shadow-sm">
+<span class="text-sm font-bold text-primary">3</span>
+<span class="material-symbols-outlined text-[10px] text-primary absolute bottom-2 fill-1">favorite</span>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium">4</span>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium text-primary">5</span>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium">6</span>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium">7</span>
+<div class="absolute bottom-2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-primary text-white border border-primary cursor-pointer shadow-lg shadow-primary/30">
+<span class="text-sm font-bold">8</span>
+<span class="material-symbols-outlined text-[10px] text-white absolute bottom-2 fill-1">favorite</span>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium">9</span>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium">10</span>
+<div class="absolute bottom-2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium">11</span>
+</div>
+<div class="day-cell relative flex flex-col items-center justify-center rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-transparent hover:border-primary/30 cursor-pointer transition-all">
+<span class="text-sm font-medium text-primary">12</span>
+</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">13</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">14</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium relative">15<div class="absolute bottom-2 w-1.5 h-1.5 bg-primary rounded-full"></div></div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">16</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">17</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">18</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium text-primary">19</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">20</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium relative">21<div class="absolute bottom-2 w-1.5 h-1.5 bg-primary rounded-full"></div></div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">22</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">23</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium relative">24<div class="absolute bottom-2 w-1.5 h-1.5 bg-primary rounded-full"></div></div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">25</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium text-primary">26</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">27</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">28</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium relative">29<div class="absolute bottom-2 w-1.5 h-1.5 bg-primary rounded-full"></div></div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">30</div>
+<div class="day-cell flex items-center justify-center text-sm font-medium">31</div>
+<div class="day-cell flex items-center justify-center text-slate-300 text-sm">1</div>
+<div class="day-cell flex items-center justify-center text-slate-300 text-sm">2</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 space-y-6">
+<div class="bg-white dark:bg-slate-900 rounded-2xl border border-primary/10 shadow-sm p-6 relative overflow-hidden">
+<div class="absolute -right-6 -top-6 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[120px] text-primary">calendar_month</span>
+</div>
+<div class="flex items-center gap-3 mb-6">
+<div class="size-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+<span class="text-xl font-bold">08</span>
+</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white">Thứ Tư, 08/05</h3>
+<p class="text-xs text-slate-500">Hôm nay bạn có 2 buổi tập</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="group relative p-4 bg-rose-soft/50 dark:bg-slate-800/50 rounded-2xl border border-primary/5 hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 bg-primary text-white text-[10px] font-bold rounded uppercase">Cardio</span>
+<span class="text-[10px] font-bold text-slate-400">08:00 - 09:30</span>
+</div>
+<h4 class="font-bold text-slate-800 dark:text-slate-100 mb-2">Cardio đốt mỡ toàn thân</h4>
+<div class="flex items-center gap-2 mb-4">
+<div class="size-6 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjt-dUPs_n8yAuHEXu9jSVl00fWL0MYtCL8KZ4jkGNJgt5iy2IgWoSOyn2IX7MPoAgSVcQjodNSd_-dajS4xfal2wvPhx3LyMykrFX4kmOWYR9LULRodHqVczVcLQTk59fmnTq5z8-y3obe53LuYtjyvY9jCY1rXXWVBzSqicpqBK4qjMstBI6ipRQ5_MD0SsZ6IDRoCKRxaqNGQoYGAZvof_HYIVDYuQqwSWlivafEg6XrZXZbkBYgLcg3a_p5XTHNq7ebLiTNB7y");'></div>
+<span class="text-xs text-slate-600 dark:text-slate-400">PT: <strong>Minh Tú</strong></span>
+</div>
+<button class="w-full py-2 bg-primary text-white rounded-xl text-xs font-bold shadow-md shadow-primary/10 hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">play_circle</span>
+                                            Bắt đầu tập
+                                        </button>
+</div>
+<div class="group relative p-4 bg-white dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="px-2 py-0.5 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase">Yoga</span>
+<span class="text-[10px] font-bold text-slate-400">17:30 - 18:30</span>
+</div>
+<h4 class="font-bold text-slate-800 dark:text-slate-100 mb-2">Yoga phục hồi cơ bắp</h4>
+<div class="flex items-center gap-2 mb-4">
+<div class="size-6 rounded-full bg-cover bg-center bg-slate-200"></div>
+<span class="text-xs text-slate-600 dark:text-slate-400">PT: <strong>Hương Ly</strong></span>
+</div>
+<button class="w-full py-2 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-bold hover:bg-slate-200 transition-colors">
+                                            Xem chi tiết
+                                        </button>
+</div>
+</div>
+<div class="mt-8">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">Mục tiêu tuần</h4>
+<span class="text-xs font-bold text-primary">3/5 ngày</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[60%] shadow-[0_0_8px_rgba(244,37,89,0.3)]"></div>
+</div>
+<p class="text-[10px] text-slate-400 mt-2 text-center">Cố lên! Chỉ còn 2 buổi tập nữa thôi</p>
+</div>
+</div>
+<div class="bg-gradient-to-br from-primary to-pink-500 p-6 rounded-2xl text-white shadow-xl shadow-primary/20 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-sm font-bold opacity-80">Calo dự kiến hôm nay</h4>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-3xl font-bold">1,250</span>
+<span class="text-sm opacity-80">kcal</span>
+</div>
+<div class="mt-4 flex gap-2">
+<div class="flex-1 bg-white/20 backdrop-blur-md rounded-xl p-2 text-center">
+<span class="block text-[10px] opacity-80 uppercase">Bước chân</span>
+<span class="font-bold">6,420</span>
+</div>
+<div class="flex-1 bg-white/20 backdrop-blur-md rounded-xl p-2 text-center">
+<span class="block text-[10px] opacity-80 uppercase">Thời gian</span>
+<span class="font-bold">1h 45m</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-8xl opacity-10">favorite</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="border-t border-primary/10 py-8 px-6 bg-white dark:bg-slate-900 mt-auto">
+<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-xl">favorite</span>
+<span class="font-bold">FitnessHeart</span>
+</div>
+<p class="text-slate-500 text-sm">© 2024 FitnessHeart. Đồng hành cùng sức khỏe của bạn.</p>
+<div class="flex gap-6">
+<a class="text-slate-400 hover:text-primary transition-colors text-sm" href="#">Điều khoản</a>
+<a class="text-slate-400 hover:text-primary transition-colors text-sm" href="#">Bảo mật</a>
+<a class="text-slate-400 hover:text-primary transition-colors text-sm" href="#">Trợ giúp</a>
+</div>
+</div>
+</footer>
+</div>
+</div>
+
+</body></html>

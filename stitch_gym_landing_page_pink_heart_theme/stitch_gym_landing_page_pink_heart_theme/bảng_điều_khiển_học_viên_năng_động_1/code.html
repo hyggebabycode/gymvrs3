@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản lý Đơn hàng và Yêu cầu Hoàn tiền - FitHeart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f42559",
+                        "background-light": "#fdf8f9",
+                        "background-dark": "#1a0a0d",
+                        "card-light": "#ffffff",
+                        "accent-pink": "#fee2e7",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .heart-gradient {
+            background: linear-gradient(135deg, #f42559 0%, #ff85a1 100%);
+        }
+        .achievement-card:hover .heart-icon {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }#refund-modal:target {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1c0d11] dark:text-pink-50 transition-colors duration-300">
+<div class="min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-pink-100 dark:border-pink-900/30 px-6 lg:px-20 py-4">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-4xl font-bold">favorite</span>
+<h1 class="text-2xl font-black tracking-tight">FitHeart</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#5c3d44] dark:text-pink-200/70 hover:text-primary font-medium text-sm transition-colors" href="#">Bảng điều khiển</a>
+<a class="text-[#5c3d44] dark:text-pink-200/70 hover:text-primary font-medium text-sm transition-colors" href="#">Khóa học</a>
+<a class="text-primary font-semibold text-sm" href="#">Đơn hàng</a>
+<a class="text-[#5c3d44] dark:text-pink-200/70 hover:text-primary font-medium text-sm transition-colors" href="#">Cộng đồng</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 flex-1 justify-end">
+<div class="hidden sm:flex max-w-md flex-1 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pink-400">search</span>
+<input class="w-full bg-pink-50 dark:bg-pink-900/20 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-pink-300" placeholder="Tìm kiếm bài tập..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full bg-pink-50 dark:bg-pink-900/20 text-primary hover:bg-pink-100 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-white dark:border-background-dark"></span>
+</button>
+<div class="h-10 w-10 rounded-full border-2 border-primary p-0.5">
+<div class="h-full w-full rounded-full bg-center bg-cover" data-alt="Ảnh đại diện học viên Lan Anh" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcLZpgRHVraOEK-T85UmuFdyiUxIiXh0Tf78Slw-5-0NfChTx0HfKG795Rt-CGCS80759oCyAFnmW5qQ5wmlrbHdHjHgMPSNSzK3EHdlSN7Z6VjA57TPBBtBWdraQUiErWuYSpu3QRezXTSCBz-K4CUKTA7gV4kGo67MMkMQEB0xnt5H37PDJa0ptXWyUMwq-Top-2zS0JBGU1PFT3G9G75skHpF9X4TfWBKmwtWooh1-Y8NBmQYct2_62NVmpR-ZbyJ8lU11xzugf');"></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1440px] mx-auto w-full p-6 lg:p-10 space-y-8">
+<nav class="flex text-sm text-[#9c495e] dark:text-pink-300 mb-2">
+<a class="hover:text-primary" href="#">Trang chủ</a>
+<span class="mx-2">/</span>
+<span class="font-semibold text-primary">Quản lý Đơn hàng</span>
+</nav>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+<div class="space-y-1">
+<h2 class="text-3xl md:text-4xl font-extrabold text-[#1c0d11] dark:text-white">Quản lý Đơn hàng &amp; Hoàn tiền</h2>
+<p class="text-[#9c495e] dark:text-pink-300/80 text-lg">Theo dõi lịch sử giao dịch và quyền lợi của bạn.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-8 space-y-8">
+<div class="bg-white dark:bg-pink-950/10 rounded-xl border border-pink-100 dark:border-pink-900/30 overflow-hidden shadow-sm">
+<div class="p-6 border-b border-pink-50 dark:border-pink-900/20 flex items-center justify-between">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+                            Lịch sử đơn hàng
+                        </h3>
+<div class="flex gap-2">
+<button class="text-xs font-bold px-3 py-1.5 rounded-full bg-pink-50 text-primary border border-primary/10">Tất cả</button>
+<button class="text-xs font-medium px-3 py-1.5 rounded-full text-gray-500 hover:bg-gray-50 transition-colors">Đang chờ</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-pink-50/30 dark:bg-pink-900/10 text-[#9c495e] dark:text-pink-300 text-xs uppercase tracking-wider">
+<th class="px-6 py-4 font-bold">Mã đơn hàng</th>
+<th class="px-6 py-4 font-bold">Khóa học / Gói tập</th>
+<th class="px-6 py-4 font-bold">Ngày mua</th>
+<th class="px-6 py-4 font-bold">Trạng thái</th>
+<th class="px-6 py-4 font-bold text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-pink-50 dark:divide-pink-900/20">
+<tr class="hover:bg-pink-50/20 dark:hover:bg-pink-900/5 transition-colors">
+<td class="px-6 py-4 font-medium text-sm">#FH-98214</td>
+<td class="px-6 py-4">
+<div class="text-sm font-bold">Pilates Cơ Bản Cho Người Mới</div>
+<div class="text-[10px] text-[#9c495e]">Gói 6 tháng - Membership</div>
+</td>
+<td class="px-6 py-4 text-sm">12/11/2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-700">
+                                            Đã thanh toán
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<a class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold border border-pink-200 bg-white text-primary hover:bg-pink-50 hover:border-primary/30 transition-all" href="#refund-modal">
+                                                Yêu cầu hoàn tiền
+                                            </a>
+<button class="p-1.5 text-[#9c495e] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">description</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-pink-50/20 dark:hover:bg-pink-900/5 transition-colors">
+<td class="px-6 py-4 font-medium text-sm">#FH-97552</td>
+<td class="px-6 py-4">
+<div class="text-sm font-bold">Cardio Đốt Mỡ Thần Tốc</div>
+<div class="text-[10px] text-[#9c495e]">Gói trọn đời</div>
+</td>
+<td class="px-6 py-4 text-sm">05/11/2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-700">
+                                            Đã thanh toán
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<a class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold border border-pink-200 bg-white text-primary hover:bg-pink-50 hover:border-primary/30 transition-all" href="#refund-modal">
+                                                Yêu cầu hoàn tiền
+                                            </a>
+<button class="p-1.5 text-[#9c495e] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">description</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-pink-50/20 dark:hover:bg-pink-900/5 transition-colors">
+<td class="px-6 py-4 font-medium text-sm">#FH-92110</td>
+<td class="px-6 py-4">
+<div class="text-sm font-bold">Yoga Flow Nâng Cao</div>
+<div class="text-[10px] text-[#9c495e]">Gói 1 tháng</div>
+</td>
+<td class="px-6 py-4 text-sm">20/09/2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-600">
+                                            Quá hạn hoàn tiền
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-[#9c495e] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">description</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="bg-accent-pink/30 dark:bg-pink-900/10 p-6 rounded-xl border border-dashed border-primary/30 flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">info</span>
+<div class="space-y-1">
+<h4 class="font-bold text-sm text-[#1c0d11] dark:text-white">Chính sách hoàn tiền tại FitHeart</h4>
+<p class="text-xs text-[#9c495e] dark:text-pink-300 leading-relaxed">
+                            Học viên có thể yêu cầu hoàn tiền trong vòng 7 ngày kể từ ngày thanh toán nếu chưa bắt đầu khóa học quá 20% tiến trình. Số tiền hoàn lại sẽ được chuyển về phương thức thanh toán ban đầu trong vòng 3-5 ngày làm việc.
+                        </p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 space-y-8">
+<section class="bg-white dark:bg-pink-950/20 p-6 rounded-xl border border-pink-100 dark:border-pink-900/30">
+<h3 class="font-bold flex items-center gap-2 mb-4 text-primary">
+<span class="material-symbols-outlined">support_agent</span>
+                        Hỗ trợ khách hàng
+                    </h3>
+<div class="space-y-4">
+<p class="text-sm text-[#9c495e] dark:text-pink-300">Nếu bạn gặp vấn đề về đơn hàng, hãy liên hệ với chúng tôi ngay:</p>
+<div class="space-y-3">
+<a class="flex items-center gap-3 p-3 rounded-lg bg-pink-50/50 dark:bg-pink-900/20 hover:bg-pink-50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">mail</span>
+<span class="text-sm font-medium">support@fitheart.vn</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg bg-pink-50/50 dark:bg-pink-900/20 hover:bg-pink-50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">phone_in_talk</span>
+<span class="text-sm font-medium">1900 88 99 XX</span>
+</a>
+</div>
+</div>
+</section>
+<section class="bg-white dark:bg-pink-950/20 p-6 rounded-xl border border-pink-100 dark:border-pink-900/30">
+<h3 class="font-bold mb-4">Tổng quan tài chính</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2 border-b border-pink-50 dark:border-pink-900/10">
+<span class="text-sm text-[#9c495e]">Tổng chi tiêu</span>
+<span class="font-bold">2.450.000đ</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-pink-50 dark:border-pink-900/10">
+<span class="text-sm text-[#9c495e]">Số đơn hàng</span>
+<span class="font-bold">04</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-sm text-[#9c495e]">Hoàn trả gần đây</span>
+<span class="font-bold text-gray-400">0</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<div class="fixed inset-0 z-[60] hidden items-center justify-center bg-background-dark/60 backdrop-blur-sm p-4" id="refund-modal">
+<div class="bg-white dark:bg-pink-950 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl border border-pink-100 dark:border-pink-900/50">
+<div class="p-8 flex flex-col items-center text-center space-y-4">
+<div class="w-16 h-16 rounded-full bg-pink-50 dark:bg-pink-900/40 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined text-4xl fill-1">favorite</span>
+</div>
+<h3 class="text-2xl font-black text-[#1c0d11] dark:text-white">Xác nhận yêu cầu hoàn tiền</h3>
+<p class="text-[#9c495e] dark:text-pink-300 text-sm leading-relaxed">
+                    Bạn đang thực hiện yêu cầu hoàn tiền cho đơn hàng <span class="font-bold text-primary">#FH-98214</span>. FitHeart rất tiếc khi bạn không hài lòng với dịch vụ.
+                </p>
+<div class="w-full bg-pink-50/50 dark:bg-pink-900/20 p-5 rounded-xl text-left space-y-3 border border-pink-100/50">
+<h4 class="text-xs font-bold uppercase tracking-widest text-primary">Quy trình tiếp theo:</h4>
+<ul class="text-xs text-[#9c495e] dark:text-pink-300 space-y-2">
+<li class="flex gap-2">
+<span class="font-bold text-primary">1.</span>
+                            Hệ thống sẽ tạm khóa quyền truy cập khóa học để kiểm tra.
+                        </li>
+<li class="flex gap-2">
+<span class="font-bold text-primary">2.</span>
+                            Đội ngũ chăm sóc khách hàng sẽ xem xét yêu cầu trong 24h.
+                        </li>
+<li class="flex gap-2">
+<span class="font-bold text-primary">3.</span>
+                            Kết quả sẽ được gửi qua Email &amp; Thông báo trên app.
+                        </li>
+</ul>
+</div>
+<div class="grid grid-cols-2 gap-4 w-full pt-4">
+<a class="py-3 px-6 rounded-full border border-pink-100 text-sm font-bold text-[#9c495e] hover:bg-gray-50 transition-colors text-center" href="#">
+                        Để mình xem lại
+                    </a>
+<a class="py-3 px-6 rounded-full heart-gradient text-white text-sm font-bold shadow-lg shadow-primary/25 hover:scale-[1.02] transition-transform text-center" href="#">
+                        Gửi yêu cầu ngay
+                    </a>
+</div>
+</div>
+</div>
+</div>
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-pink-100 dark:border-pink-900/30 flex justify-around py-4 z-50">
+<span class="material-symbols-outlined text-gray-400">home</span>
+<span class="material-symbols-outlined text-gray-400">school</span>
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+<span class="material-symbols-outlined text-gray-400">person</span>
+</div>
+<footer class="bg-white dark:bg-background-dark border-t border-pink-100 dark:border-pink-900/30 py-10 mt-12">
+<div class="max-w-[1440px] mx-auto px-6 text-center">
+<div class="flex items-center justify-center gap-2 text-primary mb-4">
+<span class="material-symbols-outlined font-bold">favorite</span>
+<span class="text-xl font-black">FitHeart</span>
+</div>
+<p class="text-[#9c495e] dark:text-pink-400 text-sm">© 2024 FitHeart Studio. Nỗ lực hôm nay, hạnh phúc mai sau.</p>
+</div>
+</footer>
+</div>
+
+</body></html>

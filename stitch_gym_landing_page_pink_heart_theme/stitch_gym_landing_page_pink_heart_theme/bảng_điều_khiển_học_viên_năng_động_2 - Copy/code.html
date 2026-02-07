@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bảng Điều Khiển Học Viên Năng Động - FitHeart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f42559",
+                        "background-light": "#fdf8f9",
+                        "background-dark": "#1a0a0d",
+                        "card-light": "#ffffff",
+                        "accent-pink": "#fee2e7",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .heart-gradient {
+            background: linear-gradient(135deg, #f42559 0%, #ff85a1 100%);
+        }
+        .achievement-card:hover .heart-icon {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1c0d11] dark:text-pink-50 transition-colors duration-300">
+<div class="min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-pink-100 dark:border-pink-900/30 px-6 lg:px-20 py-4">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-4xl font-bold">favorite</span>
+<h1 class="text-2xl font-black tracking-tight">FitHeart</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-primary font-semibold text-sm" href="#">Bảng điều khiển</a>
+<a class="text-[#5c3d44] dark:text-pink-200/70 hover:text-primary font-medium text-sm transition-colors" href="#">Khóa học</a>
+<a class="text-[#5c3d44] dark:text-pink-200/70 hover:text-primary font-medium text-sm transition-colors" href="#">Lịch tập</a>
+<a class="text-[#5c3d44] dark:text-pink-200/70 hover:text-primary font-medium text-sm transition-colors" href="#">Cộng đồng</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 flex-1 justify-end">
+<div class="hidden sm:flex max-w-md flex-1 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pink-400">search</span>
+<input class="w-full bg-pink-50 dark:bg-pink-900/20 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-pink-300" placeholder="Tìm kiếm bài tập..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full bg-pink-50 dark:bg-pink-900/20 text-primary hover:bg-pink-100 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-white dark:border-background-dark"></span>
+</button>
+<div class="h-10 w-10 rounded-full border-2 border-primary p-0.5">
+<div class="h-full w-full rounded-full bg-center bg-cover" data-alt="Ảnh đại diện học viên Lan Anh" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcLZpgRHVraOEK-T85UmuFdyiUxIiXh0Tf78Slw-5-0NfChTx0HfKG795Rt-CGCS80759oCyAFnmW5qQ5wmlrbHdHjHgMPSNSzK3EHdlSN7Z6VjA57TPBBtBWdraQUiErWuYSpu3QRezXTSCBz-K4CUKTA7gV4kGo67MMkMQEB0xnt5H37PDJa0ptXWyUMwq-Top-2zS0JBGU1PFT3G9G75skHpF9X4TfWBKmwtWooh1-Y8NBmQYct2_62NVmpR-ZbyJ8lU11xzugf');"></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1440px] mx-auto w-full p-6 lg:p-10 space-y-8">
+<!-- Welcome Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+<div class="space-y-1">
+<h2 class="text-3xl md:text-4xl font-extrabold text-[#1c0d11] dark:text-white">Chào mừng trở lại, Lan Anh! 👋</h2>
+<p class="text-[#9c495e] dark:text-pink-300/80 text-lg">Hôm nay là một ngày tuyệt vời để bứt phá giới hạn bản thân.</p>
+</div>
+<button class="heart-gradient text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-primary/25 flex items-center gap-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">play_circle</span>
+                    Bắt đầu tập luyện ngay
+                </button>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Main Content Column -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Quick Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white dark:bg-pink-950/20 p-6 rounded-xl border border-pink-100 dark:border-pink-900/30 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-pink-50 dark:bg-pink-900/40 p-2 rounded-lg">exercise</span>
+<span class="text-green-500 text-xs font-bold bg-green-50 px-2 py-1 rounded-full">+12%</span>
+</div>
+<p class="text-sm font-medium text-[#9c495e] dark:text-pink-300">Buổi tập hôm nay</p>
+<h3 class="text-xl font-bold">Yoga Flow - 45p</h3>
+</div>
+<div class="bg-white dark:bg-pink-950/20 p-6 rounded-xl border border-pink-100 dark:border-pink-900/30 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-pink-50 dark:bg-pink-900/40 p-2 rounded-lg">local_fire_department</span>
+<span class="text-green-500 text-xs font-bold bg-green-50 px-2 py-1 rounded-full">+5%</span>
+</div>
+<p class="text-sm font-medium text-[#9c495e] dark:text-pink-300">Calo tiêu thụ</p>
+<h3 class="text-2xl font-bold">450 <span class="text-sm font-normal">kcal</span></h3>
+</div>
+<div class="bg-white dark:bg-pink-950/20 p-6 rounded-xl border border-pink-100 dark:border-pink-900/30 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-pink-50 dark:bg-pink-900/40 p-2 rounded-lg">favorite</span>
+<span class="text-primary text-xs font-bold bg-pink-50 px-2 py-1 rounded-full">Hot!</span>
+</div>
+<p class="text-sm font-medium text-[#9c495e] dark:text-pink-300">Số ngày liên tiếp</p>
+<h3 class="text-2xl font-bold">12 <span class="text-sm font-normal">ngày</span></h3>
+</div>
+</div>
+<!-- Active Courses -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">school</span>
+                                Khóa học đang tham gia
+                            </h3>
+<a class="text-primary text-sm font-bold hover:underline" href="#">Xem tất cả</a>
+</div>
+<div class="space-y-4">
+<!-- Course Card 1 -->
+<div class="bg-white dark:bg-pink-950/10 rounded-xl border border-pink-100 dark:border-pink-900/30 overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-md transition-shadow">
+<div class="w-full md:w-64 h-48 md:h-auto bg-center bg-cover" data-alt="Học viên đang tập Pilates" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBzChu-CLGpN6xf3qGmSzGerG8mUHLjMU7pmISBplnxQ2e89vbhIbJb7G_rIKRp66yu-uoXTu1uuSmRU1fjkKCOt_TA3uR1SmLQBQMVhcVXEPs94pjrbusYrTvXSh1WqKATOXpio3hHiZHQdyuKijjuvzohilkFP4MUrVIu2bZLGC6x4BPwVSDtErBNEtcuNlSymrHoyvOY7ZM1k7L6mLTyceKWOOUermfXvVBdfNF9GTyY_g7M9JpudcFDx4hv6bYnSZq38Tn_opaJ');"></div>
+<div class="flex-1 p-6 flex flex-col justify-between gap-4">
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] uppercase tracking-widest font-bold text-primary px-2 py-1 bg-pink-50 rounded">Đang học</span>
+<span class="text-sm font-semibold text-primary">65% Hoàn thành</span>
+</div>
+<h4 class="text-xl font-bold text-[#1c0d11] dark:text-white mb-1">Pilates Cơ Bản Cho Người Mới</h4>
+<p class="text-sm text-[#9c495e] dark:text-pink-300">Giảng viên: Master Minh Tú</p>
+</div>
+<div class="space-y-3">
+<div class="w-full bg-pink-100 dark:bg-pink-900/30 h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%] rounded-full shadow-[0_0_8px_rgba(244,37,89,0.4)]"></div>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-xs text-[#9c495e] dark:text-pink-400 italic">Bài tiếp theo: Kiểm soát hơi thở &amp; Cơ lõi</p>
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Tiếp tục học</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="bg-white dark:bg-pink-950/10 rounded-xl border border-pink-100 dark:border-pink-900/30 overflow-hidden flex flex-col md:flex-row shadow-sm opacity-90 grayscale-[20%] hover:grayscale-0 transition-all">
+<div class="w-full md:w-64 h-48 md:h-auto bg-center bg-cover" data-alt="Học viên đang tập Cardio đốt mỡ" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAvm9EskSLU_s58dW5uwI1ZATQVuCoTgEpP5NmjzTdKw7DpQp1BKSClsWHCunnCxKybMtot4OIl4-bD8wyIXZOlRYU5ZV8WmTj4j6DeP9ujpfOOLmGzPKj7Cj6lub4i0cdhdIAL6Qz_gOGEK5F0Ba2kpnaAWi1Fp8m4DOtdznceRC2fCjvo4P8zweq_L8X2IyJnjpcQVwimeaZ87yiPnWw4F9wCyBqiL32mTTBimbG3Yz0OL_l48fW5NxhKlY9AT4HYRQd05ceeJs3G');"></div>
+<div class="flex-1 p-6 flex flex-col justify-between gap-4">
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] uppercase tracking-widest font-bold text-gray-500 px-2 py-1 bg-gray-100 rounded">Chưa bắt đầu</span>
+<span class="text-sm font-semibold text-gray-500">0% Hoàn thành</span>
+</div>
+<h4 class="text-xl font-bold text-[#1c0d11] dark:text-white mb-1">Cardio Đốt Mỡ Thần Tốc</h4>
+<p class="text-sm text-[#9c495e] dark:text-pink-300">Giảng viên: Coach Ryan</p>
+</div>
+<div class="space-y-3">
+<div class="w-full bg-gray-100 dark:bg-pink-900/20 h-2.5 rounded-full overflow-hidden">
+<div class="bg-gray-300 h-full w-[0%] rounded-full"></div>
+</div>
+<div class="flex justify-end items-center">
+<button class="bg-white dark:bg-pink-900/20 text-primary border border-primary text-xs font-bold px-4 py-2 rounded-full hover:bg-primary hover:text-white transition-all">Bắt đầu ngay</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar Column -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Calendar Section -->
+<section class="bg-white dark:bg-pink-950/20 p-6 rounded-xl border border-pink-100 dark:border-pink-900/30">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+                                Lịch tập sắp tới
+                            </h3>
+<button class="text-primary text-xs font-bold">Chi tiết</button>
+</div>
+<div class="space-y-4">
+<!-- Day 1 -->
+<div class="flex gap-4 items-center p-3 rounded-lg bg-pink-50 dark:bg-pink-900/40 border-l-4 border-primary">
+<div class="flex flex-col items-center justify-center bg-white dark:bg-background-dark min-w-12 h-12 rounded-lg shadow-sm">
+<span class="text-[10px] font-bold text-gray-400 uppercase">T2</span>
+<span class="text-lg font-black text-primary leading-tight">12</span>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-bold">Cardio Intensity</h5>
+<p class="text-xs text-[#9c495e] dark:text-pink-300">07:00 AM - 45 phút</p>
+</div>
+<span class="material-symbols-outlined text-primary/40">navigate_next</span>
+</div>
+<!-- Day 2 -->
+<div class="flex gap-4 items-center p-3 rounded-lg hover:bg-pink-50/50 dark:hover:bg-pink-900/20 transition-colors">
+<div class="flex flex-col items-center justify-center bg-white dark:bg-background-dark min-w-12 h-12 rounded-lg shadow-sm">
+<span class="text-[10px] font-bold text-gray-400 uppercase">T3</span>
+<span class="text-lg font-black text-gray-400 leading-tight">13</span>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-bold">Ngày nghỉ phục hồi</h5>
+<p class="text-xs text-[#9c495e] dark:text-pink-300">Tự do thư giãn</p>
+</div>
+</div>
+<!-- Day 3 -->
+<div class="flex gap-4 items-center p-3 rounded-lg hover:bg-pink-50/50 dark:hover:bg-pink-900/20 transition-colors">
+<div class="flex flex-col items-center justify-center bg-white dark:bg-background-dark min-w-12 h-12 rounded-lg shadow-sm">
+<span class="text-[10px] font-bold text-gray-400 uppercase">T4</span>
+<span class="text-lg font-black text-primary leading-tight">14</span>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-bold">Yoga Cơ Bản</h5>
+<p class="text-xs text-[#9c495e] dark:text-pink-300">06:30 PM - 60 phút</p>
+</div>
+<span class="material-symbols-outlined text-primary/40">navigate_next</span>
+</div>
+</div>
+</section>
+<!-- Achievements Section -->
+<section class="bg-white dark:bg-pink-950/20 p-6 rounded-xl border border-pink-100 dark:border-pink-900/30">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">emoji_events</span>
+                                Thành tích đạt được
+                            </h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Badge 1 -->
+<div class="achievement-card flex flex-col items-center gap-2 text-center p-4 rounded-xl bg-pink-50/50 dark:bg-pink-900/20 border border-transparent hover:border-primary/20 transition-all cursor-default">
+<div class="heart-icon flex items-center justify-center w-12 h-12 text-primary">
+<span class="material-symbols-outlined text-4xl fill-1">favorite</span>
+</div>
+<h6 class="text-[11px] font-bold uppercase tracking-tight">Chiến binh hồng</h6>
+<p class="text-[10px] text-[#9c495e] dark:text-pink-400">Tập luyện 7 ngày liên tiếp</p>
+</div>
+<!-- Badge 2 -->
+<div class="achievement-card flex flex-col items-center gap-2 text-center p-4 rounded-xl bg-pink-50/50 dark:bg-pink-900/20 border border-transparent hover:border-primary/20 transition-all cursor-default">
+<div class="heart-icon flex items-center justify-center w-12 h-12 text-primary">
+<span class="material-symbols-outlined text-4xl fill-1">bolt</span>
+</div>
+<h6 class="text-[11px] font-bold uppercase tracking-tight">Vượt mục tiêu</h6>
+<p class="text-[10px] text-[#9c495e] dark:text-pink-400">Đốt cháy 5000 kcal</p>
+</div>
+<!-- Badge 3 -->
+<div class="achievement-card flex flex-col items-center gap-2 text-center p-4 rounded-xl bg-pink-50/50 dark:bg-pink-900/20 border border-transparent hover:border-primary/20 transition-all cursor-default opacity-50 grayscale">
+<div class="heart-icon flex items-center justify-center w-12 h-12 text-gray-400">
+<span class="material-symbols-outlined text-4xl">workspace_premium</span>
+</div>
+<h6 class="text-[11px] font-bold uppercase tracking-tight">Master Yoga</h6>
+<p class="text-[10px] text-[#9c495e] dark:text-pink-400">Hoàn thành khóa Yoga</p>
+</div>
+<!-- Badge 4 -->
+<div class="achievement-card flex flex-col items-center gap-2 text-center p-4 rounded-xl bg-pink-50/50 dark:bg-pink-900/20 border border-transparent hover:border-primary/20 transition-all cursor-default">
+<div class="heart-icon flex items-center justify-center w-12 h-12 text-primary">
+<span class="material-symbols-outlined text-4xl fill-1">groups</span>
+</div>
+<h6 class="text-[11px] font-bold uppercase tracking-tight">Người truyền cảm hứng</h6>
+<p class="text-[10px] text-[#9c495e] dark:text-pink-400">Tham gia 5 cộng đồng</p>
+</div>
+</div>
+<button class="w-full mt-6 py-3 rounded-full border border-pink-100 dark:border-pink-900/50 text-sm font-bold text-primary hover:bg-pink-50 transition-colors">
+                            Xem tất cả huy hiệu
+                        </button>
+</section>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Nav (Visual Only) -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-pink-100 dark:border-pink-900/30 flex justify-around py-4 z-50">
+<span class="material-symbols-outlined text-primary">home</span>
+<span class="material-symbols-outlined text-gray-400">school</span>
+<span class="material-symbols-outlined text-gray-400">calendar_month</span>
+<span class="material-symbols-outlined text-gray-400">person</span>
+</div>
+<footer class="bg-white dark:bg-background-dark border-t border-pink-100 dark:border-pink-900/30 py-10 mt-12">
+<div class="max-w-[1440px] mx-auto px-6 text-center">
+<div class="flex items-center justify-center gap-2 text-primary mb-4">
+<span class="material-symbols-outlined font-bold">favorite</span>
+<span class="text-xl font-black">FitHeart</span>
+</div>
+<p class="text-[#9c495e] dark:text-pink-400 text-sm">© 2024 FitHeart Studio. Nỗ lực hôm nay, hạnh phúc mai sau.</p>
+</div>
+</footer>
+</div>
+</body></html>

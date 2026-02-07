@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dịch Vụ và Tìm Kiếm Khóa Học - Gym Hồng Tim</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f42559",
+                        "background-light": "#fdf8f9",
+                        "background-dark": "#1a0b0e",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .pink-gradient-overlay {
+            background: linear-gradient(0deg, rgba(244, 37, 89, 0.4) 0%, rgba(244, 37, 89, 0) 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #f42559;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1c0d11] dark:text-white transition-colors duration-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex flex-col sticky top-0 z-50">
+<div class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-primary/10 dark:border-b-white/10 px-6 md:px-10 py-3 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1">favorite</span>
+</div>
+<h1 class="text-[#1c0d11] dark:text-white text-xl font-bold leading-tight tracking-tight">Gym Hồng Tim</h1>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="hidden lg:flex items-center gap-9">
+<a class="text-[#1c0d11] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Trang chủ</a>
+<a class="text-primary text-sm font-bold leading-normal border-b-2 border-primary" href="#">Dịch vụ</a>
+<a class="text-[#1c0d11] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Cơ sở vật chất</a>
+<a class="text-[#1c0d11] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">HLV</a>
+<a class="text-[#1c0d11] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Liên hệ</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal shadow-lg hover:bg-opacity-90 transition-all">
+                                Tham gia ngay
+                            </button>
+</div>
+</div>
+</div>
+<div class="bg-white/90 dark:bg-background-dark/90 border-b border-primary/5 px-6 md:px-10 py-2 backdrop-blur-sm">
+<div class="max-w-full flex justify-end">
+<a class="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-semibold group" href="#">
+<span class="material-symbols-outlined text-lg">shopping_bag</span>
+<span>Đơn hàng của tôi</span>
+<span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</a>
+</div>
+</div>
+</header>
+<main class="flex flex-col">
+<section class="pt-12 pb-8 px-6 md:px-10 bg-white dark:bg-background-dark">
+<div class="max-w-[1200px] mx-auto">
+<div class="text-center mb-10">
+<h2 class="text-3xl md:text-4xl font-bold text-[#1c0d11] dark:text-white mb-4">Khám Phá Khóa Học</h2>
+<p class="text-gray-500 dark:text-gray-400">Tìm kiếm chương trình tập luyện phù hợp với mục tiêu của bạn</p>
+</div>
+<div class="relative max-w-2xl mx-auto mb-8">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+<input class="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-primary/10 focus:border-primary focus:ring-0 bg-primary/5 dark:bg-white/5 transition-all outline-none" placeholder="Tìm kiếm khóa học (ví dụ: Cardio, Yoga...)" type="text"/>
+</div>
+<div class="flex items-center justify-center gap-3 overflow-x-auto pb-4 custom-scrollbar">
+<button class="px-6 py-2 rounded-full bg-primary text-white font-semibold whitespace-nowrap shadow-md">Tất cả</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-white/10 border border-primary/20 hover:border-primary hover:text-primary transition-all font-medium whitespace-nowrap">Giảm cân</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-white/10 border border-primary/20 hover:border-primary hover:text-primary transition-all font-medium whitespace-nowrap">Tăng cơ</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-white/10 border border-primary/20 hover:border-primary hover:text-primary transition-all font-medium whitespace-nowrap">Yoga</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-white/10 border border-primary/20 hover:border-primary hover:text-primary transition-all font-medium whitespace-nowrap">Cardio</button>
+</div>
+</div>
+</section>
+<section class="py-12 px-6 md:px-10 bg-background-light dark:bg-background-dark/50">
+<div class="max-w-[1200px] mx-auto">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+<div class="bg-white dark:bg-background-dark rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col group border border-primary/5">
+<div class="h-56 bg-cover bg-center relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtuikJTtc6icWs5QlXAWOqKifY8tSfXv2gTUSAWuzVELxIhoz6OczAtHxkkX0VOF2MVz700WQAXOJiLzusgD_JtU46mJGX6LZhf5tR_DtoMqbpL-b_5yub0PpkBuqt57al-YdnrweVdtUKkxNLQwuvcZZlVxK8mKCIH0dlvRqB1f8-4WzlSOXs7ldYzJ-QlKtFWWgIQKf9KDlsiObXJ85ucQsW39Prw_3Stf3nvhSrbs2xUsedL1KdynWWrDrGI1dJT8idKW5RIma4");'>
+<div class="absolute inset-0 pink-gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<button class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 0">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tăng cơ</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-bold text-xl mb-2 text-[#1c0d11] dark:text-white group-hover:text-primary transition-colors line-clamp-1">HIIT Đốt Mỡ Thần Tốc</h3>
+<div class="flex items-center gap-2 mb-4">
+<img alt="HLV" class="w-6 h-6 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2IPUB-RYO8--T2FsIe1KESZarW_j2XBqlFoI5GGAva8gtysSeT6Csi6GqOQJFzZkODm0aiSeBpKhIUcK2biyBi024ouSah67E-NqJycEahXAyKGDc75oYry8k--uJ17ixykZbXxf1LPiAJ-LQzQKRLRlxpvl6ID3uUg0-oNeqDecfw0hIIWISx-AnsSm3ldwfIeslzlWBq0Ji3r56_sgFMWiEKfpkpE0KoWbiHyTxD1JaJ3E4EjQxMAfSYduELFHyarkFARzJxufZ"/>
+<span class="text-sm text-gray-500">Coach Minh Tuấn</span>
+</div>
+<div class="flex items-center justify-between mb-6 text-sm">
+<div class="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span>45 phút</span>
+</div>
+<div class="font-bold text-primary text-lg">499.000đ</div>
+</div>
+<button class="mt-auto w-full py-3 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 hover:shadow-lg hover:-translate-y-1 transition-all">Đăng ký ngay</button>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col group border border-primary/5">
+<div class="h-56 bg-cover bg-center relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFKmMYCSQBtIgIpilxUzn8mAqmn_GhzlimfTGXkzeBrBs3wOQG_47aZKqL28khbUsVpRO6tO0eH3f-3eAgwCM-5INPtun4JFXsICFDxMtEEeA1l0puSIQIOKgPDjEU_Dnqd4uCVtGYCj3mhwJ9qjgFpEQ_FmCeaekLhNCjDx1Pn2qs6wLgQ5agQ_jeQUzoP4rKsfXsq7yIvKTCMJ5TxgYq9VgbRZA-wgCz8cybVgj3FMLcY3WN-whz2MICgDZ22bhNssPXS6csBI18");'>
+<div class="absolute inset-0 pink-gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<button class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Yoga</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-bold text-xl mb-2 text-[#1c0d11] dark:text-white group-hover:text-primary transition-colors line-clamp-1">Yoga Flow Buổi Sáng</h3>
+<div class="flex items-center gap-2 mb-4">
+<img alt="HLV" class="w-6 h-6 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGilRFR_UUH67JH7ChysQBHQscwssA7wLUwdCtTmWYnm_-FAwnkt_BIwmA11V-VJ5DX834X5aDw5_PIxa_muvYErF8ESQ-_cYZs3BZ36Adj2GA_3Tj1gK62UEgKEOtUtSrKcVhHA4CVSzVW-TTqx4Zh8H86q_CG87NHweajI0MkE0DxpSTFYJPPhEV1_7ICZjRlxQdWsj_exJ_9nQTsnvjBHeUWS30YbQdnrGqHNcmWU3qszcrPyNl55YoUEtj1LNM742jFccgLD7x"/>
+<span class="text-sm text-gray-500">Coach Hồng Hạnh</span>
+</div>
+<div class="flex items-center justify-between mb-6 text-sm">
+<div class="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span>60 phút</span>
+</div>
+<div class="font-bold text-primary text-lg">350.000đ</div>
+</div>
+<button class="mt-auto w-full py-3 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 hover:shadow-lg hover:-translate-y-1 transition-all">Đăng ký ngay</button>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col group border border-primary/5">
+<div class="h-56 bg-cover bg-center relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxmDI1Gc82ks17CBZFoN2vQPLxg5VB_GpusrtExKoJxu4WDs73YA3nHi0ECVzqIptGQaMzjEXHqQKSieh3rCBWadiAZ-aijdduNoDWGrPapT6Ak85TLITFJZkBPm_JCw02PwtJLHW-99VtIMG3HSSEmr3JJp29dSfOnlB3NDd8G-b1m8Apav85207QWycVJXZXh45Z0AQaZJ6T3u-9OB90FfW3xGM0iehD9JYeTWke79JmkI-KlDDPt5GZiY1gzlQe9WubSEsuj4uu");'>
+<div class="absolute inset-0 pink-gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<button class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 0">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Cardio</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-bold text-xl mb-2 text-[#1c0d11] dark:text-white group-hover:text-primary transition-colors line-clamp-1">Kickboxing Tăng Cơ</h3>
+<div class="flex items-center gap-2 mb-4">
+<img alt="HLV" class="w-6 h-6 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2mseQBHLfamp4E11JJ_uRai_j0ocrPjoFsWv9Gd56P0oWbNnshhzNsyJw_YZddboJfzrt4f95PtOMIPHVMH7UHbl3g090rsF4Qo9MxfotMs-Hse64Qa7RzuJkRX8Zcm4fBZMw6LyHBQx8XaeiPD0UeggKK8Etg9QrinZrWEgihhWXHh11Lyj_skfnJwIZMv3YcRmzshHs_uqchpzl7ncCxIdcG449vJDzKM62C21DML3HqjlWfB7mvLLLFA7u34wtexuC4YWk79N3"/>
+<span class="text-sm text-gray-500">Coach Quốc Anh</span>
+</div>
+<div class="flex items-center justify-between mb-6 text-sm">
+<div class="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span>50 phút</span>
+</div>
+<div class="font-bold text-primary text-lg">550.000đ</div>
+</div>
+<button class="mt-auto w-full py-3 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 hover:shadow-lg hover:-translate-y-1 transition-all">Đăng ký ngay</button>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col group border border-primary/5">
+<div class="h-56 bg-cover bg-center relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEgZkQ7gpgjdV9mSNSKPMycQlW3WDGVWFVjxLVqcGlMmSRUk3AeFvKBbbg3YEhLVsXgIb7Nc8boa9TOoA9apsA19MNJvLfH96Ema0FfqU3Y4jvpUZQzEHzbArgxgvDEFZ3rUJT8oVDuhw0O4GLN4daWRqFau3IaUFfC0QxQ-9JgmH1lEw7T-pwL08DDBKCvc6Na4QGys-GdIFxfd086qBz9Nqy7Fcy7VFaQUbcJR99iLjPxShyg6nc6M1Z8yQfVXYFDppxlE27GRZw");'>
+<div class="absolute inset-0 pink-gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<button class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 0">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Wellness</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-bold text-xl mb-2 text-[#1c0d11] dark:text-white group-hover:text-primary transition-colors line-clamp-1">Phục Hồi Cơ Chuyên Sâu</h3>
+<div class="flex items-center gap-2 mb-4">
+<img alt="HLV" class="w-6 h-6 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlypYxBHfKOwz0bZ2e0VFZsJqM9x4qhrWsPyUw5IOdKE14KgZnG4hFArJN1lMXzSuSCKoSTwJAaOQWeA4Jk_N8tRw2RksAvSwz1hUL_0IP9f5m2GLulztr2NB3HODeIrj2AokLihE9OAm_Z8nWwOZcpJjyDEkiJ_BCAwfj0umbf70WmQ07brsTm0YYPIBn8f89gO3pAxFya-UyrC1Ud2-ld6DDrnhrlaQzIpUR_GSrEF8Iw9K5dtyM21Lf0rhEtmqAPD3cESq94fab"/>
+<span class="text-sm text-gray-500">Coach Minh Tuấn</span>
+</div>
+<div class="flex items-center justify-between mb-6 text-sm">
+<div class="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span>30 phút</span>
+</div>
+<div class="font-bold text-primary text-lg">299.000đ</div>
+</div>
+<button class="mt-auto w-full py-3 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 hover:shadow-lg hover:-translate-y-1 transition-all">Đăng ký ngay</button>
+</div>
+</div>
+</div>
+<div class="mt-16 flex justify-center items-center gap-4">
+<button class="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-primary text-white font-bold shadow-md">1</button>
+<button class="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-all">2</button>
+<button class="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-all">3</button>
+<button class="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<section class="py-20 px-6 md:px-10 bg-white dark:bg-background-dark">
+<div class="max-w-[900px] mx-auto bg-primary/5 border-2 border-dashed border-primary/30 rounded-3xl p-10 md:p-16 text-center">
+<h2 class="text-3xl md:text-4xl font-bold mb-6">Bạn Chưa Tìm Thấy Khóa Học Ưng Ý?</h2>
+<p class="text-lg text-gray-600 dark:text-gray-400 mb-10">Liên hệ ngay với đội ngũ chuyên gia của Gym Hồng Tim để được tư vấn lộ trình tập luyện cá nhân hóa hoàn toàn miễn phí.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="px-10 py-4 bg-primary text-white rounded-full font-bold text-lg shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">support_agent</span>
+<span>Tư vấn trực tiếp</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-white dark:bg-background-dark border-t border-primary/10 py-16 px-6 md:px-10">
+<div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-3 text-primary mb-8">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1">favorite</span>
+<h2 class="text-2xl font-bold tracking-tight">Gym Hồng Tim</h2>
+</div>
+<p class="text-gray-600 dark:text-gray-400 mb-8 max-w-sm leading-relaxed">
+                            Hệ thống phòng tập cao cấp với sứ mệnh mang lại sức khỏe và niềm vui từ trái tim cho cộng đồng Fitness Việt Nam. Chúng tôi tin rằng mỗi nỗ lực nhỏ đều xứng đáng được trân trọng.
+                        </p>
+<div class="flex gap-4">
+<a class="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined">public</span>
+</a>
+<a class="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined">videocam</span>
+</a>
+<a class="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold mb-8 text-[#1c0d11] dark:text-white text-lg">Khám Phá</h4>
+<ul class="flex flex-col gap-4 text-sm text-gray-600 dark:text-gray-400">
+<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#"><span class="material-symbols-outlined text-xs">chevron_right</span> Về chúng tôi</a></li>
+<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#"><span class="material-symbols-outlined text-xs">chevron_right</span> Các khóa học</a></li>
+<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#"><span class="material-symbols-outlined text-xs">chevron_right</span> Lịch tập luyện</a></li>
+<li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#"><span class="material-symbols-outlined text-xs">chevron_right</span> Tuyển dụng</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-8 text-[#1c0d11] dark:text-white text-lg">Liên Hệ</h4>
+<ul class="flex flex-col gap-4 text-sm text-gray-600 dark:text-gray-400">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span>123 Đường Hạnh Phúc, Quận 1, TP. Hồ Chí Minh</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">phone_in_talk</span>
+<span>1900 888 999</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">mail</span>
+<span>info@gymhongtim.vn</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto border-t border-primary/10 mt-16 pt-8 text-center text-xs text-gray-500">
+<p>© 2024 Gym Hồng Tim. Được thiết kế với tất cả trái tim.</p>
+</div>
+</footer>
+</div>
+</div>
+
+</body></html>

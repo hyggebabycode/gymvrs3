@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bảng Điều Khiển Quản Trị Viên - Gym Hồng Tim</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f42559",
+                        "secondary": "#ff85a2",
+                        "background-light": "#fdf8f9",
+                        "sidebar-bg": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #f4255933;
+            border-radius: 10px;
+        }
+        .chart-container {
+            position: relative;
+        }
+        .pie-slice-1 { fill: #f42559; }
+        .pie-slice-2 { fill: #ff85a2; }
+        .pie-slice-3 { fill: #fbc2cf; }
+        .pie-slice-4 { fill: #ffe4e9; }
+    </style>
+</head>
+<body class="bg-[#fafafa] text-[#1c0d11]">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 bg-sidebar-bg border-r border-gray-100 flex flex-col z-50">
+<div class="p-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1">favorite</span>
+<span class="font-bold text-xl tracking-tight">Gym Hồng Tim</span>
+</div>
+<nav class="flex-1 px-4 mt-4 space-y-1 overflow-y-auto custom-scrollbar">
+<div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">Chính</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-primary/10 text-primary font-semibold transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Tổng quan</span>
+</a>
+<div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-6 mb-2">Quản lý</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+<span>Khóa học</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Học viên</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span>Huấn luyện viên</span>
+</a>
+<div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-6 mb-2">Tài chính</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Báo cáo doanh thu</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>Giao dịch</span>
+</a>
+</nav>
+<div class="p-4 border-t border-gray-100">
+<div class="flex items-center gap-3 p-2 rounded-xl bg-gray-50">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+<img alt="Admin Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4ZC8gRNuAqw4uppL3DMlcnUPJGFM6B0a2kz_JysLxaC6p7FIlE6XyaWZnXjYGdyOJwF_gHcine0bgsXRm4it19dkE8KOjPhl2Dr21qOoqU_Gs7dbXdycgywqQ_1_VpV84W5K5J4sKw3LKO16RCijmNahmKY5blJgHqhwxW_kNWYVLkRUT2aJbIr-sBLYzNVko0wnHYQKzMgVG0UEYVHfw4Gw7cvblPm6VW0sG6lC6HEV3gittII9ZfvF597USumdz3nJvRcfh6jWJ"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold truncate">Admin Hồng Tim</p>
+<p class="text-[10px] text-gray-400 uppercase font-medium">Quản trị viên</p>
+</div>
+<button class="text-gray-400 hover:text-primary">
+<span class="material-symbols-outlined text-sm">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto custom-scrollbar bg-[#fdfafb]">
+<header class="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-8 sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-bold">Bảng Điều Khiển</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+<input class="bg-gray-50 border-none rounded-full py-1.5 pl-10 pr-4 text-sm w-64 focus:ring-1 focus:ring-primary/30" placeholder="Tìm kiếm nhanh..." type="text"/>
+</div>
+<button class="relative text-gray-500 hover:text-primary">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full border-2 border-white"></span>
+</button>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-50">
+<div class="flex items-center justify-between mb-4">
+<div class="w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">payments</span>
+</div>
+<span class="text-green-500 text-xs font-bold flex items-center bg-green-50 px-2 py-1 rounded-full">+12.5% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+</div>
+<p class="text-gray-500 text-sm font-medium">Tổng doanh thu</p>
+<h3 class="text-2xl font-bold mt-1">1.284.000.000 <span class="text-sm font-normal text-gray-400">VNĐ</span></h3>
+</div>
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-50">
+<div class="flex items-center justify-between mb-4">
+<div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">groups</span>
+</div>
+<span class="text-green-500 text-xs font-bold flex items-center bg-green-50 px-2 py-1 rounded-full">+8.2% <span class="material-symbols-outlined text-[14px]">trending_up</span></span>
+</div>
+<p class="text-gray-500 text-sm font-medium">Tổng học viên</p>
+<h3 class="text-2xl font-bold mt-1">1,450 <span class="text-sm font-normal text-gray-400">Thành viên</span></h3>
+</div>
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-50">
+<div class="flex items-center justify-between mb-4">
+<div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">trending_up</span>
+</div>
+<span class="text-purple-500 text-xs font-bold flex items-center bg-purple-50 px-2 py-1 rounded-full">Cao nhất năm</span>
+</div>
+<p class="text-gray-500 text-sm font-medium">Tỷ lệ tăng trưởng</p>
+<h3 class="text-2xl font-bold mt-1">24.6% <span class="text-sm font-normal text-gray-400">Hàng tháng</span></h3>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-50 overflow-hidden">
+<div class="p-6 border-b border-gray-50 flex items-center justify-between">
+<h3 class="font-bold text-lg">Quản lý khóa học</h3>
+<button class="bg-primary text-white text-sm px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-opacity-90 transition-all">
+<span class="material-symbols-outlined text-sm">add</span> Thêm khóa học
+                            </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-gray-50/50 text-gray-400 text-[11px] uppercase tracking-widest font-bold">
+<tr>
+<th class="px-6 py-4">Tên khóa học</th>
+<th class="px-6 py-4 text-center">Giá (VNĐ)</th>
+<th class="px-6 py-4 text-center">Học viên</th>
+<th class="px-6 py-4 text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-50 text-sm">
+<tr class="hover:bg-gray-50/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">fitness_center</span>
+</div>
+<span class="font-semibold">Weight Lifting Pro</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">2,500,000</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<span class="font-bold">142</span>
+<span class="text-[10px] text-green-500">+12</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="w-8 h-8 rounded-lg text-blue-500 hover:bg-blue-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg text-primary hover:bg-pink-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-pink-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">self_improvement</span>
+</div>
+<span class="font-semibold">Yoga Flow Morning</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">1,800,000</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<span class="font-bold">86</span>
+<span class="text-[10px] text-gray-400">0</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="w-8 h-8 rounded-lg text-blue-500 hover:bg-blue-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg text-primary hover:bg-pink-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600">bolt</span>
+</div>
+<span class="font-semibold">HIIT Fat Burner</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">2,200,000</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<span class="font-bold">215</span>
+<span class="text-[10px] text-green-500">+45</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="w-8 h-8 rounded-lg text-blue-500 hover:bg-blue-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg text-primary hover:bg-pink-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-600">spa</span>
+</div>
+<span class="font-semibold">Wellness &amp; Spa</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">1,200,000</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<span class="font-bold">64</span>
+<span class="text-[10px] text-red-500">-2</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="w-8 h-8 rounded-lg text-blue-500 hover:bg-blue-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg text-primary hover:bg-pink-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-gray-50/30 border-t border-gray-50 flex items-center justify-center">
+<button class="text-primary text-xs font-bold hover:underline">Xem tất cả khóa học</button>
+</div>
+</div>
+<div class="bg-white rounded-2xl shadow-sm border border-gray-50 p-6">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-bold text-lg">Tỷ lệ bán khóa học</h3>
+<button class="text-gray-400">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative w-48 h-48 mb-8">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+<circle class="pie-slice-1" cx="18" cy="18" fill="transparent" r="15.9" stroke="#f42559" stroke-dasharray="45 100" stroke-width="3.5"></circle>
+<circle class="pie-slice-2" cx="18" cy="18" fill="transparent" r="15.9" stroke="#ff85a2" stroke-dasharray="25 100" stroke-dashoffset="-45" stroke-width="3.5"></circle>
+<circle class="pie-slice-3" cx="18" cy="18" fill="transparent" r="15.9" stroke="#fbc2cf" stroke-dasharray="20 100" stroke-dashoffset="-70" stroke-width="3.5"></circle>
+<circle class="pie-slice-4" cx="18" cy="18" fill="transparent" r="15.9" stroke="#ffe4e9" stroke-dasharray="10 100" stroke-dashoffset="-90" stroke-width="3.5"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="text-2xl font-black text-primary">100%</span>
+<span class="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Tháng 12</span>
+</div>
+</div>
+<div class="w-full space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-sm font-medium text-gray-600">Weight Lifting</span>
+</div>
+<span class="text-sm font-bold">45%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-[#ff85a2]"></div>
+<span class="text-sm font-medium text-gray-600">HIIT</span>
+</div>
+<span class="text-sm font-bold">25%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-[#fbc2cf]"></div>
+<span class="text-sm font-medium text-gray-600">Yoga</span>
+</div>
+<span class="text-sm font-bold">20%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-[#ffe4e9]"></div>
+<span class="text-sm font-medium text-gray-600">Others</span>
+</div>
+<span class="text-sm font-bold">10%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-2xl shadow-sm border border-gray-50 p-6">
+<h3 class="font-bold text-lg mb-6">Thao tác nhanh</h3>
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+<button class="flex flex-col items-center p-4 rounded-2xl hover:bg-pink-50 transition-all border border-gray-100 border-dashed">
+<span class="material-symbols-outlined text-primary mb-2">person_add</span>
+<span class="text-xs font-semibold">Tạo học viên</span>
+</button>
+<button class="flex flex-col items-center p-4 rounded-2xl hover:bg-pink-50 transition-all border border-gray-100 border-dashed">
+<span class="material-symbols-outlined text-primary mb-2">event_note</span>
+<span class="text-xs font-semibold">Lịch tập</span>
+</button>
+<button class="flex flex-col items-center p-4 rounded-2xl hover:bg-pink-50 transition-all border border-gray-100 border-dashed">
+<span class="material-symbols-outlined text-primary mb-2">payments</span>
+<span class="text-xs font-semibold">Thu phí</span>
+</button>
+<button class="flex flex-col items-center p-4 rounded-2xl hover:bg-pink-50 transition-all border border-gray-100 border-dashed">
+<span class="material-symbols-outlined text-primary mb-2">mail</span>
+<span class="text-xs font-semibold">Gửi thông báo</span>
+</button>
+<button class="flex flex-col items-center p-4 rounded-2xl hover:bg-pink-50 transition-all border border-gray-100 border-dashed">
+<span class="material-symbols-outlined text-primary mb-2">assignment_ind</span>
+<span class="text-xs font-semibold">Chấm công HLV</span>
+</button>
+<button class="flex flex-col items-center p-4 rounded-2xl hover:bg-pink-50 transition-all border border-gray-100 border-dashed">
+<span class="material-symbols-outlined text-primary mb-2">settings</span>
+<span class="text-xs font-semibold">Cài đặt HT</span>
+</button>
+</div>
+</div>
+</div>
+<footer class="p-8 text-center text-xs text-gray-400 font-medium">
+                © 2024 Gym Hồng Tim Admin Dashboard. Tinh hoa cho sức khỏe Việt.
+            </footer>
+</main>
+</div>
+
+</body></html>

@@ -1,0 +1,564 @@
+<!doctype html>
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GymHeart - Đăng Nhập & Đăng Ký</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts: Lexend -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#f42559",
+              "background-light": "#fcf8f9",
+              "background-dark": "#221014",
+            },
+            fontFamily: {
+              display: ["Lexend", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Lexend", sans-serif;
+      }
+      .heart-pattern {
+        background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M30 50 Q20 40, 10 30 T10 20 Q10 10, 20 10 T30 20 Q40 10, 50 10 T50 20 Q50 30, 40 40 T30 50" fill="%23f4255920" opacity="0.1"/></svg>');
+        background-size: 60px 60px;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .fill-heart {
+        font-variation-settings: "FILL" 1;
+      }
+      .tab-active {
+        border-bottom-color: #f42559 !important;
+        color: #1c0d11 !important;
+      }
+      .tab-inactive {
+        border-bottom-color: transparent !important;
+        color: #9c495e !important;
+      }
+      #signup-form {
+        display: none;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-[#1c0d11] dark:text-[#fcf8f9] min-h-screen flex flex-col"
+  >
+    <!-- Top Navigation Bar -->
+    <header
+      class="w-full border-b border-solid border-[#f4e7ea] dark:border-[#3d1a24] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50"
+    >
+      <div
+        class="max-w-[1200px] mx-auto px-4 sm:px-10 py-3 flex items-center justify-between"
+      >
+        <div
+          class="flex items-center gap-2 cursor-pointer"
+          onclick="window.location.href = 'index.html'"
+        >
+          <div class="size-8 text-primary">
+            <span
+              class="material-symbols-outlined text-3xl font-bold fill-heart"
+              >favorite</span
+            >
+          </div>
+          <h2
+            class="text-[#1c0d11] dark:text-[#fcf8f9] text-xl font-bold leading-tight tracking-tight"
+          >
+            GymHeart
+          </h2>
+        </div>
+        <nav class="hidden md:flex items-center gap-8">
+          <a
+            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            href="index.html"
+            >Trang chủ</a
+          >
+          <a
+            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            href="index.html#courses"
+            >Khóa học</a
+          >
+          <a
+            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            href="index.html#features"
+            >Lịch tập</a
+          >
+        </nav>
+        <div class="flex gap-2">
+          <button
+            onclick="window.location.href = 'index.html'"
+            class="hidden sm:flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 border-2 border-primary text-primary text-sm font-bold tracking-wide hover:bg-primary hover:text-white transition-all"
+          >
+            Quay lại
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-8">
+      <!-- Main Container -->
+      <div
+        class="w-full max-w-[1000px] bg-white dark:bg-[#2d161b] rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px] relative"
+      >
+        <!-- Floating Heart Decor -->
+        <div
+          class="absolute top-4 right-4 text-primary opacity-20 pointer-events-none"
+        >
+          <span class="material-symbols-outlined text-4xl fill-heart"
+            >favorite</span
+          >
+        </div>
+        <div
+          class="absolute bottom-10 right-20 text-primary opacity-10 pointer-events-none"
+        >
+          <span class="material-symbols-outlined text-6xl fill-heart"
+            >favorite</span
+          >
+        </div>
+
+        <!-- Left Panel: Image & Inspiration -->
+        <div
+          class="w-full md:w-1/2 relative min-h-[300px] md:min-h-full overflow-hidden"
+        >
+          <div
+            class="absolute inset-0 bg-primary/20 mix-blend-multiply z-10"
+          ></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent z-10"
+          ></div>
+          <div
+            class="absolute inset-0 bg-center bg-cover"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80&quot;);
+            "
+          ></div>
+          <div
+            class="relative z-20 h-full flex flex-col justify-end p-10 text-white"
+          >
+            <h1 class="text-4xl font-black mb-4 leading-tight">
+              Mạnh mẽ hơn<br />mỗi ngày.
+            </h1>
+            <p class="text-lg font-light opacity-90">
+              Tham gia cộng đồng GymHeart để nhận lộ trình tập luyện cá nhân hóa
+              và sự hỗ trợ nhiệt tình nhất.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Panel: Form -->
+        <div
+          class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center heart-pattern"
+        >
+          <!-- Alert Messages -->
+          <div id="alert-message" class="hidden mb-6 p-4 rounded-lg"></div>
+
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold text-[#1c0d11] dark:text-white mb-2">
+              Chào mừng bạn!
+            </h2>
+            <p class="text-[#9c495e] dark:text-[#d19fb0] text-sm">
+              Vui lòng đăng nhập hoặc tạo tài khoản mới để bắt đầu.
+            </p>
+          </div>
+
+          <!-- Tabs -->
+          <div class="mb-8 border-b border-[#e8ced5] dark:border-[#4d2832]">
+            <div class="flex gap-8">
+              <a
+                id="login-tab"
+                class="flex flex-col items-center justify-center border-b-[3px] tab-active pb-3 pt-2 cursor-pointer transition-all"
+                onclick="switchTab('login')"
+              >
+                <p class="text-sm font-bold tracking-wide">Đăng nhập</p>
+              </a>
+              <a
+                id="signup-tab"
+                class="flex flex-col items-center justify-center border-b-[3px] tab-inactive pb-3 pt-2 cursor-pointer transition-all"
+                onclick="switchTab('signup')"
+              >
+                <p class="text-sm font-bold tracking-wide">Đăng ký</p>
+              </a>
+            </div>
+          </div>
+
+          <!-- Login Form -->
+          <form id="login-form" class="space-y-5">
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                >Địa chỉ Email</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#9c495e]"
+                  >mail</span
+                >
+                <input
+                  id="login-email"
+                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  placeholder="example@email.com"
+                  type="email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between items-center">
+                <label
+                  class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                  >Mật khẩu</label
+                >
+                <a
+                  class="text-xs text-primary font-medium hover:underline cursor-pointer"
+                  >Quên mật khẩu?</a
+                >
+              </div>
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#9c495e]"
+                  >lock</span
+                >
+                <input
+                  id="login-password"
+                  class="w-full pl-12 pr-12 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  placeholder="••••••••"
+                  type="password"
+                  required
+                />
+                <button
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-[#9c495e] hover:text-primary"
+                  type="button"
+                  onclick="togglePassword('login-password')"
+                >
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="w-full h-14 bg-primary text-white rounded-lg font-bold text-lg shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+            >
+              <span id="login-btn-text">Đăng nhập</span>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+
+            <!-- Divider -->
+            <div class="flex items-center gap-4 my-6">
+              <div class="flex-1 h-px bg-[#e8ced5] dark:bg-[#4d2832]"></div>
+              <span class="text-sm text-[#9c495e] font-medium">hoặc</span>
+              <div class="flex-1 h-px bg-[#e8ced5] dark:bg-[#4d2832]"></div>
+            </div>
+
+            <!-- Google Login Button -->
+            <button
+              type="button"
+              onclick="loginWithGoogle()"
+              class="w-full h-14 bg-white dark:bg-[#3d1a24] border-2 border-[#e8ced5] dark:border-[#4d2832] text-[#1c0d11] dark:text-white rounded-lg font-bold text-base hover:bg-[#fcf8f9] dark:hover:bg-[#4d2832] hover:border-primary transition-all flex items-center justify-center gap-3"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              <span id="google-btn-text">Đăng nhập với Google</span>
+            </button>
+          </form>
+
+          <!-- Signup Form -->
+          <form id="signup-form" class="space-y-5">
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                >Họ và Tên</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#9c495e]"
+                  >person</span
+                >
+                <input
+                  id="signup-fullname"
+                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  placeholder="Nguyễn Văn A"
+                  type="text"
+                  required
+                />
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                >Địa chỉ Email</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#9c495e]"
+                  >mail</span
+                >
+                <input
+                  id="signup-email"
+                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  placeholder="example@email.com"
+                  type="email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                >Số điện thoại</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#9c495e]"
+                  >phone</span
+                >
+                <input
+                  id="signup-phone"
+                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  placeholder="0901234567"
+                  type="tel"
+                  required
+                />
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                >Mật khẩu</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#9c495e]"
+                  >lock</span
+                >
+                <input
+                  id="signup-password"
+                  class="w-full pl-12 pr-12 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  placeholder="••••••••"
+                  type="password"
+                  required
+                  minlength="6"
+                />
+                <button
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-[#9c495e] hover:text-primary"
+                  type="button"
+                  onclick="togglePassword('signup-password')"
+                >
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
+              </div>
+              <p class="text-xs text-[#9c495e]">
+                Mật khẩu phải có ít nhất 6 ký tự
+              </p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                >Loại tài khoản</label
+              >
+              <div class="flex gap-4">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="signup-role"
+                    value="user"
+                    checked
+                    class="w-5 h-5 text-primary focus:ring-primary"
+                  />
+                  <span class="text-[#1c0d11] dark:text-white font-medium"
+                    >Thành viên</span
+                  >
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="signup-role"
+                    value="coach"
+                    class="w-5 h-5 text-primary focus:ring-primary"
+                  />
+                  <span class="text-[#1c0d11] dark:text-white font-medium"
+                    >Huấn luyện viên (PT)</span
+                  >
+                </label>
+              </div>
+              <p class="text-xs text-[#9c495e]">
+                Nếu đăng ký làm PT, yêu cầu sẽ được gửi đến Admin để xét duyệt
+              </p>
+            </div>
+            <button
+              type="submit"
+              class="w-full h-14 bg-primary text-white rounded-lg font-bold text-lg shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+            >
+              <span id="signup-btn-text">Đăng ký</span>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="mt-8 mb-6">
+            <div class="relative flex items-center justify-center">
+              <div
+                class="flex-grow border-t border-[#e8ced5] dark:border-[#4d2832]"
+              ></div>
+              <span
+                class="px-4 text-xs font-medium text-[#9c495e] uppercase tracking-widest bg-white dark:bg-[#2d161b]"
+                >Hoặc</span
+              >
+              <div
+                class="flex-grow border-t border-[#e8ced5] dark:border-[#4d2832]"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Social Login -->
+          <div class="grid grid-cols-2 gap-4">
+            <button
+              type="button"
+              onclick="loginWithGoogle()"
+              class="flex items-center justify-center gap-2 h-12 border border-[#e8ced5] dark:border-[#4d2832] rounded-lg hover:bg-[#fcf8f9] dark:hover:bg-[#3d1a24] hover:border-primary transition-all"
+            >
+              <svg class="w-5 h-5" viewbox="0 0 24 24">
+                <path
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  fill="#4285F4"
+                ></path>
+                <path
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  fill="#34A853"
+                ></path>
+                <path
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  fill="#FBBC05"
+                ></path>
+                <path
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                  fill="#EA4335"
+                ></path>
+              </svg>
+              <span class="text-sm font-medium">Google</span>
+            </button>
+            <button
+              type="button"
+              onclick="showAlert('Chức năng Facebook đang phát triển', 'info')"
+              class="flex items-center justify-center gap-2 h-12 border border-[#e8ced5] dark:border-[#4d2832] rounded-lg hover:bg-[#fcf8f9] dark:hover:bg-[#3d1a24] hover:border-blue-600 transition-all opacity-50 cursor-not-allowed"
+              disabled
+            >
+              <span class="material-symbols-outlined text-blue-600"
+                >facebook</span
+              >
+              <span class="text-sm font-medium">Facebook</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="w-full py-8 border-t border-[#f4e7ea] dark:border-[#3d1a24] mt-auto"
+    >
+      <div
+        class="max-w-[1200px] mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-4"
+      >
+        <div class="flex items-center gap-2 opacity-50">
+          <span class="material-symbols-outlined text-primary fill-heart"
+            >favorite</span
+          >
+          <span class="text-sm font-medium"
+            >© 2026 GymHeart Fitness. All rights reserved.</span
+          >
+        </div>
+        <div
+          class="flex gap-6 text-sm text-[#9c495e] dark:text-[#9c495e] font-medium"
+        >
+          <a class="hover:text-primary transition-colors" href="#"
+            >Điều khoản</a
+          >
+          <a class="hover:text-primary transition-colors" href="#">Bảo mật</a>
+          <a class="hover:text-primary transition-colors" href="#">Liên hệ</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      function switchTab(tab) {
+        const loginTab = document.getElementById("login-tab");
+        const signupTab = document.getElementById("signup-tab");
+        const loginForm = document.getElementById("login-form");
+        const signupForm = document.getElementById("signup-form");
+        const alertMessage = document.getElementById("alert-message");
+
+        // Hide alert
+        alertMessage.classList.add("hidden");
+
+        if (tab === "login") {
+          loginTab.classList.remove("tab-inactive");
+          loginTab.classList.add("tab-active");
+          signupTab.classList.remove("tab-active");
+          signupTab.classList.add("tab-inactive");
+          loginForm.style.display = "block";
+          signupForm.style.display = "none";
+        } else {
+          signupTab.classList.remove("tab-inactive");
+          signupTab.classList.add("tab-active");
+          loginTab.classList.remove("tab-active");
+          loginTab.classList.add("tab-inactive");
+          signupForm.style.display = "block";
+          loginForm.style.display = "none";
+        }
+      }
+
+      function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = event.currentTarget.querySelector(
+          ".material-symbols-outlined",
+        );
+
+        if (input.type === "password") {
+          input.type = "text";
+          icon.textContent = "visibility_off";
+        } else {
+          input.type = "password";
+          icon.textContent = "visibility";
+        }
+      }
+    </script>
+  </body>
+</html>

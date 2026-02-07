@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kho Giáo Án Tập Luyện PT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f42559",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#221014",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .sidebar-active {
+            @apply bg-pink-100 text-primary;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-heart {
+            font-variation-settings: 'FILL' 1;
+        }
+        .workout-card:hover {
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#1c0d11] dark:text-white antialiased">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex-shrink-0 bg-white dark:bg-[#2d161b] border-r border-[#e8ced5] dark:border-[#3d2026] flex flex-col">
+<div class="p-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl fill-heart">favorite</span>
+<h2 class="text-xl font-black tracking-tight text-primary uppercase">PT LOVE</h2>
+</div>
+<div class="px-4 flex flex-col gap-1 grow">
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-pink-50 dark:hover:bg-primary/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Bảng điều khiển</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-pink-50 dark:hover:bg-primary/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium">Học viên</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-pink-50 dark:hover:bg-primary/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">calendar_today</span>
+<p class="text-sm font-medium">Lịch dạy</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg sidebar-active">
+<span class="material-symbols-outlined">exercise</span>
+<p class="text-sm font-bold">Kho Giáo án</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-pink-50 dark:hover:bg-primary/10 transition-colors cursor-pointer relative">
+<span class="material-symbols-outlined">volunteer_activism</span>
+<p class="text-sm font-medium">Tư vấn mới</p>
+<span class="absolute right-3 top-3 flex h-2 w-2 rounded-full bg-primary"></span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-pink-50 dark:hover:bg-primary/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">monitoring</span>
+<p class="text-sm font-medium">Báo cáo</p>
+</div>
+</div>
+<div class="p-4 border-t border-[#e8ced5] dark:border-[#3d2026]">
+<div class="flex items-center gap-3 mb-4">
+<div class="size-10 rounded-full bg-cover bg-center border-2 border-primary/20" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQW7Axczri25TtoJN7DzbB7w_Q2-hZIuNw095BzJIioDx8dXk69Q_HrXV4wyQtOZKMxJ23J7T7zRo0Op9awAxg1RyNceR9qyxtptwa2bgOwCq1N_kB2UuFfSMOzcVFacIUfNvPzXHW-CDoIj3FsYg4rGSU0iI0kVaGE0bKSeqZFSpTX5cWGGgbZrw0S_4oWFyltrw3D_zjpj3Jc46ydN4EKKxbLZHxz8XEF_1nWr2uJFk18afjGLtoYy4phzmLr9igWpUM93nQsJ75");'></div>
+<div class="flex flex-col">
+<p class="text-xs font-bold">Coach Nam</p>
+<p class="text-[10px] text-[#9c495e] dark:text-pink-300">Huấn luyện viên Senior</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<div>
+<h1 class="text-3xl font-black text-[#1c0d11] dark:text-white tracking-tight">Kho Giáo Án Tập Luyện 💖</h1>
+<p class="text-[#9c495e] dark:text-pink-300 text-sm mt-1">Quản lý và thiết kế các chương trình tập luyện mẫu cho học viên.</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-primary/30 flex items-center gap-2 transition-all transform active:scale-95">
+<span class="material-symbols-outlined">add_circle</span>
+                    Tạo giáo án mới
+                </button>
+</div>
+<div class="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
+<button class="bg-primary text-white px-5 py-2 rounded-full text-sm font-bold flex items-center gap-2">
+                    Tất cả <span class="bg-white/20 px-2 rounded-full text-[10px]">24</span>
+</button>
+<button class="bg-white dark:bg-[#2d161b] text-[#9c495e] dark:text-pink-200 border border-[#e8ced5] dark:border-[#3d2026] px-5 py-2 rounded-full text-sm font-bold hover:bg-pink-50 transition-colors">
+                    Yoga
+                </button>
+<button class="bg-white dark:bg-[#2d161b] text-[#9c495e] dark:text-pink-200 border border-[#e8ced5] dark:border-[#3d2026] px-5 py-2 rounded-full text-sm font-bold hover:bg-pink-50 transition-colors">
+                    Cardio
+                </button>
+<button class="bg-white dark:bg-[#2d161b] text-[#9c495e] dark:text-pink-200 border border-[#e8ced5] dark:border-[#3d2026] px-5 py-2 rounded-full text-sm font-bold hover:bg-pink-50 transition-colors">
+                    Strength
+                </button>
+<button class="bg-white dark:bg-[#2d161b] text-[#9c495e] dark:text-pink-200 border border-[#e8ced5] dark:border-[#3d2026] px-5 py-2 rounded-full text-sm font-bold hover:bg-pink-50 transition-colors">
+                    Phục hồi
+                </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<div class="workout-card bg-white dark:bg-[#2d161b] border border-[#e8ced5] dark:border-[#3d2026] rounded-2xl overflow-hidden group">
+<div class="h-40 bg-cover bg-center relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCR4cro45A2WiEe1Vb2RsxJQuiuqqjRRSlJJtN8X4WACaMmxN90uLkMJZdM5OTAVwmWsstp23BqJFsyAWD90U4QK3VKJR19fOQ3wAWd806Bb7iYDCeCB6do-iitZO7ibCllnR3rQsf0JAbhSz4QFZQ8VkMKuQGAOVua7u8FBlf698tb3cfa5G5dq7DKbly9LkhR2W1WdntFkbb7nbt40-QYKg4q9Wvt86qaQHlPWN_pB7mE8f6lSXuGUpPAb_t0V0U9TrLYo6tgXUYG");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute top-4 left-4 bg-pink-500 text-white text-[10px] font-bold px-2 py-1 rounded">YOGA</span>
+<div class="absolute bottom-4 left-4 text-white">
+<p class="text-lg font-bold">Chào buổi sáng Năng lượng</p>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-1 text-[#9c495e] dark:text-pink-300">
+<span class="material-symbols-outlined text-sm">exercise</span>
+<span class="text-xs font-medium">12 bài tập</span>
+</div>
+<div class="flex items-center gap-1 text-[#9c495e] dark:text-pink-300">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs font-medium">45 phút</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-pink-50 dark:border-pink-900/20">
+<div class="flex -space-x-2">
+<div class="size-7 rounded-full border-2 border-white bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQ0ZeFLdDv-1JIfRpNp466EjQPKntBR6EoioQEvD5dh1ANI2fokTWaqb7e1aT6GtX7r3DZJNZrgykEQfqFVoJristmbvZsLKBOchF1ja1Ikd-f_X0mhXsVvn7OvgVmtJIgLpJchUtsP8GEJkM7OaSr0bOnzYbrGpSb8anvGsE0KEr9s8vvubDQtoSRReea_Jw-n8fea_c0h-5I4l185dN3vL2tulNFTzR4MzI-CY3FqQnaUH2s4yL-2xbMlFXVBAGcbxg3cMNzCRJ8");'></div>
+<div class="size-7 rounded-full border-2 border-white bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAZ-kYdchkcgzgUYMwqQCmsubVU1kBq_JjyxUZk7zAA5qwHcicXUwl6LuFocUhqkA69NjRSn0Zy6-ouC8OxDsY4U1WWBPECrHJlyHW9Oqek9PkYgWvFCpmge2IMIoDBr8St6TRDb5UMO22WpSxIOi1kxedfKG9KFykYK6JhMv14U0qMrKBU-iHU1Ih8p3QXxXgZUbwe-yu2vdRI0qDtsjQq_P4MPOJTohvg5BU7yvfzpDVgcjpcSxHDIOF7oe7Tyyktu2KAiFWCQL-j");'></div>
+<div class="size-7 rounded-full border-2 border-white bg-pink-100 flex items-center justify-center text-[8px] font-bold text-primary">+8</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-[#9c495e] hover:text-primary transition-colors">
+<span class="material-symbols-outlined">drag_indicator</span>
+</button>
+<button class="bg-pink-50 text-primary px-3 py-1 rounded-lg text-xs font-bold hover:bg-primary hover:text-white transition-all">Chi tiết</button>
+</div>
+</div>
+</div>
+</div>
+<div class="workout-card bg-white dark:bg-[#2d161b] border border-[#e8ced5] dark:border-[#3d2026] rounded-2xl overflow-hidden group">
+<div class="h-40 bg-cover bg-center relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBeUu5IDa6mBMdiW8x0qC2_V7_Z_Ahdz4D28dW5-eOwLhv-quhPKujHpeHjyOaROKfeTsuyWiJDYeK5_mPaV6n82wPkxmkfnml-1bZ2i5NotDRJkuSFNhH5WJg-F6_FH_rK8Q_yv8baRN_pIx2J30SiyOrV2bny3q4Y9wp5_u7vxitOuvTk8GD8rYG2uWnIKhxTE5IVjBRMBq0sRmQb1mUNet-BtFMkY7GP39y1VYBFGuKY1P3s1GJYFqVJsuFCmASOstt3EHaLyd0o");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded">STRENGTH</span>
+<div class="absolute bottom-4 left-4 text-white">
+<p class="text-lg font-bold">Thần hình S-Line Cơ bản</p>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-1 text-[#9c495e] dark:text-pink-300">
+<span class="material-symbols-outlined text-sm">exercise</span>
+<span class="text-xs font-medium">8 bài tập</span>
+</div>
+<div class="flex items-center gap-1 text-[#9c495e] dark:text-pink-300">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs font-medium">60 phút</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-pink-50 dark:border-pink-900/20">
+<div class="flex -space-x-2">
+<div class="size-7 rounded-full border-2 border-white bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnRLzK2fy6gKm1ub02Aj79K4wSg35K7UGKCLvyMIJXJCXaI5Y8CdRlhaSvy1KUzif3m67Cg0MldVVLD__GldEDvKWRc0F_4rssSuwIpR8M65XF1Hx0cN27WKexPUuD-tlVhI4gwNHK_UboMG5iqotqfxYFHz3mdc8ZwOG18RgJcfqAex1kWcwqhkI7TG-iBjfzw3ps8lPQdnl1MKmSirrZts2qFLlNPhgBKpgdp96G-rk32WmbEdnvZbJa35xov4ApUUKGyJ4Oj3nr");'></div>
+<div class="size-7 rounded-full border-2 border-white bg-pink-100 flex items-center justify-center text-[8px] font-bold text-primary">+12</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-[#9c495e] hover:text-primary transition-colors">
+<span class="material-symbols-outlined">drag_indicator</span>
+</button>
+<button class="bg-pink-50 text-primary px-3 py-1 rounded-lg text-xs font-bold hover:bg-primary hover:text-white transition-all">Chi tiết</button>
+</div>
+</div>
+</div>
+</div>
+<div class="workout-card bg-white dark:bg-[#2d161b] border border-[#e8ced5] dark:border-[#3d2026] rounded-2xl overflow-hidden group">
+<div class="h-40 bg-cover bg-center relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDo7b9o-Nd0eYWinETZ18ewLNuMCpc9IyVFtfKWCgGSfKbMyA9SMJUl0SKKOjVy9zA5HXw1QRgydEupOVA6TTiLYFrDaNEcEg4q3-BCJNE9Ssx5c-lwwqOVR1CQKqX1eWEyVpBxD4FU8rI0ZgJEsbIdDRCbT9KMxvv4qjXEYpie7p4JzYMGZEuEvOFTwosyqv-_q_2tIpTvdSCCq_Jxmtqboonb0hFCpFTQnMw-uvFI-va3rrObhRaR3suMuy4xqByOZaqDy7Q9IX14");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded">CARDIO</span>
+<div class="absolute bottom-4 left-4 text-white">
+<p class="text-lg font-bold">Đốt mỡ Thần tốc HIIT</p>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center gap-1 text-[#9c495e] dark:text-pink-300">
+<span class="material-symbols-outlined text-sm">exercise</span>
+<span class="text-xs font-medium">6 bài tập</span>
+</div>
+<div class="flex items-center gap-1 text-[#9c495e] dark:text-pink-300">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs font-medium">30 phút</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-pink-50 dark:border-pink-900/20">
+<div class="flex -space-x-2">
+<div class="size-7 rounded-full border-2 border-white bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjFa8AsMlkU0zcgRMWTa7c3LhMAN3NPVNxevrKZFqbNgV_2JQUifkccWmfAKOCofv3kyfbozYISR6Hz4Ot2HK45KUQdW7PHq9QFs9FP9d9zbEEQ9XwqyIAbHMqg4Fyliz6gtYpRdWBb0V1Zs2Ymy4j0r4hhB-Ll46iq2cV3X6dAnjg4LoW_m_JSoNMfw4qEX16hNwUFzARf5srkUhWwcyFDBt9dnLbO6N86JkKDxYIg-5mI5xheY-tYPCEz8Vs9QGklc1sPOGRanIu");'></div>
+<div class="size-7 rounded-full border-2 border-white bg-pink-100 flex items-center justify-center text-[8px] font-bold text-primary">+20</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-[#9c495e] hover:text-primary transition-colors">
+<span class="material-symbols-outlined">drag_indicator</span>
+</button>
+<button class="bg-pink-50 text-primary px-3 py-1 rounded-lg text-xs font-bold hover:bg-primary hover:text-white transition-all">Chi tiết</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-xl font-bold text-[#1c0d11] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">drag_pan</span>
+                        Tùy chỉnh giáo án nhanh
+                    </h2>
+<p class="text-xs text-[#9c495e] dark:text-pink-300 italic">Kéo thả các bài tập để thay đổi thứ tự</p>
+</div>
+<div class="bg-white dark:bg-[#2d161b] rounded-2xl border border-dashed border-primary/30 p-6">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-4 p-4 bg-pink-50/50 dark:bg-primary/5 border border-primary/10 rounded-xl cursor-move hover:bg-pink-50 transition-colors">
+<span class="material-symbols-outlined text-[#9c495e]">drag_indicator</span>
+<div class="size-12 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACkyN0Tw0tYvOIDqu8jJp-aVV_6z-qWro2VgADEIaEjJxifSirKeu63BUrFpAybZVr07gpZ3fTJPt8YJ7OErEtEm9Ib68afAx9DNIFhbG4zywvopuNkC4vGdeHTPWExN4hN0Gs8cFYq6EneJhzb67iEBsle6Q5B_Vbyw8uQdyzlCavL6FkqQCIn2XcPkNtCvEeVssmh6CQFhBzSK-1OLCbSPKAzS3X7VCVRt9uy6iJ33jR3JnpjYWT9IW3n9GADQg6Xt-AUhFZ9wDq");'></div>
+<div class="flex-1">
+<p class="font-bold text-sm">Khởi động: Xoay các khớp</p>
+<p class="text-[10px] text-[#9c495e]">3 phút • Thư giãn</p>
+</div>
+<span class="material-symbols-outlined text-primary text-xl fill-heart">favorite</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-pink-50/50 dark:bg-primary/5 border border-primary/10 rounded-xl cursor-move hover:bg-pink-50 transition-colors">
+<span class="material-symbols-outlined text-[#9c495e]">drag_indicator</span>
+<div class="size-12 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCP5K-rQwrVItaFuhVYFRhqOP6TddM_FT9hiJaFb-V2jk-sU5tG-tgOsiGnDdN2yPR80L5QJyF3Yx7DZ2ABHenVVozMHLlBHbfBIRHgBix4l-fyWMXHGJloYiV2Zr8zilak9HfYAnEqZrOrRfjE9WRDWMwd1xPoIcBD2vjCtSuqfMW3kyk1w-V-H46ZLyDjWjNzBBAYS-SUDOtqxG_gzIrHF_IH8jO1QSvV5Ty7p971Yrx9Q0FFLiBNtLvAaFUsJ3fCa0Yrrzqut7P9");'></div>
+<div class="flex-1">
+<p class="font-bold text-sm">Squat tạ ấm (Kettlebell Squat)</p>
+<p class="text-[10px] text-[#9c495e]">4 hiệp • 12 lần</p>
+</div>
+<span class="material-symbols-outlined text-primary text-xl">favorite</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-pink-50/50 dark:bg-primary/5 border border-primary/10 rounded-xl cursor-move hover:bg-pink-50 transition-colors">
+<span class="material-symbols-outlined text-[#9c495e]">drag_indicator</span>
+<div class="size-12 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBoJD2s81-oXlfk4Z87xR0GPjGzBVnLnvKhuAIJTkJkTP9q0Nh3dIU4fzRIn-5zLgggb92gffSicWpM297EzqMFcz4gPfcyrJSIqlyCfGqzkGwmnzo9xwtJSneZpA5AxWOR6RrUXNmxM1mOYGiQ0EegWP199bDiDqu4TGhtQ-8wgl7Zx1hBzgy3r6wzA7phdtHlqcxycXQ5UvsRsqgrw2oKj1WMolD0TcVJuDiZvlYj-oT-S9jN18NH1OHjoUeBI6P7JWpHb0oc87-");'></div>
+<div class="flex-1">
+<p class="font-bold text-sm">Plank cao (High Plank)</p>
+<p class="text-[10px] text-[#9c495e]">3 hiệp • 60 giây</p>
+</div>
+<span class="material-symbols-outlined text-primary text-xl fill-heart">favorite</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 p-5 bg-gradient-to-r from-primary/10 to-pink-50 dark:to-primary/20 rounded-2xl border border-primary/20 flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">lightbulb</span>
+<div>
+<p class="text-sm font-bold text-primary mb-1">Mẹo huấn luyện</p>
+<p class="text-xs text-[#9c495e] dark:text-pink-100 leading-relaxed">Luôn cập nhật giáo án mới mỗi 2 tuần để giữ cho học viên cảm thấy hứng thú và không bị rơi vào trạng thái "plateau". Một giáo án có hình ảnh minh họa rõ ràng sẽ giúp họ tự tập luyện tại nhà tốt hơn!</p>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

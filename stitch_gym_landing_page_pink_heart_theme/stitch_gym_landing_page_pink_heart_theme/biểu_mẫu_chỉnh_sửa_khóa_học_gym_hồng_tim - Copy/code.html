@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Biểu Mẫu Chỉnh Sửa Khóa Học Gym Hồng Tim</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f42559",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#221014",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.bg-overlay {
+    background-color: rgba(34, 16, 20, 0.6);
+    backdrop-filter: blur(4px)
+    }
+select {
+    appearance: none;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDnT7G4-1fEqhIiPFdal5NHiDW8MSJ35v6Bv_o5YZZY-E5Guu097Ck4bxvdPg8iTUpKxr7wzUPfTiwusObMXPFgbG8Q2FrMhjPVspGxGf6x1w9fbA8GmBmgONctlEGmxi3FXIwA_VDlJU_s8LGPd9otFmc2w_o-hDzb593W33lBcYgMdHzuPdAQFjgvsl8BX5nE1IJAH1SLMHwnbMmI6YceV_yaHIIO3lLQIrs5V4QRAOi6KZAzj8VUU_lDUx25dFiDktvIDKnG5mXN);
+    background-repeat: no-repeat;
+    background-position: right 1rem center
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen">
+<!-- Backdrop/Overlay representing the Admin Dashboard background -->
+<div class="fixed inset-0 z-0 bg-background-light dark:bg-background-dark p-10">
+<div class="max-w-7xl mx-auto opacity-20 pointer-events-none">
+<h1 class="text-4xl font-bold mb-8">Trang Quản Trị Hệ Thống</h1>
+<div class="grid grid-cols-3 gap-6">
+<div class="h-32 bg-gray-300 dark:bg-gray-700 rounded-xl"></div>
+<div class="h-32 bg-gray-300 dark:bg-gray-700 rounded-xl"></div>
+<div class="h-32 bg-gray-300 dark:bg-gray-700 rounded-xl"></div>
+</div>
+<div class="mt-10 h-96 bg-gray-200 dark:bg-gray-800 rounded-xl"></div>
+</div>
+</div>
+<!-- Modal Pop-up -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay">
+<div class="bg-white dark:bg-[#2d1b1f] w-full max-w-[800px] rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+<!-- Header -->
+<div class="px-8 py-6 border-b border-[#e8ced5] dark:border-[#4d2c35] flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h2 class="text-[#1c0d11] dark:text-white text-2xl font-black leading-tight tracking-tight">Chỉnh Sửa Khóa Học Gym Hồng Tim</h2>
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<p class="text-[#9c495e] dark:text-[#cc889a] text-sm font-normal">Cập nhật thông tin chi tiết cho khóa học của bạn một cách nhanh chóng</p>
+</div>
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-background-light dark:hover:bg-[#3d252a] text-[#1c0d11] dark:text-white transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Scrollable Form Content -->
+<div class="overflow-y-auto px-8 py-6">
+<form class="space-y-6">
+<!-- Section: Basic Info -->
+<div class="grid grid-cols-1 gap-6">
+<label class="flex flex-col w-full">
+<p class="text-[#1c0d11] dark:text-[#f8f5f6] text-base font-semibold pb-2">Tên khóa học</p>
+<input class="form-input w-full rounded-lg text-[#1c0d11] dark:text-white border border-[#e8ced5] dark:border-[#4d2c35] bg-white dark:bg-[#3d252a] focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4 transition-all" placeholder="Ví dụ: Giảm cân thần tốc 30 ngày" type="text" value="Khóa học Gym Hồng Tim Cao Cấp"/>
+</label>
+<label class="flex flex-col w-full">
+<p class="text-[#1c0d11] dark:text-[#f8f5f6] text-base font-semibold pb-2">Mô tả chi tiết</p>
+<textarea class="form-input w-full rounded-lg text-[#1c0d11] dark:text-white border border-[#e8ced5] dark:border-[#4d2c35] bg-white dark:bg-[#3d252a] focus:ring-2 focus:ring-primary focus:border-primary min-h-[120px] p-4 text-base transition-all">Lộ trình tập luyện chuyên biệt được thiết kế để tối ưu hóa quá trình đốt mỡ và tăng cơ. Phù hợp cho cả người mới bắt đầu và người đã có kinh nghiệm.</textarea>
+</label>
+</div>
+<!-- Section: Price & Duration -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col">
+<p class="text-[#1c0d11] dark:text-[#f8f5f6] text-base font-semibold pb-2">Giá tiền (VNĐ)</p>
+<div class="relative">
+<input class="form-input w-full rounded-lg text-[#1c0d11] dark:text-white border border-[#e8ced5] dark:border-[#4d2c35] bg-white dark:bg-[#3d252a] focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4" type="text" value="5,500,000"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-[#9c495e] font-medium">VNĐ</span>
+</div>
+</label>
+<label class="flex flex-col">
+<p class="text-[#1c0d11] dark:text-[#f8f5f6] text-base font-semibold pb-2">Thời lượng</p>
+<div class="relative">
+<input class="form-input w-full rounded-lg text-[#1c0d11] dark:text-white border border-[#e8ced5] dark:border-[#4d2c35] bg-white dark:bg-[#3d252a] focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4" type="text" value="12 tuần"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#9c495e]">schedule</span>
+</div>
+</label>
+</div>
+<!-- Section: Coach & Image -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col">
+<p class="text-[#1c0d11] dark:text-[#f8f5f6] text-base font-semibold pb-2">Huấn luyện viên phụ trách</p>
+<select class="form-input w-full rounded-lg text-[#1c0d11] dark:text-white border border-[#e8ced5] dark:border-[#4d2c35] bg-white dark:bg-[#3d252a] focus:ring-2 focus:ring-primary focus:border-primary h-12 px-4 appearance-none">
+<option value="1">Nguyễn Văn A - Master Coach</option>
+<option selected="" value="2">Trần Thị B - Senior Trainer</option>
+<option value="3">Lê Văn C - Nutrition Specialist</option>
+</select>
+</label>
+<div class="flex flex-col">
+<p class="text-[#1c0d11] dark:text-[#f8f5f6] text-base font-semibold pb-2">Hình ảnh đại diện mới</p>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center border border-[#e8ced5] dark:border-[#4d2c35]" data-alt="Hình ảnh phòng gym hiện đại" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyXRmBsdi9YZDwNa8vtyvl4h1UfXHg812auoE_VThBAVA6sSeV18p41KePVdmcWB2TJb7yyviIWAsUU4LXaW_KZ6uDNSgJerdqJqaTnksDgXKa1SyNKofZvUFezxNlXMasokv_bUAujs1Cql26Xpz74cHws8Io0o4zxK_aGd-6KJoROkTPWj-Upu-eoo0yGNDAS3XGWHr_w6OkXmoGPfQFQ2MXxR6bNIsg6ay_NdZ7H2B4SAxyv57_gc4DCm7_cYz-gNEWOv9Qzz0Q')"></div>
+<label class="flex-1 cursor-pointer">
+<div class="flex items-center justify-center w-full h-12 border-2 border-dashed border-[#e8ced5] dark:border-[#4d2c35] rounded-lg hover:border-primary dark:hover:border-primary transition-all group">
+<div class="flex items-center gap-2 text-[#9c495e] dark:text-[#cc889a] group-hover:text-primary">
+<span class="material-symbols-outlined text-sm">cloud_upload</span>
+<span class="text-sm font-medium">Thay đổi ảnh</span>
+</div>
+</div>
+<input class="hidden" type="file"/>
+</label>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Footer -->
+<div class="px-8 py-6 bg-[#fcf8f9] dark:bg-[#221014] border-t border-[#e8ced5] dark:border-[#4d2c35] flex justify-end gap-3">
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-gray-200 dark:bg-[#3d252a] text-[#1c0d11] dark:text-white text-base font-bold transition-all hover:bg-gray-300 dark:hover:bg-[#4d2c35]">
+                    Hủy bỏ
+                </button>
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-primary text-white text-base font-bold transition-all hover:bg-[#d41c4a] shadow-lg shadow-primary/20">
+                    Lưu thay đổi
+                </button>
+</div>
+</div>
+</div>
+</body></html>
