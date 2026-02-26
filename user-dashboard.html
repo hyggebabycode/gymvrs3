@@ -71,7 +71,7 @@
                 class="material-symbols-outlined text-4xl font-bold fill-heart"
                 >favorite</span
               >
-              <h1 class="text-2xl font-black tracking-tight">FitHeart</h1>
+              <h1 class="text-2xl font-black tracking-tight">GymHeart</h1>
             </div>
             <nav class="hidden md:flex items-center gap-8">
               <a
@@ -143,6 +143,16 @@
                 <span class="material-symbols-outlined">notifications</span>
                 <span
                   class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-white"
+                ></span>
+              </button>
+              <button
+                onclick="openCartModal()"
+                class="p-2 rounded-full bg-pink-50 text-primary hover:bg-pink-100 transition-colors relative"
+              >
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <span
+                  id="cart-count"
+                  class="hidden absolute -top-1 -right-1 min-w-5 h-5 bg-primary text-white rounded-full text-xs font-bold flex items-center justify-center px-1"
                 ></span>
               </button>
               <div
@@ -580,17 +590,23 @@
           <!-- Course Tabs -->
           <div class="flex gap-4 mb-6 border-b border-pink-100">
             <button
+              id="tab-active"
+              onclick="switchCourseTab('active')"
               class="px-6 py-3 font-bold text-primary border-b-2 border-primary"
             >
               Đang học
             </button>
             <button
-              class="px-6 py-3 font-medium text-[#9c495e] hover:text-primary"
+              id="tab-completed"
+              onclick="switchCourseTab('completed')"
+              class="px-6 py-3 font-medium text-[#9c495e] hover:text-primary border-b-2 border-transparent"
             >
               Đã hoàn thành
             </button>
             <button
-              class="px-6 py-3 font-medium text-[#9c495e] hover:text-primary"
+              id="tab-pending"
+              onclick="switchCourseTab('pending')"
+              class="px-6 py-3 font-medium text-[#9c495e] hover:text-primary border-b-2 border-transparent"
             >
               Chờ thanh toán
             </button>
@@ -645,6 +661,7 @@
                 email@example.com
               </p>
               <button
+                onclick="enableEditProfile()"
                 class="w-full px-4 py-2 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
               >
                 Chỉnh sửa hồ sơ
@@ -656,7 +673,98 @@
               class="lg:col-span-2 bg-white rounded-xl border border-pink-100 shadow-sm p-6"
             >
               <h4 class="text-lg font-bold mb-4">Thông tin cá nhân</h4>
-              <div class="space-y-4">
+
+              <!-- View Mode (Read-only) -->
+              <div id="profile-view-mode" class="space-y-4">
+                <div>
+                  <label class="text-sm font-semibold text-[#9c495e] mb-1 block"
+                    >Họ và tên</label
+                  >
+                  <p
+                    id="display-fullname"
+                    class="text-[#1c0d11] font-medium p-3 bg-pink-50 rounded-lg"
+                  >
+                    -
+                  </p>
+                </div>
+                <div>
+                  <label class="text-sm font-semibold text-[#9c495e] mb-1 block"
+                    >Email</label
+                  >
+                  <p
+                    id="display-email"
+                    class="text-[#1c0d11] font-medium p-3 bg-pink-50 rounded-lg"
+                  >
+                    -
+                  </p>
+                </div>
+                <div>
+                  <label class="text-sm font-semibold text-[#9c495e] mb-1 block"
+                    >Số điện thoại</label
+                  >
+                  <p
+                    id="display-phone"
+                    class="text-[#1c0d11] font-medium p-3 bg-pink-50 rounded-lg"
+                  >
+                    -
+                  </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      class="text-sm font-semibold text-[#9c495e] mb-1 block"
+                      >Ngày sinh</label
+                    >
+                    <p
+                      id="display-dob"
+                      class="text-[#1c0d11] font-medium p-3 bg-pink-50 rounded-lg"
+                    >
+                      -
+                    </p>
+                  </div>
+                  <div>
+                    <label
+                      class="text-sm font-semibold text-[#9c495e] mb-1 block"
+                      >Giới tính</label
+                    >
+                    <p
+                      id="display-gender"
+                      class="text-[#1c0d11] font-medium p-3 bg-pink-50 rounded-lg"
+                    >
+                      -
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Edit Mode (Form) -->
+              <div id="profile-edit-mode" class="space-y-4 hidden">
+                <!-- Avatar Preview in Edit Mode -->
+                <div class="bg-pink-50 p-4 rounded-lg">
+                  <label class="text-sm font-semibold text-[#9c495e] mb-2 block"
+                    >Ảnh đại diện</label
+                  >
+                  <div class="flex items-center gap-4">
+                    <div
+                      id="edit-avatar-preview"
+                      class="size-20 rounded-full bg-cover bg-center border-4 border-primary/20"
+                    ></div>
+                    <div class="flex-1">
+                      <input
+                        type="url"
+                        id="input-avatar"
+                        placeholder="Nhập URL ảnh đại diện..."
+                        class="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20 mb-2"
+                        oninput="previewAvatar()"
+                      />
+                      <p class="text-xs text-[#9c495e]">
+                        Nhập link ảnh từ Internet (ví dụ:
+                        https://example.com/avatar.jpg)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <div>
                   <label class="text-sm font-semibold text-[#9c495e] mb-1 block"
                     >Họ và tên</label
@@ -674,7 +782,7 @@
                   <input
                     type="email"
                     id="input-email"
-                    class="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20"
+                    class="w-full p-3 border border-pink-200 rounded-lg bg-gray-100 cursor-not-allowed"
                     disabled
                   />
                 </div>
@@ -715,12 +823,20 @@
                     </select>
                   </div>
                 </div>
-                <button
-                  onclick="updateProfile()"
-                  class="w-full px-6 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
-                >
-                  Lưu thay đổi
-                </button>
+                <div class="flex gap-3">
+                  <button
+                    onclick="cancelEditProfile()"
+                    class="flex-1 px-6 py-3 border-2 border-pink-200 text-[#9c495e] rounded-lg font-bold hover:bg-pink-50 transition-all"
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    onclick="updateProfile()"
+                    class="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+                  >
+                    Lưu thay đổi
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -763,51 +879,183 @@
                 >
                 Thông tin thanh toán
               </h3>
+
               <div class="space-y-4">
+                <!-- Payment Method Selection -->
                 <div>
                   <label
-                    class="text-sm font-semibold text-[#9c495e] mb-2 block"
+                    class="text-sm font-semibold text-[#9c495e] mb-3 block"
                   >
-                    Số tiền thanh toán
+                    Chọn phương thức thanh toán
                   </label>
-                  <input
-                    type="number"
-                    id="payment-amount"
-                    placeholder="Nhập số tiền..."
-                    class="w-full p-4 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary text-lg"
-                  />
-                  <p class="text-xs text-[#9c495e] mt-1">
-                    Số tiền cần thanh toán:
-                    <span
-                      id="required-amount"
-                      class="font-bold text-primary"
-                    ></span>
-                  </p>
+                  <div class="grid grid-cols-2 gap-3">
+                    <button
+                      id="btn-qr-payment"
+                      onclick="selectPaymentMethod('qr')"
+                      class="p-4 border-2 border-pink-200 rounded-lg hover:border-primary transition-all text-center group"
+                    >
+                      <span
+                        class="material-symbols-outlined text-4xl text-pink-300 group-hover:text-primary mb-2"
+                        >qr_code_scanner</span
+                      >
+                      <p class="font-bold text-[#1c0d11]">QR Code</p>
+                      <p class="text-xs text-[#9c495e] mt-1">
+                        Quét mã thanh toán
+                      </p>
+                    </button>
+                    <button
+                      id="btn-card-payment"
+                      onclick="selectPaymentMethod('card')"
+                      class="p-4 border-2 border-pink-200 rounded-lg hover:border-primary transition-all text-center group"
+                    >
+                      <span
+                        class="material-symbols-outlined text-4xl text-pink-300 group-hover:text-primary mb-2"
+                        >credit_card</span
+                      >
+                      <p class="font-bold text-[#1c0d11]">Thẻ tín dụng</p>
+                      <p class="text-xs text-[#9c495e] mt-1">
+                        Visa, Master, JCB
+                      </p>
+                    </button>
+                  </div>
                 </div>
 
-                <div class="bg-pink-50 p-4 rounded-lg">
-                  <p class="text-sm text-[#9c495e]">
+                <!-- QR Payment Section -->
+                <div id="qr-payment-section" class="hidden">
+                  <div class="bg-pink-50 p-6 rounded-lg text-center">
+                    <p class="text-sm font-semibold text-[#1c0d11] mb-4">
+                      Quét mã QR để thanh toán
+                    </p>
+                    <!-- Mock QR Code -->
+                    <div class="bg-white p-4 rounded-lg inline-block mb-4">
+                      <img
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=GymHeart-Payment"
+                        alt="QR Code"
+                        class="w-48 h-48"
+                      />
+                    </div>
+                    <p class="text-sm text-[#9c495e] mb-2">
+                      Số tiền:
+                      <span
+                        id="qr-amount"
+                        class="font-bold text-primary"
+                      ></span>
+                    </p>
+                    <p class="text-xs text-[#9c495e]">
+                      Sử dụng ứng dụng ngân hàng để quét mã QR
+                    </p>
+                  </div>
+                  <div class="flex gap-3 mt-4">
+                    <button
+                      onclick="showSection('available-courses')"
+                      class="flex-1 px-6 py-3 border-2 border-pink-200 text-[#9c495e] rounded-lg font-bold hover:bg-pink-50 transition-all"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      onclick="processPayment()"
+                      class="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+                    >
+                      Xác nhận đã thanh toán
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Card Payment Section -->
+                <div id="card-payment-section" class="hidden">
+                  <div class="space-y-4">
+                    <div>
+                      <label
+                        class="text-sm font-semibold text-[#9c495e] mb-2 block"
+                      >
+                        Số thẻ
+                      </label>
+                      <input
+                        type="text"
+                        id="card-number"
+                        placeholder="1234 5678 9012 3456"
+                        maxlength="19"
+                        class="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                      />
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                      <div>
+                        <label
+                          class="text-sm font-semibold text-[#9c495e] mb-2 block"
+                        >
+                          Ngày hết hạn
+                        </label>
+                        <input
+                          type="text"
+                          id="card-expiry"
+                          placeholder="MM/YY"
+                          maxlength="5"
+                          class="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="text-sm font-semibold text-[#9c495e] mb-2 block"
+                        >
+                          CVV
+                        </label>
+                        <input
+                          type="text"
+                          id="card-cvv"
+                          placeholder="123"
+                          maxlength="3"
+                          class="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label
+                        class="text-sm font-semibold text-[#9c495e] mb-2 block"
+                      >
+                        Tên chủ thẻ
+                      </label>
+                      <input
+                        type="text"
+                        id="card-holder"
+                        placeholder="NGUYEN VAN A"
+                        class="w-full p-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary uppercase"
+                      />
+                    </div>
+                    <div class="bg-pink-50 p-4 rounded-lg">
+                      <p class="text-sm text-[#9c495e]">
+                        Số tiền thanh toán:
+                        <span
+                          id="card-amount"
+                          class="font-bold text-primary"
+                        ></span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex gap-3 mt-4">
+                    <button
+                      onclick="showSection('available-courses')"
+                      class="flex-1 px-6 py-3 border-2 border-pink-200 text-[#9c495e] rounded-lg font-bold hover:bg-pink-50 transition-all"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      onclick="processPayment()"
+                      class="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+                    >
+                      Thanh toán
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Info notice (shown when no method selected) -->
+                <div id="payment-notice" class="bg-pink-50 p-4 rounded-lg">
+                  <p class="text-sm text-[#9c495e] text-center">
                     <span
                       class="material-symbols-outlined text-sm align-middle text-primary"
                       >info</span
                     >
-                    Vui lòng nhập đúng số tiền để hoàn tất đăng ký khóa học.
+                    Vui lòng chọn phương thức thanh toán để tiếp tục
                   </p>
-                </div>
-
-                <div class="flex gap-3">
-                  <button
-                    onclick="showSection('available-courses')"
-                    class="flex-1 px-6 py-3 border-2 border-pink-200 text-[#9c495e] rounded-lg font-bold hover:bg-pink-50 transition-all"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    onclick="processPayment()"
-                    class="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
-                  >
-                    Thanh toán
-                  </button>
                 </div>
               </div>
             </div>
@@ -829,25 +1077,89 @@
       }
 
       // Update user info in UI
+      const defaultAvatar =
+        "https://ui-avatars.com/api/?name=" +
+        encodeURIComponent(currentUser.full_name) +
+        "&background=ec4899&color=fff&size=200";
+      const userAvatar = currentUser.avatar_url || defaultAvatar;
+
       document.getElementById("welcome-name").textContent =
         currentUser.full_name.split(" ")[0];
       document.getElementById("user-avatar").style.backgroundImage =
-        `url('${currentUser.avatar_url}')`;
+        `url('${userAvatar}')`;
       document.getElementById("profile-avatar").style.backgroundImage =
-        `url('${currentUser.avatar_url}')`;
+        `url('${userAvatar}')`;
       document.getElementById("profile-name").textContent =
         currentUser.full_name;
       document.getElementById("profile-email").textContent = currentUser.email;
 
-      // Populate profile form
-      document.getElementById("input-fullname").value =
-        currentUser.full_name || "";
-      document.getElementById("input-email").value = currentUser.email || "";
-      document.getElementById("input-phone").value = currentUser.phone || "";
-      document.getElementById("input-dob").value =
-        currentUser.date_of_birth || "";
-      document.getElementById("input-gender").value =
-        currentUser.gender || "Nam";
+      // Populate profile form (both view and edit mode)
+      populateProfileData();
+
+      function populateProfileData() {
+        // Populate view mode (display)
+        document.getElementById("display-fullname").textContent =
+          currentUser.full_name || "-";
+        document.getElementById("display-email").textContent =
+          currentUser.email || "-";
+        document.getElementById("display-phone").textContent =
+          currentUser.phone || "-";
+        document.getElementById("display-dob").textContent =
+          currentUser.date_of_birth
+            ? new Date(currentUser.date_of_birth).toLocaleDateString("vi-VN")
+            : "-";
+        document.getElementById("display-gender").textContent =
+          currentUser.gender || "-";
+
+        // Populate edit mode (inputs)
+        document.getElementById("input-fullname").value =
+          currentUser.full_name || "";
+        document.getElementById("input-email").value = currentUser.email || "";
+        document.getElementById("input-phone").value = currentUser.phone || "";
+        document.getElementById("input-dob").value =
+          currentUser.date_of_birth || "";
+        document.getElementById("input-gender").value =
+          currentUser.gender || "Nam";
+        document.getElementById("input-avatar").value =
+          currentUser.avatar_url || "";
+
+        // Update avatar preview in edit mode
+        const defaultAvatar =
+          "https://ui-avatars.com/api/?name=" +
+          encodeURIComponent(currentUser.full_name) +
+          "&background=ec4899&color=fff&size=200";
+        document.getElementById("edit-avatar-preview").style.backgroundImage =
+          `url('${currentUser.avatar_url || defaultAvatar}')`;
+      }
+
+      function previewAvatar() {
+        const avatarUrl = document.getElementById("input-avatar").value;
+        const defaultAvatar =
+          "https://ui-avatars.com/api/?name=" +
+          encodeURIComponent(currentUser.full_name) +
+          "&background=ec4899&color=fff&size=200";
+
+        if (avatarUrl && avatarUrl.trim() !== "") {
+          document.getElementById("edit-avatar-preview").style.backgroundImage =
+            `url('${avatarUrl}')`;
+        } else {
+          document.getElementById("edit-avatar-preview").style.backgroundImage =
+            `url('${defaultAvatar}')`;
+        }
+      }
+
+      function enableEditProfile() {
+        document.getElementById("profile-view-mode").classList.add("hidden");
+        document.getElementById("profile-edit-mode").classList.remove("hidden");
+      }
+
+      function cancelEditProfile() {
+        // Reset form to original values
+        populateProfileData();
+        // Switch back to view mode
+        document.getElementById("profile-edit-mode").classList.add("hidden");
+        document.getElementById("profile-view-mode").classList.remove("hidden");
+      }
 
       // Show/Hide sections
       function showSection(section) {
@@ -859,6 +1171,18 @@
           .getElementById(`section-${section}`)
           .classList.remove("hidden");
         console.log("Section displayed:", `section-${section}`);
+
+        // Reset payment method when leaving payment section
+        if (section !== "payment" && selectedPaymentMethod !== null) {
+          selectedPaymentMethod = null;
+          // Clear card form
+          if (document.getElementById("card-number")) {
+            document.getElementById("card-number").value = "";
+            document.getElementById("card-expiry").value = "";
+            document.getElementById("card-cvv").value = "";
+            document.getElementById("card-holder").value = "";
+          }
+        }
 
         // Update active nav
         document.querySelectorAll("nav a").forEach((el) => {
@@ -988,12 +1312,21 @@
                     ${
                       !isEnrolled
                         ? `
-                    <button
-                      onclick="goToPayment('${course.id}')"
-                      class="w-full px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
-                    >
-                      Đăng ký ngay
-                    </button>
+                    <div class="flex gap-2">
+                      <button
+                        onclick="addToCart('${course.id}')"
+                        class="flex-1 px-3 py-2 bg-pink-50 text-primary border border-primary rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-1"
+                      >
+                        <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                        Thêm vào giỏ
+                      </button>
+                      <button
+                        onclick="goToPayment('${course.id}')"
+                        class="flex-1 px-3 py-2 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+                      >
+                        Đăng ký ngay
+                      </button>
+                    </div>
                     `
                         : `
                     <button
@@ -1343,12 +1676,21 @@
                         <span class="material-symbols-outlined text-sm">map</span>
                         Xem lộ trình học
                       </button>
-                      <button
-                        onclick="goToPayment('${course.id}')"
-                        class="w-full px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all"
-                      >
-                        Đăng ký ngay
-                      </button>
+                      <div class="flex gap-2">
+                        <button
+                          onclick="addToCart('${course.id}')"
+                          class="flex-1 px-3 py-2 bg-pink-50 text-primary border border-primary rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-1"
+                        >
+                          <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                          Thêm vào giỏ
+                        </button>
+                        <button
+                          onclick="goToPayment('${course.id}')"
+                          class="flex-1 px-3 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all"
+                        >
+                          Đăng ký ngay
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1363,6 +1705,9 @@
       async function goToPayment(courseId) {
         console.log("goToPayment called with courseId:", courseId);
         try {
+          // IMPORTANT: Clear any previous cart/course state first
+          pendingCourse = null;
+          
           // Get course details
           const { data: course } = await supabaseClient
             .from("courses")
@@ -1398,43 +1743,114 @@
             return;
           }
 
-          // Save pending course
+          // Save pending course (fresh object, no cart properties)
           pendingCourse = course;
+          console.log("Set pendingCourse to single course:", pendingCourse);
 
           // Display course info in payment page
           const courseInfo = document.getElementById("payment-course-info");
-          courseInfo.innerHTML = `
-            <div class="flex gap-4">
-              <div class="w-32 h-32 rounded-lg overflow-hidden">
-                <img src="${course.image_url || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200"}"
-                     alt="${course.course_name}"
-                     class="w-full h-full object-cover" />
-              </div>
-              <div class="flex-1">
-                <h4 class="font-bold text-lg mb-2">${course.course_name}</h4>
-                <div class="space-y-1 text-sm text-[#9c495e]">
-                  <p><span class="material-symbols-outlined text-xs align-middle">schedule</span> ${course.duration_weeks} tuần</p>
-                  <p><span class="material-symbols-outlined text-xs align-middle">people</span> ${course.current_students}/${course.max_students} học viên</p>
-                  <p class="text-lg font-black text-primary mt-2">
-                    ${new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(course.price)}
-                  </p>
+          
+          // Check if paying for cart (multiple courses) or single course
+          // Since we cleared pendingCourse and set it to course from DB, isCart should be undefined/false
+          if (pendingCourse.isCart) {
+            console.log("ERROR: pendingCourse still has isCart property! This should not happen.");
+            // This branch should NOT execute for single course payment
+            // Fetch all courses in cart
+            const { data: cartCourses } = await supabaseClient
+              .from("courses")
+              .select("*")
+              .in("id", pendingCourse.courseIds);
+
+            courseInfo.innerHTML = `
+              <div class="space-y-3">
+                <h4 class="font-bold text-lg mb-3">Thanh toán ${cartCourses.length} khóa học</h4>
+                ${cartCourses.map(c => `
+                  <div class="flex gap-3 p-3 bg-pink-50 rounded-lg">
+                    <img src="${c.image_url || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200"}"
+                         alt="${c.course_name}"
+                         class="w-16 h-16 object-cover rounded-lg" />
+                    <div class="flex-1">
+                      <h5 class="font-bold text-sm">${c.course_name}</h5>
+                      <p class="text-xs text-[#9c495e]">${c.duration}</p>
+                      <p class="text-sm font-bold text-primary mt-1">
+                        ${new Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(c.price)}
+                      </p>
+                    </div>
+                  </div>
+                `).join('')}
+                <div class="border-t-2 border-primary pt-3 mt-3">
+                  <div class="flex justify-between items-center">
+                    <span class="font-bold text-lg">Tổng cộng:</span>
+                    <span class="text-2xl font-black text-primary">
+                      ${new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(pendingCourse.amount)}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          `;
+            `;
 
-          // Set required amount
-          document.getElementById("required-amount").textContent =
-            new Intl.NumberFormat("vi-VN", {
+            // Set amount for payment methods
+            const formattedPrice = new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(pendingCourse.amount);
+
+            document.getElementById("qr-amount").textContent = formattedPrice;
+            document.getElementById("card-amount").textContent = formattedPrice;
+          } else {
+            // Single course payment
+            console.log("Rendering single course payment for:", course.course_name, "ID:", course.id);
+            courseInfo.innerHTML = `
+              <div class="flex gap-4">
+                <div class="w-32 h-32 rounded-lg overflow-hidden">
+                  <img src="${course.image_url || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200"}"
+                       alt="${course.course_name}"
+                       class="w-full h-full object-cover" />
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-lg mb-2">${course.course_name}</h4>
+                  <div class="space-y-1 text-sm text-[#9c495e]">
+                    <p><span class="material-symbols-outlined text-xs align-middle">schedule</span> ${course.duration_weeks} tuần</p>
+                    <p><span class="material-symbols-outlined text-xs align-middle">people</span> ${course.current_students}/${course.max_students} học viên</p>
+                    <p class="text-lg font-black text-primary mt-2">
+                      ${new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(course.price)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            // Set amount for both payment methods
+            const formattedPrice = new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
             }).format(course.price);
 
-          // Clear payment amount input
-          document.getElementById("payment-amount").value = "";
+            document.getElementById("qr-amount").textContent = formattedPrice;
+            document.getElementById("card-amount").textContent = formattedPrice;
+          }
+
+          // Reset payment method selection
+          document.getElementById("qr-payment-section").classList.add("hidden");
+          document
+            .getElementById("card-payment-section")
+            .classList.add("hidden");
+          document.getElementById("payment-notice").classList.remove("hidden");
+          document
+            .getElementById("btn-qr-payment")
+            .classList.remove("border-primary", "bg-pink-50");
+          document
+            .getElementById("btn-card-payment")
+            .classList.remove("border-primary", "bg-pink-50");
 
           // Show payment section
           console.log("About to show payment section");
@@ -1517,91 +1933,204 @@
         }
       }
 
+      let selectedPaymentMethod = null;
+
+      function selectPaymentMethod(method) {
+        selectedPaymentMethod = method;
+
+        // Hide all payment sections
+        document.getElementById("qr-payment-section").classList.add("hidden");
+        document.getElementById("card-payment-section").classList.add("hidden");
+        document.getElementById("payment-notice").classList.add("hidden");
+
+        // Reset button styles
+        document
+          .getElementById("btn-qr-payment")
+          .classList.remove("border-primary", "bg-pink-50");
+        document
+          .getElementById("btn-card-payment")
+          .classList.remove("border-primary", "bg-pink-50");
+
+        // Show selected payment section and highlight button
+        if (method === "qr") {
+          document
+            .getElementById("qr-payment-section")
+            .classList.remove("hidden");
+          document
+            .getElementById("btn-qr-payment")
+            .classList.add("border-primary", "bg-pink-50");
+        } else if (method === "card") {
+          document
+            .getElementById("card-payment-section")
+            .classList.remove("hidden");
+          document
+            .getElementById("btn-card-payment")
+            .classList.add("border-primary", "bg-pink-50");
+        }
+      }
+
       async function processPayment() {
         if (!pendingCourse) {
           alert("Không có khóa học nào được chọn!");
           return;
         }
 
-        const paymentAmount = parseFloat(
-          document.getElementById("payment-amount").value,
-        );
-
-        if (!paymentAmount || paymentAmount <= 0) {
-          alert("Vui lòng nhập số tiền hợp lệ!");
+        if (!selectedPaymentMethod) {
+          alert("Vui lòng chọn phương thức thanh toán!");
           return;
         }
 
-        if (paymentAmount !== pendingCourse.price) {
-          alert(
-            `Số tiền thanh toán không đúng! Vui lòng thanh toán đúng ${new Intl.NumberFormat(
-              "vi-VN",
-              {
-                style: "currency",
-                currency: "VND",
-              },
-            ).format(pendingCourse.price)}`,
-          );
-          return;
+        // Validate card info if paying by card
+        if (selectedPaymentMethod === "card") {
+          const cardNumber = document.getElementById("card-number").value;
+          const cardExpiry = document.getElementById("card-expiry").value;
+          const cardCvv = document.getElementById("card-cvv").value;
+          const cardHolder = document.getElementById("card-holder").value;
+
+          if (!cardNumber || !cardExpiry || !cardCvv || !cardHolder) {
+            alert("Vui lòng điền đầy đủ thông tin thẻ!");
+            return;
+          }
         }
+
+        const paymentAmount = pendingCourse.isCart ? pendingCourse.amount : pendingCourse.price;
+        
+        console.log("processPayment - pendingCourse:", pendingCourse);
+        console.log("processPayment - isCart:", pendingCourse.isCart);
+        console.log("processPayment - payment amount:", paymentAmount);
 
         try {
-          // Check if enrollment already exists (any status)
-          const { data: existingEnrollment } = await supabaseClient
-            .from("class_enrollments")
-            .select("*")
-            .eq("user_id", currentUser.id)
-            .eq("course_id", pendingCourse.id)
-            .single();
+          // Check if paying for cart (multiple courses)
+          if (pendingCourse.isCart) {
+            console.log("Processing CART payment for courses:", pendingCourse.courseIds);
+            // Enroll in all courses
+            let successCount = 0;
+            for (const courseId of pendingCourse.courseIds) {
+              try {
+                const { data: existingEnrollment } = await supabaseClient
+                  .from("class_enrollments")
+                  .select("*")
+                  .eq("user_id", currentUser.id)
+                  .eq("course_id", courseId)
+                  .single();
 
-          let enrollError;
+                if (existingEnrollment) {
+                  // Update existing enrollment
+                  await supabaseClient
+                    .from("class_enrollments")
+                    .update({
+                      enrollment_date: new Date().toISOString(),
+                      status: "active",
+                      payment_status: "paid",
+                      payment_method: selectedPaymentMethod,
+                      payment_date: new Date().toISOString(),
+                      notes: `Thanh toán qua ${selectedPaymentMethod === "qr" ? "QR Code" : "Thẻ tín dụng"}`,
+                    })
+                    .eq("user_id", currentUser.id)
+                    .eq("course_id", courseId);
+                } else {
+                  // Create new enrollment
+                  await supabaseClient
+                    .from("class_enrollments")
+                    .insert({
+                      user_id: currentUser.id,
+                      course_id: courseId,
+                      enrollment_date: new Date().toISOString(),
+                      status: "active",
+                      payment_status: "paid",
+                      payment_method: selectedPaymentMethod,
+                      payment_date: new Date().toISOString(),
+                      notes: `Thanh toán qua ${selectedPaymentMethod === "qr" ? "QR Code" : "Thẻ tín dụng"}`,
+                    });
+                }
 
-          if (existingEnrollment) {
-            // Update existing enrollment
-            const { error } = await supabaseClient
-              .from("class_enrollments")
-              .update({
-                enrollment_date: new Date().toISOString(),
-                status: "active",
-                payment_status: "paid",
-                payment_method: "cash",
-                payment_date: new Date().toISOString(),
-                notes: `Thanh toán ${paymentAmount.toLocaleString("vi-VN")}đ`,
-              })
-              .eq("user_id", currentUser.id)
-              .eq("course_id", pendingCourse.id);
+                // Update course student count
+                await syncCourseStudentCount(courseId);
+                successCount++;
+              } catch (error) {
+                console.error(`Error enrolling in course ${courseId}:`, error);
+              }
+            }
 
-            enrollError = error;
+            // Clear cart
+            shoppingCart = [];
+            localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+            updateCartCount();
+
+            alert(`✅ Thanh toán thành công! Bạn đã đăng ký ${successCount} khóa học.`);
           } else {
-            // Create new enrollment
-            const { error } = await supabaseClient
+            // Single course payment
+            console.log("Processing SINGLE course payment for:", pendingCourse.course_name, "ID:", pendingCourse.id);
+            const { data: existingEnrollment } = await supabaseClient
               .from("class_enrollments")
-              .insert({
-                user_id: currentUser.id,
-                course_id: pendingCourse.id,
-                enrollment_date: new Date().toISOString(),
-                status: "active",
-                payment_status: "paid",
-                payment_method: "cash",
-                payment_date: new Date().toISOString(),
-                notes: `Thanh toán ${paymentAmount.toLocaleString("vi-VN")}đ`,
-              });
+              .select("*")
+              .eq("user_id", currentUser.id)
+              .eq("course_id", pendingCourse.id)
+              .single();
 
-            enrollError = error;
+            let enrollError;
+
+            if (existingEnrollment) {
+              // Update existing enrollment
+              const { error } = await supabaseClient
+                .from("class_enrollments")
+                .update({
+                  enrollment_date: new Date().toISOString(),
+                  status: "active",
+                  payment_status: "paid",
+                  payment_method: selectedPaymentMethod,
+                  payment_date: new Date().toISOString(),
+                  notes: `Thanh toán ${paymentAmount.toLocaleString("vi-VN")}đ qua ${selectedPaymentMethod === "qr" ? "QR Code" : "Thẻ tín dụng"}`,
+                })
+                .eq("user_id", currentUser.id)
+                .eq("course_id", pendingCourse.id);
+
+              enrollError = error;
+            } else {
+              // Create new enrollment
+              const { error } = await supabaseClient
+                .from("class_enrollments")
+                .insert({
+                  user_id: currentUser.id,
+                  course_id: pendingCourse.id,
+                  enrollment_date: new Date().toISOString(),
+                  status: "active",
+                  payment_status: "paid",
+                  payment_method: selectedPaymentMethod,
+                  payment_date: new Date().toISOString(),
+                  notes: `Thanh toán ${paymentAmount.toLocaleString("vi-VN")}đ qua ${selectedPaymentMethod === "qr" ? "QR Code" : "Thẻ tín dụng"}`,
+                });
+
+              enrollError = error;
+            }
+
+            if (enrollError) {
+              console.error("Enrollment error:", enrollError);
+              throw enrollError;
+            }
+
+            // Update course student count
+            await syncCourseStudentCount(pendingCourse.id);
+
+            // Remove from cart if it was in cart
+            if (shoppingCart.includes(pendingCourse.id)) {
+              shoppingCart = shoppingCart.filter(id => id !== pendingCourse.id);
+              localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+              updateCartCount();
+            }
+
+            alert("✅ Thanh toán thành công! Bạn đã đăng ký khóa học.");
           }
 
-          if (enrollError) {
-            console.error("Enrollment error:", enrollError);
-            throw enrollError;
-          }
-
-          // Update course student count based on actual active enrollments
-          await syncCourseStudentCount(pendingCourse.id);
-
-          alert("✅ Thanh toán thành công! Bạn đã đăng ký khóa học.");
-
-          // Reset pending course
+          // Reset pending course and payment method
           pendingCourse = null;
+          selectedPaymentMethod = null;
+
+          // Clear card form
+          document.getElementById("card-number").value = "";
+          document.getElementById("card-expiry").value = "";
+          document.getElementById("card-cvv").value = "";
+          document.getElementById("card-holder").value = "";
 
           // Reload all data to refresh student counts everywhere
           await loadDashboardData();
@@ -1735,7 +2264,7 @@
             .order("created_at", { ascending: false });
 
           myCoursesData = data || []; // Store globally
-          displayMyCourses(myCoursesData);
+          filterMyCourses(); // Use filter to apply current tab
         } catch (error) {
           console.error("Error loading courses:", error);
         }
@@ -1743,6 +2272,20 @@
 
       function displayMyCourses(courses) {
         const container = document.getElementById("my-courses-grid");
+        
+        if (!courses || courses.length === 0) {
+          let emptyMessage = "Bạn chưa đăng ký khóa học nào";
+          if (currentCourseTab === 'active') {
+            emptyMessage = "Bạn chưa có khóa học đang học";
+          } else if (currentCourseTab === 'completed') {
+            emptyMessage = "Bạn chưa hoàn thành khóa học nào";
+          } else if (currentCourseTab === 'pending') {
+            emptyMessage = "Không có khóa học chờ thanh toán";
+          }
+          container.innerHTML = `<p class="col-span-2 text-[#9c495e] text-center py-8">${emptyMessage}</p>`;
+          return;
+        }
+
         container.innerHTML =
           courses
             ?.map(
@@ -1779,9 +2322,15 @@
                                 </div>
                             </div>
                             <div class="flex gap-2">
+                                ${currentCourseTab !== 'pending' ? `
                                 <button onclick="showRoadmap('${e.course_id}', '${e.courses.course_name}')" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all">
-                                    Tiếp tục học
+                                    ${currentCourseTab === 'completed' ? 'Xem lại' : 'Tiếp tục học'}
                                 </button>
+                                ` : `
+                                <button onclick="goToPayment('${e.course_id}')" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all">
+                                    Thanh toán ngay
+                                </button>
+                                `}
                                 ${
                                   e.status === "active"
                                     ? `
@@ -1796,8 +2345,110 @@
                     </div>
                 `,
             )
-            .join("") ||
-          '<p class="col-span-2 text-[#9c495e] text-center py-8">Bạn chưa đăng ký khóa học nào</p>';
+            .join("");
+      }
+
+      let currentCourseTab = 'active'; // Track current tab
+
+      async function switchCourseTab(tab) {
+        currentCourseTab = tab;
+        
+        // Update tab styles
+        ['tab-active', 'tab-completed', 'tab-pending'].forEach(id => {
+          const btn = document.getElementById(id);
+          btn.classList.remove('font-bold', 'text-primary', 'border-primary');
+          btn.classList.add('font-medium', 'text-[#9c495e]', 'border-transparent');
+        });
+        
+        const activeTab = document.getElementById(`tab-${tab}`);
+        activeTab.classList.remove('font-medium', 'text-[#9c495e]', 'border-transparent');
+        activeTab.classList.add('font-bold', 'text-primary', 'border-primary');
+        
+        // If pending tab, load cart items
+        if (tab === 'pending') {
+          await loadCartItemsForTab();
+        } else {
+          // Filter and display enrolled courses
+          filterMyCourses();
+        }
+      }
+
+      async function loadCartItemsForTab() {
+        const container = document.getElementById("my-courses-grid");
+        
+        if (shoppingCart.length === 0) {
+          container.innerHTML = `
+            <div class="col-span-2 text-center py-12">
+              <span class="material-symbols-outlined text-6xl text-[#9c495e] mb-4">shopping_cart</span>
+              <p class="text-[#9c495e] text-lg mb-4">Giỏ hàng của bạn đang trống</p>
+              <button
+                onclick="switchCourseTab('active'); showSection('available-courses')"
+                class="px-6 py-2 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+              >
+                Khám phá khóa học
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        try {
+          // Fetch course details for items in cart
+          const { data: courses, error } = await supabaseClient
+            .from("courses")
+            .select("*")
+            .in("id", shoppingCart);
+
+          if (error) throw error;
+
+          container.innerHTML = courses.map(course => `
+            <div class="bg-white rounded-xl border border-pink-100 shadow-sm overflow-hidden">
+              <div class="h-40 bg-cover bg-center" style="background-image: url('${course.image_url}')"></div>
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="px-3 py-1 text-xs font-bold rounded-full bg-yellow-100 text-yellow-700">CHỜ THANH TOÁN</span>
+                  <span class="px-3 py-1 text-xs font-bold rounded-full bg-pink-100 text-primary">
+                    ${course.level === "beginner" ? "Mới bắt đầu" : course.level === "intermediate" ? "Trung cấp" : "Nâng cao"}
+                  </span>
+                </div>
+                <h3 class="font-bold text-lg mb-2">${course.course_name}</h3>
+                <p class="text-sm text-[#9c495e] mb-4">${course.description?.substring(0, 80) || ""}...</p>
+                <div class="space-y-2 mb-4">
+                  <div class="flex items-center gap-2 text-sm text-[#9c495e]">
+                    <span class="material-symbols-outlined text-sm">schedule</span>
+                    <span>${course.duration_weeks} tuần</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm text-[#9c495e]">
+                    <span class="material-symbols-outlined text-sm">people</span>
+                    <span>${course.current_students || 0}/${course.max_students} học viên</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <span class="material-symbols-outlined text-sm text-primary">payments</span>
+                    <span class="font-bold text-primary">${parseFloat(course.price).toLocaleString("vi-VN")}đ</span>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button 
+                    onclick="goToPayment('${course.id}')" 
+                    class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+                  >
+                    Thanh toán ngay
+                  </button>
+                  <button 
+                    onclick="removeFromCart('${course.id}'); switchCourseTab('pending')" 
+                    class="px-4 py-3 bg-red-50 text-red-600 rounded-lg font-bold hover:bg-red-100 transition-all"
+                  >
+                    Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+
+        } catch (error) {
+          console.error("Error loading cart items:", error);
+          container.innerHTML = '<p class="col-span-2 text-red-500 text-center py-8">Không thể tải giỏ hàng. Vui lòng thử lại!</p>';
+        }
       }
 
       function filterMyCourses() {
@@ -1805,17 +2456,26 @@
           .getElementById("my-courses-search")
           .value.toLowerCase();
 
-        if (!searchTerm) {
-          displayMyCourses(myCoursesData);
-          return;
+        let filtered = myCoursesData;
+
+        // Filter by tab status
+        if (currentCourseTab === 'active') {
+          filtered = filtered.filter(e => e.status === 'active');
+        } else if (currentCourseTab === 'completed') {
+          filtered = filtered.filter(e => e.status === 'completed');
+        } else if (currentCourseTab === 'pending') {
+          filtered = filtered.filter(e => e.payment_status === 'pending' || e.status === 'pending');
         }
 
-        const filtered = myCoursesData.filter(
-          (e) =>
-            e.courses.course_name.toLowerCase().includes(searchTerm) ||
-            (e.courses.description &&
-              e.courses.description.toLowerCase().includes(searchTerm)),
-        );
+        // Filter by search term
+        if (searchTerm) {
+          filtered = filtered.filter(
+            (e) =>
+              e.courses.course_name.toLowerCase().includes(searchTerm) ||
+              (e.courses.description &&
+                e.courses.description.toLowerCase().includes(searchTerm)),
+          );
+        }
 
         displayMyCourses(filtered);
       }
@@ -1932,12 +2592,21 @@
                     ${
                       !isEnrolled
                         ? `
-                    <button
-                      onclick="goToPayment('${course.id}')"
-                      class="w-full px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
-                    >
-                      Đăng ký ngay
-                    </button>
+                    <div class="flex gap-2">
+                      <button
+                        onclick="addToCart('${course.id}')"
+                        class="flex-1 px-3 py-2 bg-pink-50 text-primary border border-primary rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-1"
+                      >
+                        <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                        Thêm vào giỏ
+                      </button>
+                      <button
+                        onclick="goToPayment('${course.id}')"
+                        class="flex-1 px-3 py-2 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+                      >
+                        Đăng ký ngay
+                      </button>
+                    </div>
                     `
                         : `
                     <button
@@ -2171,27 +2840,38 @@
 
       async function updateProfile() {
         try {
-          const { error } = await supabaseClient
+          const dobValue = document.getElementById("input-dob").value;
+          const avatarValue = document.getElementById("input-avatar").value;
+
+          const updateData = {
+            full_name: document.getElementById("input-fullname").value,
+            phone: document.getElementById("input-phone").value || null,
+            date_of_birth: dobValue ? dobValue : null, // Chuyển empty string thành null
+            gender: document.getElementById("input-gender").value,
+            avatar_url: avatarValue ? avatarValue : null,
+          };
+
+          console.log("Updating profile with data:", updateData);
+          console.log("User ID:", currentUser.id);
+
+          const { data, error } = await supabaseClient
             .from("users")
-            .update({
-              full_name: document.getElementById("input-fullname").value,
-              phone: document.getElementById("input-phone").value,
-              date_of_birth: document.getElementById("input-dob").value,
-              gender: document.getElementById("input-gender").value,
-            })
-            .eq("id", currentUser.id);
+            .update(updateData)
+            .eq("id", currentUser.id)
+            .select();
+
+          console.log("Update result:", { data, error });
 
           if (error) throw error;
 
           alert("Cập nhật hồ sơ thành công!");
 
           // Update localStorage
-          currentUser.full_name =
-            document.getElementById("input-fullname").value;
-          currentUser.phone = document.getElementById("input-phone").value;
-          currentUser.date_of_birth =
-            document.getElementById("input-dob").value;
-          currentUser.gender = document.getElementById("input-gender").value;
+          currentUser.full_name = updateData.full_name;
+          currentUser.phone = updateData.phone;
+          currentUser.date_of_birth = updateData.date_of_birth;
+          currentUser.gender = updateData.gender;
+          currentUser.avatar_url = updateData.avatar_url;
           localStorage.setItem("gymheart_user", JSON.stringify(currentUser));
 
           // Update UI
@@ -2199,9 +2879,29 @@
             currentUser.full_name.split(" ")[0];
           document.getElementById("profile-name").textContent =
             currentUser.full_name;
+
+          // Update all avatar displays
+          const defaultAvatar =
+            "https://ui-avatars.com/api/?name=" +
+            encodeURIComponent(currentUser.full_name) +
+            "&background=ec4899&color=fff&size=200";
+          const newAvatarUrl = currentUser.avatar_url || defaultAvatar;
+          document.getElementById("user-avatar").style.backgroundImage =
+            `url('${newAvatarUrl}')`;
+          document.getElementById("profile-avatar").style.backgroundImage =
+            `url('${newAvatarUrl}')`;
+
+          // Refresh view mode display
+          populateProfileData();
+
+          // Switch back to view mode
+          document.getElementById("profile-edit-mode").classList.add("hidden");
+          document
+            .getElementById("profile-view-mode")
+            .classList.remove("hidden");
         } catch (error) {
           console.error("Error updating profile:", error);
-          alert("Không thể cập nhật hồ sơ!");
+          alert("Không thể cập nhật hồ sơ: " + error.message);
         }
       }
 
@@ -2215,13 +2915,47 @@
       async function showRoadmap(courseId, courseName) {
         const modal = document.getElementById("roadmap-modal");
         const modalTitle = document.getElementById("modal-course-title");
+        
+        // Show modal
+        modal.classList.remove("hidden");
+        modalTitle.textContent = courseName;
+
+        // Reset to roadmap tab
+        switchCourseDetailTab('roadmap');
+
+        // Load roadmap
+        await loadCourseRoadmap(courseId);
+        
+        // Load schedule
+        await loadCourseSchedule(courseId);
+      }
+      
+      function switchCourseDetailTab(tab) {
+        // Update tab buttons
+        document.querySelectorAll("[id^='tab-']").forEach((btn) => {
+          btn.classList.remove("border-primary", "text-primary");
+          btn.classList.add("border-transparent", "text-[#9c495e]");
+        });
+        document
+          .getElementById(`tab-${tab}`)
+          .classList.add("border-primary", "text-primary");
+        document
+          .getElementById(`tab-${tab}`)
+          .classList.remove("border-transparent", "text-[#9c495e]");
+
+        // Update content
+        document.querySelectorAll(".tab-content-detail").forEach((content) => {
+          content.classList.add("hidden");
+        });
+        document
+          .getElementById(`tab-content-${tab}`)
+          .classList.remove("hidden");
+      }
+      
+      async function loadCourseRoadmap(courseId) {
         const loading = document.getElementById("roadmap-loading");
         const content = document.getElementById("roadmap-content");
         const empty = document.getElementById("roadmap-empty");
-
-        // Show modal
-        modal.classList.remove("hidden");
-        modalTitle.textContent = `Lộ trình: ${courseName}`;
 
         // Reset states
         loading.classList.remove("hidden");
@@ -2284,6 +3018,288 @@
           content.classList.remove("hidden");
         }
       }
+      
+      async function loadCourseSchedule(courseId) {
+        const loading = document.getElementById("schedule-loading");
+        const content = document.getElementById("schedule-content");
+        const empty = document.getElementById("schedule-empty");
+
+        // Reset states
+        loading.classList.remove("hidden");
+        content.classList.add("hidden");
+        empty.classList.add("hidden");
+
+        try {
+          const { data: schedules, error } = await supabaseClient
+            .from("schedules")
+            .select("*")
+            .eq("course_id", courseId)
+            .order("day_of_week");
+
+          if (error) throw error;
+
+          loading.classList.add("hidden");
+
+          if (schedules && schedules.length > 0) {
+            const daysMap = {
+              0: 'Chủ Nhật',
+              1: 'Thứ Hai',
+              2: 'Thứ Ba',
+              3: 'Thứ Tư',
+              4: 'Thứ Năm',
+              5: 'Thứ Sáu',
+              6: 'Thứ Bảy'
+            };
+
+            content.innerHTML = schedules
+              .map(
+                (schedule) => `
+              <div class="bg-background-light rounded-lg border border-pink-100 p-5 hover:border-primary transition-colors">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0">
+                    <div class="w-16 h-16 rounded-lg bg-primary/10 border-2 border-primary flex flex-col items-center justify-center">
+                      <span class="text-primary font-black text-xs">${daysMap[schedule.day_of_week]}</span>
+                    </div>
+                  </div>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="material-symbols-outlined text-primary text-sm">schedule</span>
+                      <span class="font-bold text-[#1c0d11]">${schedule.start_time} - ${schedule.end_time}</span>
+                    </div>
+                    ${schedule.location ? `
+                      <div class="flex items-center gap-2 mb-2">
+                        <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+                        <span class="text-[#9c495e] text-sm">${schedule.location}</span>
+                      </div>
+                    ` : ''}
+                    ${schedule.notes ? `
+                      <div class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-primary text-sm">info</span>
+                        <span class="text-[#9c495e] text-sm">${schedule.notes}</span>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+              </div>
+            `,
+              )
+              .join("");
+            content.classList.remove("hidden");
+          } else {
+            empty.classList.remove("hidden");
+          }
+        } catch (error) {
+          console.error("Error loading schedule:", error);
+          loading.classList.add("hidden");
+          content.innerHTML = `
+            <div class="text-center py-8">
+              <p class="text-red-500">Không thể tải lịch tập. Vui lòng thử lại sau.</p>
+            </div>
+          `;
+          content.classList.remove("hidden");
+        }
+      }
+
+      // ==================== Shopping Cart Functions ====================
+      
+      // Initialize cart from localStorage
+      let shoppingCart = JSON.parse(localStorage.getItem('gymheart_cart')) || [];
+      updateCartCount();
+
+      // Add course to cart
+      async function addToCart(courseId) {
+        try {
+          // Check if already in cart
+          if (shoppingCart.includes(courseId)) {
+            alert("Khóa học này đã có trong giỏ hàng!");
+            return;
+          }
+
+          // Check if already enrolled
+          const { data: enrollment } = await supabaseClient
+            .from("class_enrollments")
+            .select("*")
+            .eq("user_id", currentUser.id)
+            .eq("course_id", courseId)
+            .single();
+
+          if (enrollment) {
+            alert("Bạn đã đăng ký khóa học này rồi!");
+            return;
+          }
+
+          // Add to cart
+          shoppingCart.push(courseId);
+          localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+          updateCartCount();
+          
+          // Show success message
+          alert("✅ Đã thêm khóa học vào giỏ hàng!");
+        } catch (error) {
+          console.error("Error adding to cart:", error);
+          alert("Không thể thêm vào giỏ hàng. Vui lòng thử lại!");
+        }
+      }
+
+      // Update cart count badge
+      function updateCartCount() {
+        const badge = document.getElementById('cart-count');
+        if (shoppingCart.length > 0) {
+          badge.textContent = shoppingCart.length;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+
+      // Open cart modal
+      async function openCartModal() {
+        document.getElementById('cart-modal').classList.remove('hidden');
+        await loadCartItems();
+      }
+
+      // Close cart modal
+      function closeCartModal() {
+        document.getElementById('cart-modal').classList.add('hidden');
+      }
+
+      // Load cart items
+      async function loadCartItems() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartEmpty = document.getElementById('cart-empty');
+        const cartTotal = document.getElementById('cart-total');
+
+        if (shoppingCart.length === 0) {
+          cartItemsContainer.classList.add('hidden');
+          cartEmpty.classList.remove('hidden');
+          return;
+        }
+
+        cartEmpty.classList.add('hidden');
+        cartItemsContainer.classList.remove('hidden');
+
+        try {
+          // Fetch course details
+          const { data: courses, error } = await supabaseClient
+            .from("courses")
+            .select("*")
+            .in("id", shoppingCart);
+
+          if (error) throw error;
+
+          let total = 0;
+          cartItemsContainer.innerHTML = courses.map(course => {
+            total += course.price;
+            return `
+              <div class="flex gap-4 bg-white border border-pink-100 rounded-xl p-4 hover:shadow-md transition-shadow">
+                <img
+                  src="${course.image_url}"
+                  alt="${course.course_name}"
+                  class="w-24 h-24 object-cover rounded-lg"
+                />
+                <div class="flex-1">
+                  <h4 class="font-bold text-[#1c0d11] mb-1">${course.course_name}</h4>
+                  <p class="text-sm text-[#9c495e] mb-2 line-clamp-2">${course.description}</p>
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="material-symbols-outlined text-sm text-primary">schedule</span>
+                    <span class="text-xs text-[#5c3d44]">${course.duration}</span>
+                    <span class="material-symbols-outlined text-sm text-primary ml-2">groups</span>
+                    <span class="text-xs text-[#5c3d44]">${course.max_students} học viên</span>
+                  </div>
+                  <div class="flex gap-2">
+                    <button
+                      onclick="goToPayment('${course.id}'); closeCartModal()"
+                      class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all"
+                    >
+                      Thanh toán
+                    </button>
+                    <button
+                      onclick="removeFromCart('${course.id}')"
+                      class="px-4 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-bold hover:bg-red-100 transition-all flex items-center gap-1"
+                    >
+                      <span class="material-symbols-outlined text-sm">delete</span>
+                      Xóa
+                    </button>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end justify-start">
+                  <span class="text-lg font-black text-primary">
+                    ${new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(course.price)}
+                  </span>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          cartTotal.textContent = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(total);
+
+        } catch (error) {
+          console.error("Error loading cart items:", error);
+          cartItemsContainer.innerHTML = '<p class="text-red-500 text-center py-8">Không thể tải giỏ hàng. Vui lòng thử lại!</p>';
+        }
+      }
+
+      // Remove item from cart
+      function removeFromCart(courseId) {
+        console.log("Removing from cart:", courseId);
+        console.log("Cart before:", shoppingCart);
+        shoppingCart = shoppingCart.filter(id => id !== courseId);
+        console.log("Cart after:", shoppingCart);
+        localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+        updateCartCount();
+        loadCartItems();
+      }
+
+      // Clear entire cart
+      function clearCart() {
+        if (shoppingCart.length === 0) return;
+        
+        if (confirm("Bạn có chắc muốn xóa tất cả khóa học khỏi giỏ hàng?")) {
+          shoppingCart = [];
+          localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+          updateCartCount();
+          loadCartItems();
+        }
+      }
+
+      // Checkout - enroll multiple courses
+      async function checkoutCart() {
+        if (shoppingCart.length === 0) {
+          alert("Giỏ hàng trống!");
+          return;
+        }
+
+        // Get total amount
+        try {
+          const { data: courses } = await supabaseClient
+            .from("courses")
+            .select("price")
+            .in("id", shoppingCart);
+
+          const total = courses.reduce((sum, course) => sum + course.price, 0);
+
+          // Store cart info for payment
+          pendingCourse = {
+            isCart: true,
+            courseIds: [...shoppingCart],
+            amount: total
+          };
+          
+          console.log("Checkout cart - set pendingCourse for multiple courses:", pendingCourse);
+
+          closeCartModal();
+          showSection('payment');
+        } catch (error) {
+          console.error("Error preparing checkout:", error);
+          alert("Không thể thanh toán. Vui lòng thử lại!");
+        }
+      }
 
       // Close roadmap modal
       function closeRoadmapModal() {
@@ -2292,12 +3308,83 @@
 
       // Close modal when clicking outside
       document.addEventListener("click", (e) => {
-        const modal = document.getElementById("roadmap-modal");
-        if (e.target === modal) {
+        const roadmapModal = document.getElementById("roadmap-modal");
+        if (e.target === roadmapModal) {
           closeRoadmapModal();
+        }
+        
+        const cartModal = document.getElementById("cart-modal");
+        if (e.target === cartModal) {
+          closeCartModal();
         }
       });
     </script>
+
+    <!-- Shopping Cart Modal -->
+    <div
+      id="cart-modal"
+      class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+      >
+        <div
+          class="p-6 border-b border-pink-100 flex items-center justify-between"
+        >
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-3xl text-primary">shopping_cart</span>
+            <h3 class="text-2xl font-bold text-[#1c0d11]">Giỏ hàng của bạn</h3>
+          </div>
+          <button
+            onclick="closeCartModal()"
+            class="text-[#9c495e] hover:text-primary transition-colors"
+          >
+            <span class="material-symbols-outlined text-3xl">close</span>
+          </button>
+        </div>
+
+        <div class="p-6 overflow-y-auto max-h-[calc(90vh-240px)]">
+          <div id="cart-items" class="space-y-4">
+            <!-- Cart items will be loaded here -->
+          </div>
+          <div id="cart-empty" class="hidden text-center py-12">
+            <span
+              class="material-symbols-outlined text-6xl text-[#9c495e] mb-4"
+              >shopping_cart</span
+            >
+            <p class="text-[#9c495e] text-lg">Giỏ hàng của bạn đang trống</p>
+            <button
+              onclick="closeCartModal(); showSection('available-courses')"
+              class="mt-4 px-6 py-2 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+            >
+              Khám phá khóa học
+            </button>
+          </div>
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="p-6 border-t border-pink-100 bg-pink-50">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-lg font-bold text-[#1c0d11]">Tổng cộng:</span>
+            <span id="cart-total" class="text-2xl font-black text-primary">0 ₫</span>
+          </div>
+          <div class="flex gap-3">
+            <button
+              onclick="clearCart()"
+              class="flex-1 px-6 py-3 bg-white text-primary border-2 border-primary rounded-lg font-bold hover:bg-pink-50 transition-all"
+            >
+              Xóa tất cả
+            </button>
+            <button
+              onclick="checkoutCart()"
+              class="flex-1 px-6 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
+            >
+              Thanh toán
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Course Roadmap Modal -->
     <div
@@ -2311,7 +3398,7 @@
           class="p-6 border-b border-pink-100 flex items-center justify-between"
         >
           <h3 id="modal-course-title" class="text-2xl font-bold text-[#1c0d11]">
-            Lộ trình học tập
+            Chi tiết khóa học
           </h3>
           <button
             onclick="closeRoadmapModal()"
@@ -2320,23 +3407,66 @@
             <span class="material-symbols-outlined text-3xl">close</span>
           </button>
         </div>
-        <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-          <div id="roadmap-loading" class="text-center py-8">
-            <div
-              class="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-primary"
-            ></div>
-            <p class="mt-4 text-[#9c495e]">Đang tải lộ trình học tập...</p>
+
+        <!-- Tabs -->
+        <div class="flex border-b border-pink-100 px-6">
+          <button
+            id="tab-roadmap"
+            onclick="switchCourseDetailTab('roadmap')"
+            class="px-6 py-3 font-bold text-sm border-b-2 border-primary text-primary"
+          >
+            Lộ trình học
+          </button>
+          <button
+            id="tab-schedule"
+            onclick="switchCourseDetailTab('schedule')"
+            class="px-6 py-3 font-bold text-sm border-b-2 border-transparent text-[#9c495e] hover:text-primary"
+          >
+            Lịch tập
+          </button>
+        </div>
+
+        <div class="p-6 overflow-y-auto max-h-[calc(90vh-180px)]">
+          <!-- Roadmap Tab -->
+          <div id="tab-content-roadmap" class="tab-content-detail">
+            <div id="roadmap-loading" class="text-center py-8">
+              <div
+                class="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-primary"
+              ></div>
+              <p class="mt-4 text-[#9c495e]">Đang tải lộ trình học tập...</p>
+            </div>
+            <div id="roadmap-content" class="hidden space-y-4">
+              <!-- Lessons will be loaded here -->
+            </div>
+            <div id="roadmap-empty" class="hidden text-center py-8">
+              <span
+                class="material-symbols-outlined text-6xl text-[#9c495e] mb-4"
+                >book</span
+              >
+              <p class="text-[#9c495e]">
+                Chưa có lộ trình học tập cho khóa học này.
+              </p>
+            </div>
           </div>
-          <div id="roadmap-content" class="hidden space-y-4">
-            <!-- Lessons will be loaded here -->
-          </div>
-          <div id="roadmap-empty" class="hidden text-center py-8">
-            <span class="material-symbols-outlined text-6xl text-[#9c495e] mb-4"
-              >book</span
-            >
-            <p class="text-[#9c495e]">
-              Chưa có lộ trình học tập cho khóa học này.
-            </p>
+
+          <!-- Schedule Tab -->
+          <div id="tab-content-schedule" class="tab-content-detail hidden">
+            <div id="schedule-loading" class="text-center py-8">
+              <div
+                class="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-primary"
+              ></div>
+              <p class="mt-4 text-[#9c495e]">Đang tải lịch tập...</p>
+            </div>
+            <div id="schedule-content" class="hidden space-y-4">
+              <!-- Schedule will be loaded here -->
+            </div>
+            <div id="schedule-empty" class="hidden text-center py-8">
+              <span
+                class="material-symbols-outlined text-6xl text-[#9c495e] mb-4"
+                >calendar_today</span
+              >
+              <p class="text-[#9c495e]">Chưa có lịch tập cho khóa học này.</p>
+            </div>
           </div>
         </div>
       </div>

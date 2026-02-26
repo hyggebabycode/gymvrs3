@@ -509,6 +509,13 @@
           >
             Lộ trình học
           </button>
+          <button
+            id="tab-students"
+            onclick="switchCourseTab('students')"
+            class="px-6 py-3 font-bold text-sm border-b-2 border-transparent text-[#9c495e] hover:text-primary"
+          >
+            Học viên
+          </button>
         </div>
 
         <div class="p-6">
@@ -695,6 +702,224 @@
               <!-- Will be populated -->
             </div>
           </div>
+
+          <!-- Students Tab -->
+          <div id="tab-content-students" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-bold">Danh sách học viên</h3>
+              <div class="text-sm text-gray-600">
+                <span class="font-bold text-primary" id="students-count"
+                  >0</span
+                >
+                học viên
+              </div>
+            </div>
+
+            <!-- Students List -->
+            <div id="course-students-list" class="space-y-3">
+              <!-- Will be populated -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="students-empty-state" class="hidden text-center py-12">
+              <span
+                class="material-symbols-outlined text-6xl text-gray-300 mb-4"
+                >school</span
+              >
+              <p class="text-gray-500 font-medium">
+                Chưa có học viên nào đăng ký khóa học này
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Detail Modal -->
+    <div
+      id="student-detail-modal"
+      class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
+      onclick="closeStudentDetailModal()"
+    >
+      <div
+        class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+        onclick="event.stopPropagation()"
+      >
+        <div
+          class="sticky top-0 bg-white border-b border-pink-100 px-6 py-4 flex items-center justify-between z-10"
+        >
+          <h2 class="text-2xl font-black text-[#1c0d11]">Thông tin học viên</h2>
+          <button
+            onclick="closeStudentDetailModal()"
+            class="p-2 hover:bg-pink-50 rounded-full transition-colors"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <div class="p-6">
+          <!-- Student Info -->
+          <div class="flex items-center gap-4 mb-6 p-4 bg-pink-50 rounded-lg">
+            <div
+              id="student-detail-avatar"
+              class="size-20 rounded-full bg-cover bg-center border-4 border-primary/20"
+            ></div>
+            <div class="flex-1">
+              <h3
+                id="student-detail-name"
+                class="text-xl font-bold text-[#1c0d11] mb-1"
+              ></h3>
+              <p
+                id="student-detail-email"
+                class="text-sm text-[#9c495e] mb-1"
+              ></p>
+              <p id="student-detail-phone" class="text-sm text-[#9c495e]"></p>
+            </div>
+          </div>
+
+          <!-- Personal Info -->
+          <div class="mb-6">
+            <h4 class="font-bold text-[#1c0d11] mb-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary">person</span>
+              Thông tin cá nhân
+            </h4>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Ngày sinh</label
+                >
+                <p
+                  id="student-detail-dob"
+                  class="text-sm font-medium p-2 bg-gray-50 rounded"
+                >
+                  -
+                </p>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Giới tính</label
+                >
+                <p
+                  id="student-detail-gender"
+                  class="text-sm font-medium p-2 bg-gray-50 rounded"
+                >
+                  -
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course Info -->
+          <div class="mb-6">
+            <h4 class="font-bold text-[#1c0d11] mb-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary">school</span>
+              Thông tin khóa học
+            </h4>
+            <div class="space-y-3">
+              <div>
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Khóa học</label
+                >
+                <p
+                  id="student-detail-course"
+                  class="text-sm font-medium p-2 bg-gray-50 rounded"
+                >
+                  -
+                </p>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Ngày đăng ký</label
+                >
+                <p
+                  id="student-detail-enrollment"
+                  class="text-sm font-medium p-2 bg-gray-50 rounded"
+                >
+                  -
+                </p>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Trạng thái</label
+                >
+                <p id="student-detail-status" class="text-sm font-medium"></p>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Tiến độ học tập</label
+                >
+                <div class="flex items-center gap-3">
+                  <div class="flex-1 bg-pink-100 rounded-full h-3">
+                    <div
+                      id="student-detail-progress-bar"
+                      class="bg-primary h-3 rounded-full"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                  <span
+                    id="student-detail-progress"
+                    class="text-sm font-bold text-primary"
+                    >0%</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Info -->
+          <div class="mb-6">
+            <h4 class="font-bold text-[#1c0d11] mb-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary"
+                >payments</span
+              >
+              Thông tin thanh toán
+            </h4>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Trạng thái thanh toán</label
+                >
+                <p
+                  id="student-detail-payment-status"
+                  class="text-sm font-medium"
+                ></p>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Phương thức</label
+                >
+                <p
+                  id="student-detail-payment-method"
+                  class="text-sm font-medium p-2 bg-gray-50 rounded"
+                >
+                  -
+                </p>
+              </div>
+              <div class="col-span-2">
+                <label class="text-xs font-semibold text-[#9c495e] mb-1 block"
+                  >Ngày thanh toán</label
+                >
+                <p
+                  id="student-detail-payment-date"
+                  class="text-sm font-medium p-2 bg-gray-50 rounded"
+                >
+                  -
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div id="student-notes-section" class="hidden">
+            <h4 class="font-bold text-[#1c0d11] mb-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary">note</span>
+              Ghi chú
+            </h4>
+            <p
+              id="student-detail-notes"
+              class="text-sm text-[#9c495e] p-3 bg-gray-50 rounded"
+            ></p>
+          </div>
         </div>
       </div>
     </div>
@@ -712,9 +937,7 @@
         <div
           class="sticky top-0 bg-white border-b border-pink-100 px-6 py-4 flex items-center justify-between z-10"
         >
-          <h2 class="text-2xl font-black text-[#1c0d11]">
-            Tạo Khóa Học Mới
-          </h2>
+          <h2 class="text-2xl font-black text-[#1c0d11]">Tạo Khóa Học Mới</h2>
           <button
             onclick="closeCreateCourseModal()"
             class="p-2 hover:bg-pink-50 rounded-full transition-colors"
@@ -727,7 +950,7 @@
           <!-- Basic Info -->
           <div class="space-y-4">
             <h3 class="text-lg font-bold text-[#1c0d11]">Thông tin cơ bản</h3>
-            
+
             <div>
               <label class="block text-sm font-bold text-[#1c0d11] mb-2"
                 >Tên khóa học *</label
@@ -770,7 +993,7 @@
           <!-- Course Details -->
           <div class="space-y-4">
             <h3 class="text-lg font-bold text-[#1c0d11]">Chi tiết khóa học</h3>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-bold text-[#1c0d11] mb-2"
@@ -868,7 +1091,7 @@
           <!-- Additional Info -->
           <div class="space-y-4">
             <h3 class="text-lg font-bold text-[#1c0d11]">Thông tin bổ sung</h3>
-            
+
             <div>
               <label class="block text-sm font-bold text-[#1c0d11] mb-2"
                 >Lợi ích</label
@@ -879,7 +1102,9 @@
                 class="w-full px-4 py-2 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20"
                 placeholder="Mỗi lợi ích trên một dòng...&#10;Ví dụ:&#10;Cải thiện sức khỏe&#10;Tăng cường thể lực&#10;Giảm căng thẳng"
               ></textarea>
-              <p class="text-xs text-[#9c495e] mt-1">Mỗi lợi ích trên một dòng</p>
+              <p class="text-xs text-[#9c495e] mt-1">
+                Mỗi lợi ích trên một dòng
+              </p>
             </div>
 
             <div>
@@ -892,7 +1117,9 @@
                 class="w-full px-4 py-2 border border-pink-200 rounded-lg focus:ring-2 focus:ring-primary/20"
                 placeholder="Mỗi yêu cầu trên một dòng...&#10;Ví dụ:&#10;Không cần kinh nghiệm&#10;Trang phục tập luyện&#10;Khăn và nước uống"
               ></textarea>
-              <p class="text-xs text-[#9c495e] mt-1">Mỗi yêu cầu trên một dòng</p>
+              <p class="text-xs text-[#9c495e] mt-1">
+                Mỗi yêu cầu trên một dòng
+              </p>
             </div>
           </div>
 
@@ -1222,7 +1449,7 @@
                             </div>
                         </div>
                         <div class="flex gap-2">
-                            <button class="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-bold hover:bg-blue-100">
+                            <button onclick="showStudentDetail('${enrollment.id}')" class="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-bold hover:bg-blue-100">
                                 Chi tiết
                             </button>
                             <button onclick="removeStudent('${enrollment.id}')" class="flex-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-bold hover:bg-red-100">
@@ -1276,6 +1503,114 @@
 
       function showAddStudentModal() {
         alert("Chức năng thêm học viên - Cần implement modal");
+      }
+
+      async function showStudentDetail(enrollmentId) {
+        try {
+          const { data, error } = await supabaseClient
+            .from("class_enrollments")
+            .select(`
+              *,
+              users (
+                id,
+                full_name,
+                email,
+                phone,
+                date_of_birth,
+                gender,
+                avatar_url
+              ),
+              courses (
+                id,
+                course_name
+              )
+            `)
+            .eq("id", enrollmentId)
+            .single();
+
+          if (error) throw error;
+
+          if (!data) {
+            alert("Không tìm thấy thông tin học viên!");
+            return;
+          }
+
+          const student = data.users;
+          const course = data.courses;
+
+          // Avatar
+          const defaultAvatar = "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.full_name) + "&background=ec4899&color=fff&size=200";
+          document.getElementById("student-detail-avatar").style.backgroundImage = 
+            `url('${student.avatar_url || defaultAvatar}')`;
+
+          // Basic Info
+          document.getElementById("student-detail-name").textContent = student.full_name || "-";
+          document.getElementById("student-detail-email").textContent = student.email || "-";
+          document.getElementById("student-detail-phone").textContent = student.phone || "Chưa cập nhật";
+
+          // Personal Info
+          document.getElementById("student-detail-dob").textContent = student.date_of_birth 
+            ? new Date(student.date_of_birth).toLocaleDateString('vi-VN')
+            : "-";
+          document.getElementById("student-detail-gender").textContent = student.gender || "-";
+
+          // Course Info
+          document.getElementById("student-detail-course").textContent = course.course_name || "-";
+          document.getElementById("student-detail-enrollment").textContent = data.enrollment_date
+            ? new Date(data.enrollment_date).toLocaleDateString('vi-VN')
+            : "-";
+
+          // Status
+          const statusEl = document.getElementById("student-detail-status");
+          const statusClass = data.status === 'active' ? 'text-green-600 bg-green-50' : 'text-gray-600 bg-gray-50';
+          const statusText = data.status === 'active' ? 'Đang học' : 'Đã hoàn thành';
+          statusEl.innerHTML = `<span class="px-3 py-1 rounded-full text-xs font-bold ${statusClass}">${statusText}</span>`;
+
+          // Progress
+          const progress = data.progress_percentage || 0;
+          document.getElementById("student-detail-progress").textContent = `${progress}%`;
+          document.getElementById("student-detail-progress-bar").style.width = `${progress}%`;
+
+          // Payment Info
+          const paymentStatusEl = document.getElementById("student-detail-payment-status");
+          const paymentStatusClass = data.payment_status === 'paid' ? 'text-green-600 bg-green-50' : 'text-orange-600 bg-orange-50';
+          const paymentStatusText = data.payment_status === 'paid' ? 'Đã thanh toán' : 'Chưa thanh toán';
+          paymentStatusEl.innerHTML = `<span class="px-3 py-1 rounded-full text-xs font-bold ${paymentStatusClass}">${paymentStatusText}</span>`;
+
+          const paymentMethod = {
+            'cash': 'Tiền mặt',
+            'qr': 'QR Code',
+            'card': 'Thẻ tín dụng',
+            'transfer': 'Chuyển khoản'
+          };
+          document.getElementById("student-detail-payment-method").textContent = 
+            paymentMethod[data.payment_method] || data.payment_method || "-";
+
+          document.getElementById("student-detail-payment-date").textContent = data.payment_date
+            ? new Date(data.payment_date).toLocaleDateString('vi-VN')
+            : "-";
+
+          // Notes
+          if (data.notes) {
+            document.getElementById("student-notes-section").classList.remove("hidden");
+            document.getElementById("student-detail-notes").textContent = data.notes;
+          } else {
+            document.getElementById("student-notes-section").classList.add("hidden");
+          }
+
+          // Show modal
+          document.getElementById("student-detail-modal").classList.remove("hidden");
+          document.getElementById("student-detail-modal").classList.add("flex");
+
+        } catch (error) {
+          console.error("Error loading student details:", error);
+          alert("Không thể tải thông tin học viên!");
+        }
+      }
+
+      function closeStudentDetailModal() {
+        document.getElementById("student-detail-modal").classList.add("hidden");
+        document.getElementById("student-detail-modal").classList.remove("flex");
       }
 
       // Course Management Functions
@@ -1399,7 +1734,9 @@
 
       // Create Course Modal Functions
       function showCreateCourseModal() {
-        document.getElementById("create-course-modal").classList.remove("hidden");
+        document
+          .getElementById("create-course-modal")
+          .classList.remove("hidden");
         document.getElementById("create-course-modal").classList.add("flex");
         document.getElementById("create-course-form").reset();
       }
@@ -1417,22 +1754,48 @@
 
           // Get form values
           const courseName = document.getElementById("new-course-name").value;
-          const description = document.getElementById("new-course-description").value;
-          const imageUrl = document.getElementById("new-course-image").value || null;
-          const price = parseFloat(document.getElementById("new-course-price").value);
-          const duration = parseInt(document.getElementById("new-course-duration").value);
-          const maxStudents = parseInt(document.getElementById("new-course-max").value);
+          const description = document.getElementById(
+            "new-course-description",
+          ).value;
+          const imageUrl =
+            document.getElementById("new-course-image").value || null;
+          const price = parseFloat(
+            document.getElementById("new-course-price").value,
+          );
+          const duration = parseInt(
+            document.getElementById("new-course-duration").value,
+          );
+          const maxStudents = parseInt(
+            document.getElementById("new-course-max").value,
+          );
           const level = document.getElementById("new-course-level").value;
-          const startDate = document.getElementById("new-course-start").value || null;
-          const endDate = document.getElementById("new-course-end").value || null;
-          const scheduleDesc = document.getElementById("new-course-schedule").value || null;
-          
+          const startDate =
+            document.getElementById("new-course-start").value || null;
+          const endDate =
+            document.getElementById("new-course-end").value || null;
+          const scheduleDesc =
+            document.getElementById("new-course-schedule").value || null;
+
           // Parse benefits and requirements (split by newline, filter empty)
-          const benefitsText = document.getElementById("new-course-benefits").value;
-          const benefits = benefitsText ? benefitsText.split('\n').filter(b => b.trim()).map(b => b.trim()) : null;
-          
-          const requirementsText = document.getElementById("new-course-requirements").value;
-          const requirements = requirementsText ? requirementsText.split('\n').filter(r => r.trim()).map(r => r.trim()) : null;
+          const benefitsText = document.getElementById(
+            "new-course-benefits",
+          ).value;
+          const benefits = benefitsText
+            ? benefitsText
+                .split("\n")
+                .filter((b) => b.trim())
+                .map((b) => b.trim())
+            : null;
+
+          const requirementsText = document.getElementById(
+            "new-course-requirements",
+          ).value;
+          const requirements = requirementsText
+            ? requirementsText
+                .split("\n")
+                .filter((r) => r.trim())
+                .map((r) => r.trim())
+            : null;
 
           try {
             const { data, error } = await supabaseClient
@@ -1454,8 +1817,8 @@
                   end_date: endDate,
                   schedule_description: scheduleDesc,
                   benefits: benefits,
-                  requirements: requirements
-                }
+                  requirements: requirements,
+                },
               ])
               .select();
 
@@ -1494,6 +1857,8 @@
 
         if (tab === "roadmap") {
           loadCourseLessons(currentCourseId);
+        } else if (tab === "students") {
+          loadCourseStudents(currentCourseId);
         }
       }
 
@@ -1592,6 +1957,113 @@
             .join("");
         } catch (error) {
           console.error("Error loading lessons:", error);
+        }
+      }
+
+      async function loadCourseStudents(courseId) {
+        try {
+          const { data, error } = await supabaseClient
+            .from("class_enrollments")
+            .select(
+              `
+              id,
+              enrollment_date,
+              status,
+              user_id,
+              users (
+                id,
+                full_name,
+                email,
+                phone,
+                gender
+              )
+            `,
+            )
+            .eq("course_id", courseId)
+            .order("enrollment_date", { ascending: false });
+
+          if (error) throw error;
+
+          const container = document.getElementById("course-students-list");
+          const emptyState = document.getElementById("students-empty-state");
+          const countElement = document.getElementById("students-count");
+
+          countElement.textContent = data ? data.length : 0;
+
+          if (!data || data.length === 0) {
+            container.innerHTML = "";
+            emptyState.classList.remove("hidden");
+            return;
+          }
+
+          emptyState.classList.add("hidden");
+          container.innerHTML = data
+            .map((enrollment) => {
+              const student = enrollment.users;
+              const statusClass =
+                enrollment.status === "active"
+                  ? "bg-green-50 text-green-600"
+                  : "bg-gray-50 text-gray-600";
+              const statusText =
+                enrollment.status === "active" ? "Đang học" : "Đã hoàn thành";
+              const enrollDate = new Date(
+                enrollment.enrollment_date,
+              ).toLocaleDateString("vi-VN");
+
+              return `
+                  <div class="p-4 bg-white border border-pink-100 rounded-lg hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-4">
+                      <div class="flex-shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white font-black text-lg">
+                          ${student.full_name.charAt(0).toUpperCase()}
+                        </div>
+                      </div>
+                      <div class="flex-1">
+                        <h4 class="font-bold text-[#1c0d11]">${student.full_name}</h4>
+                        <div class="flex items-center gap-3 text-sm text-[#9c495e] mt-1">
+                          <span class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">email</span>
+                            ${student.email}
+                          </span>
+                          ${
+                            student.phone
+                              ? `
+                            <span class="flex items-center gap-1">
+                              <span class="material-symbols-outlined text-sm">phone</span>
+                              ${student.phone}
+                            </span>
+                          `
+                              : ""
+                          }
+                          ${
+                            student.gender
+                              ? `
+                            <span class="flex items-center gap-1">
+                              <span class="material-symbols-outlined text-sm">${student.gender === "Nam" ? "male" : "female"}</span>
+                              ${student.gender}
+                            </span>
+                          `
+                              : ""
+                          }
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">
+                          Đăng ký: ${enrollDate}
+                        </div>
+                      </div>
+                      <div class="flex-shrink-0">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold ${statusClass}">
+                          ${statusText}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                `;
+            })
+            .join("");
+        } catch (error) {
+          console.error("Error loading students:", error);
+          document.getElementById("course-students-list").innerHTML =
+            '<p class="text-red-500 text-center py-4">Không thể tải danh sách học viên</p>';
         }
       }
 

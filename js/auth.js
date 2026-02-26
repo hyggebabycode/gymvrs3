@@ -2,6 +2,17 @@
 // AUTHENTICATION HANDLERS
 // =====================================================
 
+// Get supabase client
+const supabaseClient = window.supabaseClient;
+
+// Check if Supabase is initialized
+if (!supabaseClient) {
+  console.error("Supabase client not initialized!");
+  alert(
+    "Lỗi: Không thể kết nối đến server. Vui lòng kiểm tra kết nối internet và thử lại.",
+  );
+}
+
 // Show alert message
 function showAlert(message, type = "error") {
   const alertDiv = document.getElementById("alert-message");
@@ -61,6 +72,15 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   const password = document.getElementById("login-password").value;
   const btnText = document.getElementById("login-btn-text");
 
+  // Check if supabaseClient exists
+  if (!supabaseClient) {
+    showAlert(
+      "Lỗi: Không thể kết nối đến server. Vui lòng kiểm tra kết nối internet.",
+      "error",
+    );
+    return;
+  }
+
   // Show loading
   btnText.textContent = "Đang đăng nhập...";
 
@@ -89,8 +109,43 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
 
     const user = users[0];
 
-    // Check password (plaintext comparison for demo)
-    if (user.password_hash !== password) {
+    // Check password with bcrypt or plaintext
+    let passwordMatch = false;
+
+    try {
+      // Check if password is a bcrypt hash
+      if (
+        user.password_hash.startsWith("$2a$") ||
+        user.password_hash.startsWith("$2b$")
+      ) {
+        // It's a bcrypt hash - check if bcrypt is available
+        if (typeof bcrypt !== "undefined" && bcrypt && bcrypt.compare) {
+          passwordMatch = await bcrypt.compare(password, user.password_hash);
+          console.log("✅ Used bcrypt comparison");
+        } else {
+          console.warn(
+            "⚠️ Bcrypt not available, cannot verify hashed password",
+          );
+          showAlert(
+            "Lỗi hệ thống: Không thể xác thực mật khẩu được mã hóa. Vui lòng thử lại sau.",
+            "error",
+          );
+          btnText.textContent = "Đăng nhập";
+          return;
+        }
+      } else {
+        // It's plaintext (for backward compatibility)
+        passwordMatch = user.password_hash === password;
+        console.log("✅ Used plaintext comparison");
+      }
+    } catch (error) {
+      console.error("Password comparison error:", error);
+      // Fallback to plaintext comparison
+      passwordMatch = user.password_hash === password;
+      console.log("⚠️ Fallback to plaintext comparison");
+    }
+
+    if (!passwordMatch) {
       showAlert("Email hoặc mật khẩu không đúng!", "error");
       btnText.textContent = "Đăng nhập";
       return;
@@ -142,6 +197,15 @@ document
     ).value;
     const btnText = document.getElementById("signup-btn-text");
 
+    // Check if supabaseClient exists
+    if (!supabaseClient) {
+      showAlert(
+        "Lỗi: Không thể kết nối đến server. Vui lòng kiểm tra kết nối internet.",
+        "error",
+      );
+      return;
+    }
+
     // Validate
     if (password.length < 6) {
       showAlert("Mật khẩu phải có ít nhất 6 ký tự!", "error");
@@ -165,10 +229,13 @@ document
         return;
       }
 
-      // Insert new user (plaintext password for demo)
+      // Hash password with bcrypt
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Insert new user with hashed password
       const userData = {
         email: email,
-        password_hash: password, // Lưu plaintext cho đơn giản
+        password_hash: hashedPassword, // Lưu bcrypt hash
         full_name: fullname,
         phone: phone,
         role: "user",
@@ -295,9 +362,23 @@ function logout() {
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     clearOldSessionOnAuthPage();
+    checkSupabaseConnection();
   });
 } else {
   clearOldSessionOnAuthPage();
+  checkSupabaseConnection();
+}
+
+// Check Supabase connection on page load
+function checkSupabaseConnection() {
+  setTimeout(() => {
+    if (!window.supabaseClient) {
+      showAlert(
+        "⚠️ Không thể kết nối đến server. Vui lòng kiểm tra:\n1. Kết nối internet\n2. Mở DevTools (F12) để xem chi tiết lỗi\n3. Thử reload lại trang",
+        "error",
+      );
+    }
+  }, 1000);
 }
 
 // Export functions

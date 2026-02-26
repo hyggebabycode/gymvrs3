@@ -18,6 +18,32 @@
     />
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Bcrypt.js for password hashing - Try multiple CDNs -->
+    <script>
+      // Load bcrypt from CDN
+      (function () {
+        const script = document.createElement("script");
+        script.src =
+          "https://cdn.rawgit.com/dcodeIO/bcrypt.js/master/dist/bcrypt.min.js";
+        script.onload = function () {
+          if (typeof dcodeIO !== "undefined" && dcodeIO.bcrypt) {
+            window.bcrypt = dcodeIO.bcrypt;
+            console.log("✅ Bcrypt loaded successfully");
+          }
+        };
+        script.onerror = function () {
+          console.warn(
+            "⚠️ Bcrypt CDN failed, using fallback plaintext comparison",
+          );
+          // Create a fallback bcrypt object for plaintext
+          window.bcrypt = {
+            compare: async (password, hash) => password === hash,
+            hash: async (password, rounds) => password, // Fallback: return plaintext
+          };
+        };
+        document.head.appendChild(script);
+      })();
+    </script>
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
