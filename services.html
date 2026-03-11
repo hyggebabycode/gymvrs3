@@ -18,13 +18,12 @@
     />
     <script id="tailwind-config">
       tailwind.config = {
-        darkMode: "class",
+
         theme: {
           extend: {
             colors: {
               primary: "#f42559",
               "background-light": "#fcf8f9",
-              "background-dark": "#221014",
             },
             fontFamily: {
               display: ["Lexend", "sans-serif"],
@@ -58,30 +57,7 @@
       }
 
       /* ====================== LUXURY DARK MODE ====================== */
-      :root {
-        --bg-primary: #ffffff;
-        --bg-secondary: #fcf8f9;
-        --text-primary: #1c0d11;
-        --text-secondary: #9c495e;
-        --border-color: #f4e7ea;
-        --card-bg: #ffffff;
-        --header-bg: rgba(255, 255, 255, 0.85);
-        --accent-gold: #d4af37;
-        --shadow-luxury: 0 4px 24px rgba(212, 175, 55, 0);
-        --transition-speed: 0.4s;
-      }
-      html.dark {
-        --bg-primary: #1a0b10;
-        --bg-secondary: #23101a;
-        --text-primary: #f9e8d0;
-        --text-secondary: #d4889c;
-        --border-color: #5a2234;
-        --card-bg: #2d1520;
-        --header-bg: rgba(18, 7, 12, 0.96);
-        --accent-gold: #d4af37;
-        --shadow-luxury:
-          0 6px 40px rgba(212, 175, 55, 0.2), 0 2px 14px rgba(180, 50, 80, 0.15);
-      }
+      
       *,
       *::before,
       *::after {
@@ -91,142 +67,17 @@
           color var(--transition-speed) ease,
           box-shadow var(--transition-speed) ease;
       }
-      html.dark body {
-        background-color: var(--bg-primary) !important;
-        color: var(--text-primary) !important;
-      }
-      html.dark header {
-        background: var(--header-bg) !important;
-        border-color: var(--border-color) !important;
-      }
-      html.dark .bg-white,
-      html.dark .bg-background-light {
-        background-color: var(--card-bg) !important;
-      }
-      html.dark .shadow-lg {
-        box-shadow: var(--shadow-luxury) !important;
-      }
-      html.dark .hover\:shadow-2xl:hover {
-        box-shadow: 0 8px 48px rgba(212, 175, 55, 0.2) !important;
-      }
-      html.dark .bg-\[\#fcf8f9\] {
-        background-color: var(--bg-secondary) !important;
-      }
-      html.dark .dark\:bg-background-dark {
-        background-color: var(--bg-primary) !important;
-      }
-      html.dark .dark\:bg-\[\#2d161b\],
-      html.dark .bg-white {
-        background-color: var(--card-bg) !important;
-      }
-      html.dark footer,
-      html.dark .bg-\[\#2d161b\] {
-        background-color: #120812 !important;
-      }
-      html.dark .dark\:text-white,
-      html.dark .dark\:text-\[\#fcf8f9\] {
-        color: var(--text-primary) !important;
-      }
-      html.dark .dark\:text-pink-300,
-      html.dark .text-\[\#9c495e\] {
-        color: var(--text-secondary) !important;
-      }
-      html.dark .dark\:border-\[\#3d1a24\] {
-        border-color: var(--border-color) !important;
-      }
-      html.dark input:not([type="submit"]):not([type="button"]),
-      html.dark textarea,
-      html.dark select {
-        background-color: var(--bg-secondary) !important;
-        color: var(--text-primary) !important;
-        border-color: var(--border-color) !important;
-      }
 
       /* Toggle button */
-      #dark-mode-toggle {
-        position: relative;
-        width: 52px;
-        height: 28px;
-        border-radius: 9999px;
-        border: 1px solid var(--accent-gold);
-        background: linear-gradient(135deg, #2d1520 0%, #3d1a24 100%);
-        cursor: pointer;
-        outline: none;
-        transition: all 0.4s ease;
-        box-shadow: 0 0 0px rgba(212, 175, 55, 0);
-        flex-shrink: 0;
-      }
-      html:not(.dark) #dark-mode-toggle {
-        background: linear-gradient(135deg, #fef9e7 0%, #fde68a 100%);
-        border-color: #f59e0b;
-        box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
-      }
-      #dark-mode-toggle:hover {
-        box-shadow: 0 0 14px rgba(212, 175, 55, 0.55);
-      }
-      .toggle-thumb {
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #d4af37 0%, #b87333 100%);
-        transition:
-          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-          background 0.4s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-      }
-      html.dark .toggle-thumb {
-        transform: translateX(24px);
-        background: linear-gradient(135deg, #c0c0c0 0%, #9a9a9a 100%);
-      }
-      .toggle-icon-sun,
-      .toggle-icon-moon {
-        position: absolute;
-        transition:
-          opacity 0.3s ease,
-          transform 0.3s ease;
-        font-size: 13px;
-        line-height: 1;
-      }
-      .toggle-icon-sun {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
-      .toggle-icon-moon {
-        opacity: 0;
-        transform: scale(0.5) rotate(-90deg);
-      }
-      html.dark .toggle-icon-sun {
-        opacity: 0;
-        transform: scale(0.5) rotate(90deg);
-      }
-      html.dark .toggle-icon-moon {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
     </style>
-    <!-- Anti-flash dark mode -->
-    <script>
-      (function () {
-        var s = localStorage.getItem("gymheart-theme");
-        var p = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (s === "dark" || (!s && p))
-          document.documentElement.classList.add("dark");
-      })();
-    </script>
+    
   </head>
   <body
-    class="bg-background-light dark:bg-background-dark text-[#1c0d11] dark:text-[#fcf8f9] min-h-screen"
+    class="bg-background-light text-[#1c0d11] min-h-screen"
   >
     <!-- Top Navigation Bar -->
     <header
-      class="w-full border-b border-solid border-[#f4e7ea] dark:border-[#3d1a24] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50"
+      class="w-full border-b border-solid border-[#f4e7ea] bg-white/80 backdrop-blur-md sticky top-0 z-50"
     >
       <div
         class="max-w-[1200px] mx-auto px-4 sm:px-10 py-3 flex items-center justify-between"
@@ -239,29 +90,29 @@
             >
           </div>
           <h2
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-xl font-bold leading-tight tracking-tight"
+            class="text-[#1c0d11] text-xl font-bold leading-tight tracking-tight"
           >
             GymHeart
           </h2>
         </div>
         <nav class="hidden md:flex items-center gap-8">
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html"
             >Trang chủ</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html#courses"
             >Khóa học</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="facilities.html"
             >Cơ sở vật chất</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="coaches.html"
             >HLV</a
           >
@@ -271,27 +122,18 @@
             >Dịch vụ</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html#community"
             >Cộng đồng</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html#contact"
             >Liên hệ</a
           >
         </nav>
         <div class="flex gap-3 items-center">
-          <button
-            id="dark-mode-toggle"
-            aria-label="Chuyển chế độ tối/sáng"
-            title="Chế độ tối/sáng"
-          >
-            <span class="toggle-thumb">
-              <span class="toggle-icon-sun">☀️</span>
-              <span class="toggle-icon-moon">🌙</span>
-            </span>
-          </button>
+          
           <button
             onclick="window.location.href = 'auth.html'"
             class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
@@ -303,15 +145,15 @@
     </header>
 
     <!-- Services Content -->
-    <section class="py-20 bg-white dark:bg-[#2d161b] min-h-screen">
+    <section class="py-20 bg-white min-h-screen">
       <div class="max-w-[1200px] mx-auto px-4 sm:px-10">
         <!-- Part 1: Các khóa học -->
         <div class="mb-16">
           <div class="text-center mb-12">
-            <h2 class="text-4xl font-black text-[#1c0d11] dark:text-white mb-4">
+            <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
               Các Khóa Học
             </h2>
-            <p class="text-[#9c495e] dark:text-pink-300 text-lg">
+            <p class="text-[#9c495e] text-lg">
               Chọn khóa học phù hợp với mục tiêu của bạn
             </p>
           </div>
@@ -334,12 +176,12 @@
         </div>
 
         <!-- Part 2: Đơn hàng của tôi -->
-        <div class="border-t border-[#f4e7ea] dark:border-[#3d1a24] pt-16">
+        <div class="border-t border-[#f4e7ea] pt-16">
           <div class="text-center mb-12">
-            <h2 class="text-4xl font-black text-[#1c0d11] dark:text-white mb-4">
+            <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
               Đơn Hàng Của Tôi
             </h2>
-            <p class="text-[#9c495e] dark:text-pink-300 text-lg">
+            <p class="text-[#9c495e] text-lg">
               Theo dõi các khóa học bạn đã đăng ký
             </p>
           </div>
@@ -347,13 +189,13 @@
           <!-- Not logged in state -->
           <div
             id="orders-not-logged-in"
-            class="hidden text-center py-12 bg-background-light dark:bg-[#3d1a24] rounded-xl"
+            class="hidden text-center py-12 bg-background-light rounded-xl"
           >
             <span class="material-symbols-outlined text-6xl text-primary mb-4"
               >lock</span
             >
             <h3 class="text-xl font-bold mb-2">Vui lòng đăng nhập</h3>
-            <p class="text-[#9c495e] dark:text-pink-300 mb-6">
+            <p class="text-[#9c495e] mb-6">
               Đăng nhập để xem các khóa học bạn đã đăng ký
             </p>
             <button
@@ -380,13 +222,13 @@
           <!-- No orders state -->
           <div
             id="orders-empty"
-            class="hidden text-center py-12 bg-background-light dark:bg-[#3d1a24] rounded-xl"
+            class="hidden text-center py-12 bg-background-light rounded-xl"
           >
             <span class="material-symbols-outlined text-6xl text-[#9c495e] mb-4"
               >shopping_bag</span
             >
             <h3 class="text-xl font-bold mb-2">Chưa có đơn hàng nào</h3>
-            <p class="text-[#9c495e] dark:text-pink-300 mb-6">
+            <p class="text-[#9c495e] mb-6">
               Hãy đăng ký khóa học để bắt đầu hành trình của bạn!
             </p>
             <a
@@ -471,7 +313,7 @@
             coursesGrid.innerHTML = courses
               .map(
                 (course) => `
-              <div class="bg-white dark:bg-[#3d1a24] rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+              <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
                 <div class="h-48 overflow-hidden">
                   <img src="${course.image_url || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800"}" 
                        alt="${course.course_name}" 
@@ -482,7 +324,7 @@
                     <h3 class="text-xl font-bold flex-1">${course.course_name}</h3>
                     ${getLevelBadge(course.level)}
                   </div>
-                  <p class="text-[#9c495e] dark:text-pink-300 text-sm mb-4 line-clamp-2">
+                  <p class="text-[#9c495e] text-sm mb-4 line-clamp-2">
                     ${course.description || ""}
                   </p>
                   <div class="space-y-2 mb-4">
@@ -495,7 +337,7 @@
                       <span>${course.current_students}/${course.max_students} học viên</span>
                     </div>
                   </div>
-                  <div class="flex items-center justify-between pt-4 border-t border-[#f4e7ea] dark:border-[#3d1a24]">
+                  <div class="flex items-center justify-between pt-4 border-t border-[#f4e7ea]">
                     <div class="text-primary text-2xl font-black">
                       ${formatCurrency(course.price)}
                     </div>
@@ -567,7 +409,7 @@
             ordersList.innerHTML = enrollments
               .map(
                 (enrollment) => `
-              <div class="bg-background-light dark:bg-[#3d1a24] rounded-xl p-6 shadow-lg hover:shadow-xl transition-all">
+              <div class="bg-background-light rounded-xl p-6 shadow-lg hover:shadow-xl transition-all">
                 <div class="flex flex-col md:flex-row gap-6">
                   <!-- Course Image -->
                   <div class="w-full md:w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
@@ -581,7 +423,7 @@
                     <div class="flex items-start justify-between mb-3">
                       <div>
                         <h3 class="text-xl font-bold mb-1">${enrollment.courses.course_name}</h3>
-                        <p class="text-sm text-[#9c495e] dark:text-pink-300">${enrollment.courses.description || ""}</p>
+                        <p class="text-sm text-[#9c495e]">${enrollment.courses.description || ""}</p>
                       </div>
                       ${getStatusBadge(enrollment.status)}
                     </div>
@@ -598,7 +440,7 @@
                       <div>
                         <p class="text-xs text-[#9c495e] mb-1">Tiến độ</p>
                         <div class="flex items-center gap-2">
-                          <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                          <div class="flex-1 bg-gray-200 rounded-full h-2">
                             <div class="bg-primary h-2 rounded-full" style="width: ${enrollment.progress_percentage}%"></div>
                           </div>
                           <span class="text-sm font-semibold">${enrollment.progress_percentage}%</span>
@@ -633,19 +475,6 @@
         loadOrders();
       });
     </script>
-    <script>
-      (function () {
-        var toggle = document.getElementById("dark-mode-toggle");
-        if (!toggle) return;
-        toggle.addEventListener("click", function () {
-          var isDark = document.documentElement.classList.toggle("dark");
-          localStorage.setItem("gymheart-theme", isDark ? "dark" : "light");
-          toggle.style.transform = "scale(0.92)";
-          setTimeout(function () {
-            toggle.style.transform = "scale(1)";
-          }, 180);
-        });
-      })();
-    </script>
+    
   </body>
 </html>

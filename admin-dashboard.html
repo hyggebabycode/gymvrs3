@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="light" lang="vi">
+<html lang="vi">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -16,13 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script id="tailwind-config">
       tailwind.config = {
-        darkMode: "class",
         theme: {
           extend: {
             colors: {
               primary: "#f42559",
               "background-light": "#f8f5f6",
-              "background-dark": "#221014",
             },
             fontFamily: {
               display: ["Lexend"],
@@ -1535,18 +1533,26 @@
                     <label class="text-xs font-bold text-[#9c495e] uppercase">Cập nhật lần cuối</label>
                     <p class="text-sm font-semibold text-[#1c0d11] mt-1">${new Date(user.updated_at || user.created_at).toLocaleDateString("vi-VN", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</p>
                   </div>
-                  ${user.date_of_birth ? `
+                  ${
+                    user.date_of_birth
+                      ? `
                   <div>
                     <label class="text-xs font-bold text-[#9c495e] uppercase">Ngày sinh</label>
                     <p class="text-sm font-semibold text-[#1c0d11] mt-1">${new Date(user.date_of_birth).toLocaleDateString("vi-VN")}</p>
                   </div>
-                  ` : ""}
-                  ${user.address ? `
+                  `
+                      : ""
+                  }
+                  ${
+                    user.address
+                      ? `
                   <div class="col-span-2">
                     <label class="text-xs font-bold text-[#9c495e] uppercase">Địa chỉ</label>
                     <p class="text-sm font-semibold text-[#1c0d11] mt-1">${user.address}</p>
                   </div>
-                  ` : ""}
+                  `
+                      : ""
+                  }
                 </div>
               </div>
 
@@ -1586,11 +1592,13 @@
                                     : "Chờ duyệt"
                             }</span>
                             <span class="px-2 py-1 rounded-full font-bold ${
-                              enrollment.payment_status === "paid" || enrollment.payment_status === "completed"
+                              enrollment.payment_status === "paid" ||
+                              enrollment.payment_status === "completed"
                                 ? "bg-green-100 text-green-700"
                                 : "bg-orange-100 text-orange-700"
                             }">${
-                              enrollment.payment_status === "paid" || enrollment.payment_status === "completed"
+                              enrollment.payment_status === "paid" ||
+                              enrollment.payment_status === "completed"
                                 ? "Đã thanh toán"
                                 : "Chưa thanh toán"
                             }</span>
@@ -1619,7 +1627,9 @@
           `;
 
           document.getElementById("user-detail-content").innerHTML = content;
-          document.getElementById("user-detail-modal").classList.remove("hidden");
+          document
+            .getElementById("user-detail-modal")
+            .classList.remove("hidden");
           document.getElementById("user-detail-modal").classList.add("flex");
         } catch (error) {
           console.error("Error loading user detail:", error);
@@ -1633,41 +1643,57 @@
       }
 
       async function resetUserPassword(userId, userEmail) {
-        const newPassword = prompt(`Đặt mật khẩu mới cho: ${userEmail}\n\n⚠️ LƯU Ý:\n- Mật khẩu tối thiểu 6 ký tự\n- Hãy ghi nhớ để gửi cho người dùng\n\nNhập mật khẩu mới:`);
-        
+        const newPassword = prompt(
+          `Đặt mật khẩu mới cho: ${userEmail}\n\n⚠️ LƯU Ý:\n- Mật khẩu tối thiểu 6 ký tự\n- Hãy ghi nhớ để gửi cho người dùng\n\nNhập mật khẩu mới:`,
+        );
+
         if (!newPassword) return;
-        
+
         if (newPassword.length < 6) {
           alert("Mật khẩu phải có ít nhất 6 ký tự!");
           return;
         }
 
-        if (!confirm(`Xác nhận đặt lại mật khẩu?\n\nTài khoản: ${userEmail}\nMật khẩu mới: ${newPassword}`)) return;
+        if (
+          !confirm(
+            `Xác nhận đặt lại mật khẩu?\n\nTài khoản: ${userEmail}\nMật khẩu mới: ${newPassword}`,
+          )
+        )
+          return;
 
         try {
           // Call RPC function to reset password
-          const { data, error } = await supabaseClient.rpc('admin_reset_user_password', {
-            target_user_id: userId,
-            new_password: newPassword
-          });
+          const { data, error } = await supabaseClient.rpc(
+            "admin_reset_user_password",
+            {
+              target_user_id: userId,
+              new_password: newPassword,
+            },
+          );
 
           if (error) {
             console.error("Error resetting password:", error);
-            
+
             // Nếu function chưa tồn tại, hiển thị hướng dẫn
             if (error.message.includes("function") || error.code === "42883") {
-              alert(`⚠️ Chưa cài đặt chức năng reset password!\n\nHƯỚNG DẪN:\n1. Vào Supabase Dashboard → SQL Editor\n2. Chạy file: enable_admin_password_reset.sql\n3. Thử lại\n\nHOẶC:\n- Vào Authentication → Users trong Supabase\n- Tìm user và click "Reset Password"\n- Gửi email reset cho user`);
+              alert(
+                `⚠️ Chưa cài đặt chức năng reset password!\n\nHƯỚNG DẪN:\n1. Vào Supabase Dashboard → SQL Editor\n2. Chạy file: enable_admin_password_reset.sql\n3. Thử lại\n\nHOẶC:\n- Vào Authentication → Users trong Supabase\n- Tìm user và click "Reset Password"\n- Gửi email reset cho user`,
+              );
             } else {
               alert("Có lỗi xảy ra: " + error.message);
             }
             return;
           }
 
-          alert(`✅ Đặt lại mật khẩu thành công!\n\n📧 Tài khoản: ${userEmail}\n🔑 Mật khẩu mới: ${newPassword}\n\n⚠️ Hãy gửi thông tin này cho người dùng!`);
-          
+          alert(
+            `✅ Đặt lại mật khẩu thành công!\n\n📧 Tài khoản: ${userEmail}\n🔑 Mật khẩu mới: ${newPassword}\n\n⚠️ Hãy gửi thông tin này cho người dùng!`,
+          );
+
           // Copy to clipboard
           try {
-            await navigator.clipboard.writeText(`Tài khoản: ${userEmail}\nMật khẩu mới: ${newPassword}`);
+            await navigator.clipboard.writeText(
+              `Tài khoản: ${userEmail}\nMật khẩu mới: ${newPassword}`,
+            );
             console.log("Đã copy thông tin vào clipboard!");
           } catch (e) {
             console.log("Không thể copy tự động");

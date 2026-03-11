@@ -18,13 +18,12 @@
     />
     <script id="tailwind-config">
       tailwind.config = {
-        darkMode: "class",
+
         theme: {
           extend: {
             colors: {
               primary: "#f42559",
               "background-light": "#fcf8f9",
-              "background-dark": "#221014",
             },
             fontFamily: {
               display: ["Lexend", "sans-serif"],
@@ -61,36 +60,7 @@
       }
 
       /* ====================== LUXURY DARK MODE ====================== */
-      :root {
-        --bg-primary: #ffffff;
-        --bg-secondary: #fcf8f9;
-        --text-primary: #1c0d11;
-        --text-secondary: #9c495e;
-        --border-color: #f4e7ea;
-        --card-bg: #ffffff;
-        --header-bg: rgba(255, 255, 255, 0.85);
-        --accent-gold: #d4af37;
-        --accent-copper: #b87333;
-        --accent-silver: #c0c0c0;
-        --shadow-luxury: 0 4px 24px rgba(212, 175, 55, 0);
-        --transition-speed: 0.4s;
-      }
-
-      html.dark {
-        /* ✦ WARM WINE LUXURY PALETTE ✦ */
-        --bg-primary: #1a0b10; /* deep wine-black — body  */
-        --bg-secondary: #23101a; /* deep plum — alt section */
-        --text-primary: #f9e8d0; /* warm cream — headings   */
-        --text-secondary: #d4889c; /* dusty rose — muted text */
-        --border-color: #5a2234; /* deep rose border        */
-        --card-bg: #2d1520; /* warm card background    */
-        --header-bg: rgba(18, 7, 12, 0.96);
-        --accent-gold: #d4af37;
-        --accent-copper: #b87333;
-        --accent-silver: #c0c0c0;
-        --shadow-luxury:
-          0 6px 40px rgba(212, 175, 55, 0.2), 0 2px 14px rgba(180, 50, 80, 0.15);
-      }
+      
 
       /* Global smooth transition */
       *,
@@ -102,155 +72,15 @@
           color var(--transition-speed) ease,
           box-shadow var(--transition-speed) ease;
       }
-
-      /* Override Tailwind dark mode with CSS vars */
-      html.dark body {
-        background-color: var(--bg-primary) !important;
-        color: var(--text-primary) !important;
-      }
-      html.dark header {
-        background: var(--header-bg) !important;
-        border-color: var(--border-color) !important;
-      }
-      html.dark .bg-white,
-      html.dark .bg-background-light {
-        background-color: var(--card-bg) !important;
-      }
-      html.dark section {
-        background-color: var(--bg-secondary);
-      }
-      /* Luxury card glow on dark */
-      html.dark .shadow-lg {
-        box-shadow: var(--shadow-luxury) !important;
-      }
-      html.dark .hover\:shadow-2xl:hover {
-        box-shadow: 0 8px 48px rgba(212, 175, 55, 0.2) !important;
-      }
-
-      /* ── Background overrides ── */
-      html.dark .bg-\[\#fcf8f9\],
-      html.dark .bg-background-light {
-        background-color: var(--bg-secondary) !important;
-      }
-      html.dark .dark\:bg-background-dark,
-      html.dark .dark\:bg-\[\#1a0b10\] {
-        background-color: var(--bg-primary) !important;
-      }
-      html.dark .bg-white.dark\:bg-\[\#2d161b\],
-      html.dark .dark\:bg-\[\#2d161b\] {
-        background-color: var(--card-bg) !important;
-      }
-      html.dark footer,
-      html.dark .bg-\[\#2d161b\] {
-        background-color: #120812 !important;
-      }
-      /* ── Text color overrides ── */
-      html.dark .dark\:text-white,
-      html.dark .dark\:text-\[\#fcf8f9\] {
-        color: var(--text-primary) !important;
-      }
-      html.dark .dark\:text-pink-300,
-      html.dark .text-\[\#9c495e\] {
-        color: var(--text-secondary) !important;
-      }
-      /* ── Border overrides ── */
-      html.dark .dark\:border-\[\#3d1a24\] {
-        border-color: var(--border-color) !important;
-      }
-      /* ── Input / form ── */
-      html.dark input:not([type="submit"]):not([type="button"]),
-      html.dark textarea,
-      html.dark select {
-        background-color: var(--bg-secondary) !important;
-        color: var(--text-primary) !important;
-        border-color: var(--border-color) !important;
-      }
-
-      /* ===== LUXURY TOGGLE BUTTON ===== */
-      #dark-mode-toggle {
-        position: relative;
-        width: 52px;
-        height: 28px;
-        border-radius: 9999px;
-        border: 1px solid var(--accent-gold);
-        background: linear-gradient(135deg, #2d1520 0%, #3d1a24 100%);
-        cursor: pointer;
-        outline: none;
-        transition: all 0.4s ease;
-        box-shadow: 0 0 0px rgba(212, 175, 55, 0);
-        flex-shrink: 0;
-      }
-      html:not(.dark) #dark-mode-toggle {
-        background: linear-gradient(135deg, #fef9e7 0%, #fde68a 100%);
-        border-color: #f59e0b;
-        box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
-      }
-      #dark-mode-toggle:hover {
-        box-shadow: 0 0 14px rgba(212, 175, 55, 0.55);
-      }
-      .toggle-thumb {
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #d4af37 0%, #b87333 100%);
-        transition:
-          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-          background 0.4s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-      }
-      html.dark .toggle-thumb {
-        transform: translateX(24px);
-        background: linear-gradient(135deg, #c0c0c0 0%, #9a9a9a 100%);
-      }
-      .toggle-icon-sun,
-      .toggle-icon-moon {
-        position: absolute;
-        transition:
-          opacity 0.3s ease,
-          transform 0.3s ease;
-        font-size: 13px;
-        line-height: 1;
-      }
-      .toggle-icon-sun {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
-      .toggle-icon-moon {
-        opacity: 0;
-        transform: scale(0.5) rotate(-90deg);
-      }
-      html.dark .toggle-icon-sun {
-        opacity: 0;
-        transform: scale(0.5) rotate(90deg);
-      }
-      html.dark .toggle-icon-moon {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
     </style>
-    <!-- Anti-flash dark mode: runs before render -->
-    <script>
-      (function () {
-        var s = localStorage.getItem("gymheart-theme");
-        var p = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (s === "dark" || (!s && p))
-          document.documentElement.classList.add("dark");
-      })();
-    </script>
+    
   </head>
   <body
-    class="bg-background-light dark:bg-background-dark text-[#1c0d11] dark:text-[#fcf8f9] min-h-screen"
+    class="bg-background-light text-[#1c0d11] min-h-screen"
   >
     <!-- Top Navigation Bar -->
     <header
-      class="w-full border-b border-solid border-[#f4e7ea] dark:border-[#3d1a24] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50"
+      class="w-full border-b border-solid border-[#f4e7ea] bg-white/80 backdrop-blur-md sticky top-0 z-50"
     >
       <div
         class="max-w-[1200px] mx-auto px-4 sm:px-10 py-3 flex items-center justify-between"
@@ -263,55 +93,46 @@
             >
           </div>
           <h2
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-xl font-bold leading-tight tracking-tight"
+            class="text-[#1c0d11] text-xl font-bold leading-tight tracking-tight"
           >
             GymHeart
           </h2>
         </div>
         <nav class="hidden md:flex items-center gap-8">
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="#home"
             >Trang chủ</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="facilities.html"
             >Cơ sở vật chất</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="coaches.html"
             >HLV</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="services.html"
             >Dịch vụ</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="#community"
             >Cộng đồng</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="#contact"
             >Liên hệ</a
           >
         </nav>
         <div class="flex gap-3 items-center">
           <!-- Luxury Dark Mode Toggle -->
-          <button
-            id="dark-mode-toggle"
-            aria-label="Chuyển chế độ tối/sáng"
-            title="Chế độ tối/sáng"
-          >
-            <span class="toggle-thumb">
-              <span class="toggle-icon-sun">☀️</span>
-              <span class="toggle-icon-moon">🌙</span>
-            </span>
-          </button>
+          
           <button
             onclick="window.location.href = 'auth.html'"
             class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
@@ -430,13 +251,13 @@
     </section>
 
     <!-- Gallery Showcase -->
-    <section class="bg-white dark:bg-[#2d161b] py-20">
+    <section class="bg-white py-20">
       <div class="max-w-[1400px] mx-auto px-4 sm:px-10">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-black text-[#1c0d11] dark:text-white mb-4">
+          <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
             Không Gian Tập Luyện Đẳng Cấp
           </h2>
-          <p class="text-[#9c495e] dark:text-pink-300 text-lg">
+          <p class="text-[#9c495e] text-lg">
             Cơ sở vật chất hiện đại - Thiết bị cao cấp - Môi trường chuyên
             nghiệp
           </p>
@@ -538,20 +359,20 @@
     <!-- Features Section -->
     <section
       id="features"
-      class="py-20 bg-background-light dark:bg-background-dark"
+      class="py-20 bg-background-light"
     >
       <div class="max-w-[1200px] mx-auto px-4 sm:px-10">
         <div class="text-center mb-16">
-          <h2 class="text-4xl font-black text-[#1c0d11] dark:text-white mb-4">
+          <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
             Tại Sao Chọn GymHeart?
           </h2>
-          <p class="text-[#9c495e] dark:text-pink-300 text-lg">
+          <p class="text-[#9c495e] text-lg">
             Những lợi ích vượt trội khi tập luyện cùng chúng tôi
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div
-            class="bg-white dark:bg-[#2d161b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all group"
+            class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all group"
           >
             <div class="h-48 overflow-hidden">
               <img
@@ -568,10 +389,10 @@
                   >psychology</span
                 >
               </div>
-              <h3 class="text-xl font-bold mb-3 text-[#1c0d11] dark:text-white">
+              <h3 class="text-xl font-bold mb-3 text-[#1c0d11]">
                 Lộ Trình Cá Nhân Hóa
               </h3>
-              <p class="text-[#9c495e] dark:text-pink-300 mb-4">
+              <p class="text-[#9c495e] mb-4">
                 Chương trình tập luyện được thiết kế riêng cho mục tiêu và thể
                 trạng của bạn.
               </p>
@@ -593,7 +414,7 @@
           </div>
 
           <div
-            class="bg-white dark:bg-[#2d161b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all group"
+            class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all group"
           >
             <div class="h-48 overflow-hidden">
               <img
@@ -610,10 +431,10 @@
                   >fitness_center</span
                 >
               </div>
-              <h3 class="text-xl font-bold mb-3 text-[#1c0d11] dark:text-white">
+              <h3 class="text-xl font-bold mb-3 text-[#1c0d11]">
                 Thiết Bị Hiện Đại
               </h3>
-              <p class="text-[#9c495e] dark:text-pink-300 mb-4">
+              <p class="text-[#9c495e] mb-4">
                 Trang thiết bị cao cấp từ các thương hiệu hàng đầu thế giới.
               </p>
               <ul class="space-y-2 text-sm text-[#9c495e]">
@@ -634,7 +455,7 @@
           </div>
 
           <div
-            class="bg-white dark:bg-[#2d161b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all group"
+            class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all group"
           >
             <div class="h-48 overflow-hidden">
               <img
@@ -651,10 +472,10 @@
                   >groups</span
                 >
               </div>
-              <h3 class="text-xl font-bold mb-3 text-[#1c0d11] dark:text-white">
+              <h3 class="text-xl font-bold mb-3 text-[#1c0d11]">
                 Huấn Luyện Viên Pro
               </h3>
-              <p class="text-[#9c495e] dark:text-pink-300 mb-4">
+              <p class="text-[#9c495e] mb-4">
                 Đội ngũ HLV giàu kinh nghiệm, nhiệt tình và tận tâm với học
                 viên.
               </p>
@@ -679,13 +500,13 @@
     </section>
 
     <!-- Courses Section -->
-    <section id="courses" class="py-20 bg-white dark:bg-[#2d161b]">
+    <section id="courses" class="py-20 bg-white">
       <div class="max-w-[1200px] mx-auto px-4 sm:px-10">
         <div class="text-center mb-16">
-          <h2 class="text-4xl font-black text-[#1c0d11] dark:text-white mb-4">
+          <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
             Khóa Học Phổ Biến
           </h2>
-          <p class="text-[#9c495e] dark:text-pink-300 text-lg">
+          <p class="text-[#9c495e] text-lg">
             Lựa chọn khóa học phù hợp với mục tiêu của bạn
           </p>
         </div>
@@ -714,14 +535,14 @@
       class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
     >
       <div
-        class="bg-white dark:bg-[#2d161b] rounded-xl max-w-3xl w-full max-h-[90vh] overflow-hidden"
+        class="bg-white rounded-xl max-w-3xl w-full max-h-[90vh] overflow-hidden"
       >
         <div
-          class="p-6 border-b border-[#f4e7ea] dark:border-[#3d1a24] flex items-center justify-between"
+          class="p-6 border-b border-[#f4e7ea] flex items-center justify-between"
         >
           <h3
             id="modal-course-title"
-            class="text-2xl font-bold text-[#1c0d11] dark:text-white"
+            class="text-2xl font-bold text-[#1c0d11]"
           >
             Lộ trình học tập
           </h3>
@@ -757,20 +578,20 @@
     <!-- Community Section - Cộng đồng -->
     <section
       id="community"
-      class="py-20 bg-background-light dark:bg-background-dark"
+      class="py-20 bg-background-light"
     >
       <div class="max-w-[1200px] mx-auto px-4 sm:px-10">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-black text-[#1c0d11] dark:text-white mb-4">
+          <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
             Cộng Đồng GymHeart
           </h2>
-          <p class="text-[#9c495e] dark:text-pink-300 text-lg">
+          <p class="text-[#9c495e] text-lg">
             Kết nối với hàng nghìn thành viên nhiệt huyết
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <!-- Testimonial 1 -->
-          <div class="bg-white dark:bg-[#2d161b] rounded-xl p-8 shadow-lg">
+          <div class="bg-white rounded-xl p-8 shadow-lg">
             <div class="flex items-center gap-4 mb-4">
               <img
                 src="https://ui-avatars.com/api/?name=Lan+Anh&background=f42559&color=fff&size=100"
@@ -781,7 +602,7 @@
                 <p class="text-sm text-[#9c495e]">Học viên 6 tháng</p>
               </div>
             </div>
-            <p class="text-[#9c495e] dark:text-pink-300">
+            <p class="text-[#9c495e]">
               "Tôi đã giảm được 12kg trong 4 tháng nhờ lộ trình tập của coach
               Nam. Cảm ơn GymHeart đã thay đổi cuộc sống của tôi!"
             </p>
@@ -794,7 +615,7 @@
             </div>
           </div>
           <!-- Testimonial 2 -->
-          <div class="bg-white dark:bg-[#2d161b] rounded-xl p-8 shadow-lg">
+          <div class="bg-white rounded-xl p-8 shadow-lg">
             <div class="flex items-center gap-4 mb-4">
               <img
                 src="https://ui-avatars.com/api/?name=Minh+Tuan&background=f42559&color=fff&size=100"
@@ -805,7 +626,7 @@
                 <p class="text-sm text-[#9c495e]">Học viên 1 năm</p>
               </div>
             </div>
-            <p class="text-[#9c495e] dark:text-pink-300">
+            <p class="text-[#9c495e]">
               "Môi trường tập luyện chuyên nghiệp, cộng đồng thân thiện. Cơ sở
               vật chất hiện đại bậc nhất Hà Nội!"
             </p>
@@ -820,7 +641,7 @@
         </div>
         <!-- Social Proof -->
         <div class="text-center">
-          <p class="text-[#9c495e] dark:text-pink-300 mb-4">
+          <p class="text-[#9c495e] mb-4">
             Theo dõi chúng tôi trên mạng xã hội
           </p>
           <div class="flex gap-4 justify-center">
@@ -845,13 +666,13 @@
     </section>
 
     <!-- Contact Section - Liên hệ -->
-    <section id="contact" class="py-20 bg-white dark:bg-[#2d161b]">
+    <section id="contact" class="py-20 bg-white">
       <div class="max-w-[1200px] mx-auto px-4 sm:px-10">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-black text-[#1c0d11] dark:text-white mb-4">
+          <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
             Liên Hệ Với Chúng Tôi
           </h2>
-          <p class="text-[#9c495e] dark:text-pink-300 text-lg">
+          <p class="text-[#9c495e] text-lg">
             Chúng tôi luôn sẵn sàng hỗ trợ bạn
           </p>
         </div>
@@ -866,7 +687,7 @@
               </div>
               <div>
                 <h3 class="font-bold text-lg mb-1">Địa chỉ</h3>
-                <p class="text-[#9c495e] dark:text-pink-300">
+                <p class="text-[#9c495e]">
                   123 Đường ABC, Quận Cầu Giấy, Hà Nội
                 </p>
               </div>
@@ -877,7 +698,7 @@
               </div>
               <div>
                 <h3 class="font-bold text-lg mb-1">Điện thoại</h3>
-                <p class="text-[#9c495e] dark:text-pink-300">
+                <p class="text-[#9c495e]">
                   Hotline: 0901 234 567<br />
                   Zalo: 0907 654 321
                 </p>
@@ -889,7 +710,7 @@
               </div>
               <div>
                 <h3 class="font-bold text-lg mb-1">Email</h3>
-                <p class="text-[#9c495e] dark:text-pink-300">
+                <p class="text-[#9c495e]">
                   info@gymheart.com<br />
                   support@gymheart.com
                 </p>
@@ -901,7 +722,7 @@
               </div>
               <div>
                 <h3 class="font-bold text-lg mb-1">Giờ mở cửa</h3>
-                <p class="text-[#9c495e] dark:text-pink-300">
+                <p class="text-[#9c495e]">
                   Thứ 2 - Thứ 6: 5:30 AM - 10:00 PM<br />
                   Thứ 7 - Chủ Nhật: 6:00 AM - 9:00 PM
                 </p>
@@ -909,7 +730,7 @@
             </div>
           </div>
           <!-- Contact Form -->
-          <div class="bg-background-light dark:bg-[#3d1a24] rounded-xl p-8">
+          <div class="bg-background-light rounded-xl p-8">
             <form class="space-y-4">
               <div>
                 <label class="block text-sm font-semibold mb-2"
@@ -917,7 +738,7 @@
                 >
                 <input
                   type="text"
-                  class="w-full px-4 py-3 rounded-lg border border-[#f4e7ea] dark:border-[#3d1a24] bg-white dark:bg-[#2d161b] focus:outline-none focus:ring-2 focus:ring-primary"
+                  class="w-full px-4 py-3 rounded-lg border border-[#f4e7ea] bg-white focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Nhập họ và tên"
                 />
               </div>
@@ -925,7 +746,7 @@
                 <label class="block text-sm font-semibold mb-2">Email</label>
                 <input
                   type="email"
-                  class="w-full px-4 py-3 rounded-lg border border-[#f4e7ea] dark:border-[#3d1a24] bg-white dark:bg-[#2d161b] focus:outline-none focus:ring-2 focus:ring-primary"
+                  class="w-full px-4 py-3 rounded-lg border border-[#f4e7ea] bg-white focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Nhập email"
                 />
               </div>
@@ -935,7 +756,7 @@
                 >
                 <input
                   type="tel"
-                  class="w-full px-4 py-3 rounded-lg border border-[#f4e7ea] dark:border-[#3d1a24] bg-white dark:bg-[#2d161b] focus:outline-none focus:ring-2 focus:ring-primary"
+                  class="w-full px-4 py-3 rounded-lg border border-[#f4e7ea] bg-white focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Nhập số điện thoại"
                 />
               </div>
@@ -943,7 +764,7 @@
                 <label class="block text-sm font-semibold mb-2">Nội dung</label>
                 <textarea
                   rows="4"
-                  class="w-full px-4 py-3 rounded-lg border border-[#f4e7ea] dark:border-[#3d1a24] bg-white dark:bg-[#2d161b] focus:outline-none focus:ring-2 focus:ring-primary"
+                  class="w-full px-4 py-3 rounded-lg border border-[#f4e7ea] bg-white focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Nhập nội dung cần tư vấn"
                 ></textarea>
               </div>
@@ -979,7 +800,7 @@
 
     <!-- Footer -->
     <footer
-      class="w-full py-8 border-t border-[#f4e7ea] dark:border-[#3d1a24] bg-white dark:bg-[#2d161b]"
+      class="w-full py-8 border-t border-[#f4e7ea] bg-white"
     >
       <div
         class="max-w-[1200px] mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-4"
@@ -993,7 +814,7 @@
           >
         </div>
         <div
-          class="flex gap-6 text-sm text-[#9c495e] dark:text-[#9c495e] font-medium"
+          class="flex gap-6 text-sm text-[#9c495e] font-medium"
         >
           <a class="hover:text-primary transition-colors" href="#"
             >Điều khoản</a
@@ -1050,7 +871,7 @@
             coursesGrid.innerHTML = courses
               .map(
                 (course) => `
-              <div class="bg-background-light dark:bg-background-dark rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all flex flex-col h-full">
+              <div class="bg-background-light rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all flex flex-col h-full">
                 <div class="h-48 overflow-hidden flex-shrink-0">
                   <img src="${course.image_url || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800"}" 
                        alt="${course.course_name}" 
@@ -1058,12 +879,12 @@
                 </div>
                 <div class="p-6 flex flex-col flex-grow">
                   <div class="flex items-start justify-between mb-3">
-                    <h3 class="text-xl font-bold flex-1 text-[#1c0d11] dark:text-white">${course.course_name}</h3>
+                    <h3 class="text-xl font-bold flex-1 text-[#1c0d11]">${course.course_name}</h3>
                   </div>
                   <div class="flex items-center gap-2 mb-3">
                     ${getLevelBadge(course.level)}
                   </div>
-                  <p class="text-[#9c495e] dark:text-pink-300 text-sm mb-4 line-clamp-2">
+                  <p class="text-[#9c495e] text-sm mb-4 line-clamp-2">
                     ${course.description || ""}
                   </p>
                   <div class="space-y-2 mb-4">
@@ -1076,13 +897,13 @@
                       <span>${course.current_students}/${course.max_students} học viên</span>
                     </div>
                   </div>
-                  <div class="pt-4 border-t border-[#f4e7ea] dark:border-[#3d1a24] space-y-3 mt-auto">
+                  <div class="pt-4 border-t border-[#f4e7ea] space-y-3 mt-auto">
                     <div class="text-primary text-2xl font-black mb-3">
                       ${formatCurrency(course.price)}
                     </div>
                     <button
                       onclick="showRoadmap('${course.id}', '${course.course_name}')"
-                      class="w-full px-4 py-2 bg-pink-50 dark:bg-[#3d1a24] text-primary border border-primary rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2"
+                      class="w-full px-4 py-2 bg-pink-50 text-primary border border-primary rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2"
                     >
                       <span class="material-symbols-outlined text-sm">map</span>
                       Xem lộ trình học
@@ -1145,7 +966,7 @@
             content.innerHTML = lessons
               .map(
                 (lesson, index) => `
-              <div class="bg-background-light dark:bg-background-dark p-5 rounded-lg border border-[#f4e7ea] dark:border-[#3d1a24] hover:border-primary transition-colors">
+              <div class="bg-background-light p-5 rounded-lg border border-[#f4e7ea] hover:border-primary transition-colors">
                 <div class="flex gap-4">
                   <div class="flex-shrink-0">
                     <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
@@ -1153,14 +974,14 @@
                     </div>
                   </div>
                   <div class="flex-1">
-                    <h4 class="text-lg font-bold text-[#1c0d11] dark:text-white mb-2">${lesson.title}</h4>
-                    <p class="text-[#9c495e] dark:text-pink-300 text-sm mb-3">${lesson.content}</p>
+                    <h4 class="text-lg font-bold text-[#1c0d11] mb-2">${lesson.title}</h4>
+                    <p class="text-[#9c495e] text-sm mb-3">${lesson.content}</p>
                     ${
                       lesson.objectives
                         ? `
                       <div class="flex items-start gap-2 text-sm">
                         <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
-                        <span class="text-[#9c495e] dark:text-pink-300"><strong>Mục tiêu:</strong> ${lesson.objectives}</span>
+                        <span class="text-[#9c495e]"><strong>Mục tiêu:</strong> ${lesson.objectives}</span>
                       </div>
                     `
                         : ""
@@ -1208,37 +1029,6 @@
     </script>
 
     <!-- ===================== LUXURY DARK MODE JS ===================== -->
-    <script>
-      function initDarkMode() {
-        const html = document.documentElement;
-        const toggle = document.getElementById("dark-mode-toggle");
-        if (!toggle) return;
-
-        // Restore saved preference (or system preference)
-        const saved = localStorage.getItem("gymheart-theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-
-        if (saved === "dark" || (!saved && prefersDark)) {
-          html.classList.add("dark");
-        } else {
-          html.classList.remove("dark");
-        }
-
-        toggle.addEventListener("click", () => {
-          const isDark = html.classList.toggle("dark");
-          localStorage.setItem("gymheart-theme", isDark ? "dark" : "light");
-
-          // Luxury ripple effect on toggle
-          toggle.style.transform = "scale(0.92)";
-          setTimeout(() => {
-            toggle.style.transform = "scale(1)";
-          }, 180);
-        });
-      }
-
-      // Run ASAP to prevent flash of wrong theme - moved to <head>
-    </script>
+    
   </body>
 </html>

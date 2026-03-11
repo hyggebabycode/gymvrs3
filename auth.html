@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="light" lang="vi">
+<html lang="vi">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -46,13 +46,12 @@
     </script>
     <script id="tailwind-config">
       tailwind.config = {
-        darkMode: "class",
+
         theme: {
           extend: {
             colors: {
               primary: "#f42559",
               "background-light": "#fcf8f9",
-              "background-dark": "#221014",
             },
             fontFamily: {
               display: ["Lexend", "sans-serif"],
@@ -99,11 +98,11 @@
     </style>
   </head>
   <body
-    class="bg-background-light dark:bg-background-dark text-[#1c0d11] dark:text-[#fcf8f9] min-h-screen flex flex-col"
+    class="bg-background-light text-[#1c0d11] min-h-screen flex flex-col"
   >
     <!-- Top Navigation Bar -->
     <header
-      class="w-full border-b border-solid border-[#f4e7ea] dark:border-[#3d1a24] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50"
+      class="w-full border-b border-solid border-[#f4e7ea] bg-white/80 backdrop-blur-md sticky top-0 z-50"
     >
       <div
         class="max-w-[1200px] mx-auto px-4 sm:px-10 py-3 flex items-center justify-between"
@@ -119,24 +118,24 @@
             >
           </div>
           <h2
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-xl font-bold leading-tight tracking-tight"
+            class="text-[#1c0d11] text-xl font-bold leading-tight tracking-tight"
           >
             GymHeart
           </h2>
         </div>
         <nav class="hidden md:flex items-center gap-8">
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html"
             >Trang chủ</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html#courses"
             >Khóa học</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html#features"
             >Lịch tập</a
           >
@@ -155,7 +154,7 @@
     <main class="flex-grow flex items-center justify-center p-4 sm:p-8">
       <!-- Main Container -->
       <div
-        class="w-full max-w-[1000px] bg-white dark:bg-[#2d161b] rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px] relative"
+        class="w-full max-w-[1000px] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px] relative"
       >
         <!-- Floating Heart Decor -->
         <div
@@ -210,16 +209,16 @@
           <div id="alert-message" class="hidden mb-6 p-4 rounded-lg"></div>
 
           <div class="mb-8">
-            <h2 class="text-3xl font-bold text-[#1c0d11] dark:text-white mb-2">
+            <h2 class="text-3xl font-bold text-[#1c0d11] mb-2">
               Chào mừng bạn!
             </h2>
-            <p class="text-[#9c495e] dark:text-[#d19fb0] text-sm">
+            <p class="text-[#9c495e] text-sm">
               Vui lòng đăng nhập hoặc tạo tài khoản mới để bắt đầu.
             </p>
           </div>
 
           <!-- Tabs -->
-          <div class="mb-8 border-b border-[#e8ced5] dark:border-[#4d2832]">
+          <div class="mb-8 border-b border-[#e8ced5]">
             <div class="flex gap-8">
               <a
                 id="login-tab"
@@ -242,7 +241,7 @@
           <form id="login-form" class="space-y-5">
             <div class="flex flex-col gap-2">
               <label
-                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                class="text-[#1c0d11] text-sm font-semibold"
                 >Địa chỉ Email</label
               >
               <div class="relative">
@@ -252,7 +251,7 @@
                 >
                 <input
                   id="login-email"
-                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] bg-[#fcf8f9] text-[#1c0d11] focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
                   placeholder="example@email.com"
                   type="email"
                   required
@@ -262,7 +261,7 @@
             <div class="flex flex-col gap-2">
               <div class="flex justify-between items-center">
                 <label
-                  class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                  class="text-[#1c0d11] text-sm font-semibold"
                   >Mật khẩu</label
                 >
                 <a
@@ -277,7 +276,7 @@
                 >
                 <input
                   id="login-password"
-                  class="w-full pl-12 pr-12 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  class="w-full pl-12 pr-12 h-14 rounded-lg border border-[#e8ced5] bg-[#fcf8f9] text-[#1c0d11] focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
                   placeholder="••••••••"
                   type="password"
                   required
@@ -304,7 +303,7 @@
           <form id="signup-form" class="space-y-5">
             <div class="flex flex-col gap-2">
               <label
-                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                class="text-[#1c0d11] text-sm font-semibold"
                 >Họ và Tên</label
               >
               <div class="relative">
@@ -314,7 +313,7 @@
                 >
                 <input
                   id="signup-fullname"
-                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] bg-[#fcf8f9] text-[#1c0d11] focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
                   placeholder="Nguyễn Văn A"
                   type="text"
                   required
@@ -323,7 +322,7 @@
             </div>
             <div class="flex flex-col gap-2">
               <label
-                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                class="text-[#1c0d11] text-sm font-semibold"
                 >Địa chỉ Email</label
               >
               <div class="relative">
@@ -333,7 +332,7 @@
                 >
                 <input
                   id="signup-email"
-                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] bg-[#fcf8f9] text-[#1c0d11] focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
                   placeholder="example@email.com"
                   type="email"
                   required
@@ -342,7 +341,7 @@
             </div>
             <div class="flex flex-col gap-2">
               <label
-                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                class="text-[#1c0d11] text-sm font-semibold"
                 >Số điện thoại</label
               >
               <div class="relative">
@@ -352,7 +351,7 @@
                 >
                 <input
                   id="signup-phone"
-                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  class="w-full pl-12 pr-4 h-14 rounded-lg border border-[#e8ced5] bg-[#fcf8f9] text-[#1c0d11] focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
                   placeholder="0901234567"
                   type="tel"
                   required
@@ -361,7 +360,7 @@
             </div>
             <div class="flex flex-col gap-2">
               <label
-                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                class="text-[#1c0d11] text-sm font-semibold"
                 >Mật khẩu</label
               >
               <div class="relative">
@@ -371,7 +370,7 @@
                 >
                 <input
                   id="signup-password"
-                  class="w-full pl-12 pr-12 h-14 rounded-lg border border-[#e8ced5] dark:border-[#4d2832] bg-[#fcf8f9] dark:bg-[#3d1a24] text-[#1c0d11] dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
+                  class="w-full pl-12 pr-12 h-14 rounded-lg border border-[#e8ced5] bg-[#fcf8f9] text-[#1c0d11] focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-[#9c495e]/50"
                   placeholder="••••••••"
                   type="password"
                   required
@@ -391,7 +390,7 @@
             </div>
             <div class="flex flex-col gap-2">
               <label
-                class="text-[#1c0d11] dark:text-white text-sm font-semibold"
+                class="text-[#1c0d11] text-sm font-semibold"
                 >Loại tài khoản</label
               >
               <div class="flex gap-4">
@@ -403,7 +402,7 @@
                     checked
                     class="w-5 h-5 text-primary focus:ring-primary"
                   />
-                  <span class="text-[#1c0d11] dark:text-white font-medium"
+                  <span class="text-[#1c0d11] font-medium"
                     >Thành viên</span
                   >
                 </label>
@@ -414,7 +413,7 @@
                     value="coach"
                     class="w-5 h-5 text-primary focus:ring-primary"
                   />
-                  <span class="text-[#1c0d11] dark:text-white font-medium"
+                  <span class="text-[#1c0d11] font-medium"
                     >Huấn luyện viên (PT)</span
                   >
                 </label>
@@ -437,7 +436,7 @@
 
     <!-- Footer -->
     <footer
-      class="w-full py-8 border-t border-[#f4e7ea] dark:border-[#3d1a24] mt-auto"
+      class="w-full py-8 border-t border-[#f4e7ea] mt-auto"
     >
       <div
         class="max-w-[1200px] mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-4"
@@ -451,7 +450,7 @@
           >
         </div>
         <div
-          class="flex gap-6 text-sm text-[#9c495e] dark:text-[#9c495e] font-medium"
+          class="flex gap-6 text-sm text-[#9c495e] font-medium"
         >
           <a class="hover:text-primary transition-colors" href="#"
             >Điều khoản</a

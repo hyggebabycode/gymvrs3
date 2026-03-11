@@ -18,13 +18,12 @@
     />
     <script id="tailwind-config">
       tailwind.config = {
-        darkMode: "class",
+
         theme: {
           extend: {
             colors: {
               primary: "#f42559",
               "background-light": "#fcf8f9",
-              "background-dark": "#221014",
             },
             fontFamily: {
               display: ["Lexend", "sans-serif"],
@@ -60,30 +59,7 @@
       }
 
       /* ====================== LUXURY DARK MODE ====================== */
-      :root {
-        --bg-primary: #ffffff;
-        --bg-secondary: #fcf8f9;
-        --text-primary: #1c0d11;
-        --text-secondary: #9c495e;
-        --border-color: #f4e7ea;
-        --card-bg: #ffffff;
-        --header-bg: rgba(255, 255, 255, 0.85);
-        --accent-gold: #d4af37;
-        --shadow-luxury: 0 4px 24px rgba(212, 175, 55, 0);
-        --transition-speed: 0.4s;
-      }
-      html.dark {
-        --bg-primary: #1a0b10;
-        --bg-secondary: #23101a;
-        --text-primary: #f9e8d0;
-        --text-secondary: #d4889c;
-        --border-color: #5a2234;
-        --card-bg: #2d1520;
-        --header-bg: rgba(18, 7, 12, 0.96);
-        --accent-gold: #d4af37;
-        --shadow-luxury:
-          0 6px 40px rgba(212, 175, 55, 0.2), 0 2px 14px rgba(180, 50, 80, 0.15);
-      }
+      
       *,
       *::before,
       *::after {
@@ -93,142 +69,17 @@
           color var(--transition-speed) ease,
           box-shadow var(--transition-speed) ease;
       }
-      html.dark body {
-        background-color: var(--bg-primary) !important;
-        color: var(--text-primary) !important;
-      }
-      html.dark header {
-        background: var(--header-bg) !important;
-        border-color: var(--border-color) !important;
-      }
-      html.dark .bg-white,
-      html.dark .bg-background-light {
-        background-color: var(--card-bg) !important;
-      }
-      html.dark .shadow-lg {
-        box-shadow: var(--shadow-luxury) !important;
-      }
-      html.dark .hover\:shadow-2xl:hover {
-        box-shadow: 0 8px 48px rgba(212, 175, 55, 0.2) !important;
-      }
-      html.dark .bg-\[\#fcf8f9\] {
-        background-color: var(--bg-secondary) !important;
-      }
-      html.dark .dark\:bg-background-dark {
-        background-color: var(--bg-primary) !important;
-      }
-      html.dark .dark\:bg-\[\#2d161b\],
-      html.dark .bg-white {
-        background-color: var(--card-bg) !important;
-      }
-      html.dark footer,
-      html.dark .bg-\[\#2d161b\] {
-        background-color: #120812 !important;
-      }
-      html.dark .dark\:text-white,
-      html.dark .dark\:text-\[\#fcf8f9\] {
-        color: var(--text-primary) !important;
-      }
-      html.dark .dark\:text-pink-300,
-      html.dark .text-\[\#9c495e\] {
-        color: var(--text-secondary) !important;
-      }
-      html.dark .dark\:border-\[\#3d1a24\] {
-        border-color: var(--border-color) !important;
-      }
-      html.dark input:not([type="submit"]):not([type="button"]),
-      html.dark textarea,
-      html.dark select {
-        background-color: var(--bg-secondary) !important;
-        color: var(--text-primary) !important;
-        border-color: var(--border-color) !important;
-      }
 
       /* Toggle button */
-      #dark-mode-toggle {
-        position: relative;
-        width: 52px;
-        height: 28px;
-        border-radius: 9999px;
-        border: 1px solid var(--accent-gold);
-        background: linear-gradient(135deg, #2d1520 0%, #3d1a24 100%);
-        cursor: pointer;
-        outline: none;
-        transition: all 0.4s ease;
-        box-shadow: 0 0 0px rgba(212, 175, 55, 0);
-        flex-shrink: 0;
-      }
-      html:not(.dark) #dark-mode-toggle {
-        background: linear-gradient(135deg, #fef9e7 0%, #fde68a 100%);
-        border-color: #f59e0b;
-        box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
-      }
-      #dark-mode-toggle:hover {
-        box-shadow: 0 0 14px rgba(212, 175, 55, 0.55);
-      }
-      .toggle-thumb {
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #d4af37 0%, #b87333 100%);
-        transition:
-          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-          background 0.4s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-      }
-      html.dark .toggle-thumb {
-        transform: translateX(24px);
-        background: linear-gradient(135deg, #c0c0c0 0%, #9a9a9a 100%);
-      }
-      .toggle-icon-sun,
-      .toggle-icon-moon {
-        position: absolute;
-        transition:
-          opacity 0.3s ease,
-          transform 0.3s ease;
-        font-size: 13px;
-        line-height: 1;
-      }
-      .toggle-icon-sun {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
-      .toggle-icon-moon {
-        opacity: 0;
-        transform: scale(0.5) rotate(-90deg);
-      }
-      html.dark .toggle-icon-sun {
-        opacity: 0;
-        transform: scale(0.5) rotate(90deg);
-      }
-      html.dark .toggle-icon-moon {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
     </style>
-    <!-- Anti-flash dark mode -->
-    <script>
-      (function () {
-        var s = localStorage.getItem("gymheart-theme");
-        var p = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (s === "dark" || (!s && p))
-          document.documentElement.classList.add("dark");
-      })();
-    </script>
+    
   </head>
   <body
-    class="bg-background-light dark:bg-background-dark text-[#1c0d11] dark:text-[#fcf8f9] min-h-screen"
+    class="bg-background-light text-[#1c0d11] min-h-screen"
   >
     <!-- Top Navigation Bar -->
     <header
-      class="w-full border-b border-solid border-[#f4e7ea] dark:border-[#3d1a24] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50"
+      class="w-full border-b border-solid border-[#f4e7ea] bg-white/80 backdrop-blur-md sticky top-0 z-50"
     >
       <div
         class="max-w-[1200px] mx-auto px-4 sm:px-10 py-3 flex items-center justify-between"
@@ -241,24 +92,24 @@
             >
           </div>
           <h2
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-xl font-bold leading-tight tracking-tight"
+            class="text-[#1c0d11] text-xl font-bold leading-tight tracking-tight"
           >
             GymHeart
           </h2>
         </div>
         <nav class="hidden md:flex items-center gap-8">
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html"
             >Trang chủ</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html#courses"
             >Khóa học</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="facilities.html"
             >Cơ sở vật chất</a
           >
@@ -268,32 +119,23 @@
             >HLV</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="services.html"
             >Dịch vụ</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html#community"
             >Cộng đồng</a
           >
           <a
-            class="text-[#1c0d11] dark:text-[#fcf8f9] text-sm font-medium hover:text-primary transition-colors"
+            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
             href="index.html#contact"
             >Liên hệ</a
           >
         </nav>
         <div class="flex gap-3 items-center">
-          <button
-            id="dark-mode-toggle"
-            aria-label="Chuyển chế độ tối/sáng"
-            title="Chế độ tối/sáng"
-          >
-            <span class="toggle-thumb">
-              <span class="toggle-icon-sun">☀️</span>
-              <span class="toggle-icon-moon">🌙</span>
-            </span>
-          </button>
+          
           <button
             onclick="window.location.href = 'auth.html'"
             class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
@@ -306,14 +148,14 @@
 
     <!-- Coaches Content -->
     <section
-      class="py-20 bg-background-light dark:bg-background-dark min-h-screen"
+      class="py-20 bg-background-light min-h-screen"
     >
       <div class="max-w-[1200px] mx-auto px-4 sm:px-10">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-black text-[#1c0d11] dark:text-white mb-4">
+          <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
             Huấn Luyện Viên Chuyên Nghiệp
           </h2>
-          <p class="text-[#9c495e] dark:text-pink-300 text-lg">
+          <p class="text-[#9c495e] text-lg">
             Đội ngũ HLV giàu kinh nghiệm, tận tâm với học viên
           </p>
         </div>
@@ -380,62 +222,62 @@
 
         <!-- Why Choose Our Coaches -->
         <div
-          class="border-t border-[#f4e7ea] dark:border-[#3d1a24] pt-16 mb-16"
+          class="border-t border-[#f4e7ea] pt-16 mb-16"
         >
           <div class="text-center mb-12">
-            <h3 class="text-3xl font-black text-[#1c0d11] dark:text-white mb-4">
+            <h3 class="text-3xl font-black text-[#1c0d11] mb-4">
               Tại Sao Chọn HLV Của Chúng Tôi?
             </h3>
-            <p class="text-[#9c495e] dark:text-pink-300">
+            <p class="text-[#9c495e]">
               Đội ngũ HLV chuyên nghiệp với chứng chỉ quốc tế
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div
-              class="text-center p-6 bg-white dark:bg-[#2d161b] rounded-xl shadow-lg"
+              class="text-center p-6 bg-white rounded-xl shadow-lg"
             >
               <span class="material-symbols-outlined text-5xl text-primary mb-4"
                 >workspace_premium</span
               >
               <h4 class="font-bold text-lg mb-2">Chứng Chỉ Quốc Tế</h4>
-              <p class="text-sm text-[#9c495e] dark:text-pink-300">
+              <p class="text-sm text-[#9c495e]">
                 ISSA, ACE, NASM, RYT và nhiều chứng chỉ uy tín khác
               </p>
             </div>
 
             <div
-              class="text-center p-6 bg-white dark:bg-[#2d161b] rounded-xl shadow-lg"
+              class="text-center p-6 bg-white rounded-xl shadow-lg"
             >
               <span class="material-symbols-outlined text-5xl text-primary mb-4"
                 >psychology</span
               >
               <h4 class="font-bold text-lg mb-2">Chế Độ Cá Nhân Hóa</h4>
-              <p class="text-sm text-[#9c495e] dark:text-pink-300">
+              <p class="text-sm text-[#9c495e]">
                 Lộ trình tập luyện được thiết kế riêng cho từng học viên
               </p>
             </div>
 
             <div
-              class="text-center p-6 bg-white dark:bg-[#2d161b] rounded-xl shadow-lg"
+              class="text-center p-6 bg-white rounded-xl shadow-lg"
             >
               <span class="material-symbols-outlined text-5xl text-primary mb-4"
                 >support_agent</span
               >
               <h4 class="font-bold text-lg mb-2">Hỗ Trợ 24/7</h4>
-              <p class="text-sm text-[#9c495e] dark:text-pink-300">
+              <p class="text-sm text-[#9c495e]">
                 Luôn sẵn sàng tư vấn và giải đáp mọi thắc mắc của học viên
               </p>
             </div>
 
             <div
-              class="text-center p-6 bg-white dark:bg-[#2d161b] rounded-xl shadow-lg"
+              class="text-center p-6 bg-white rounded-xl shadow-lg"
             >
               <span class="material-symbols-outlined text-5xl text-primary mb-4"
                 >trending_up</span
               >
               <h4 class="font-bold text-lg mb-2">Theo Dõi Tiến Độ</h4>
-              <p class="text-sm text-[#9c495e] dark:text-pink-300">
+              <p class="text-sm text-[#9c495e]">
                 Đo lường và đánh giá kết quả thường xuyên để tối ưu hiệu quả
               </p>
             </div>
@@ -444,11 +286,11 @@
 
         <!-- Booking Section -->
         <div
-          class="bg-gradient-to-r from-primary/10 to-pink-100 dark:from-primary/20 dark:to-pink-900/20 rounded-2xl p-12"
+          class="bg-gradient-to-r from-primary/10 to-pink-100 rounded-2xl p-12"
         >
           <div class="text-center">
             <h3 class="text-3xl font-black mb-4">Đặt Lịch Với HLV Ngay</h3>
-            <p class="text-[#9c495e] dark:text-pink-300 mb-6 max-w-2xl mx-auto">
+            <p class="text-[#9c495e] mb-6 max-w-2xl mx-auto">
               Đăng ký để được tư vấn miễn phí và lựa chọn HLV phù hợp với mục
               tiêu của bạn
             </p>
@@ -461,7 +303,7 @@
               </button>
               <button
                 onclick="window.location.href = 'services.html'"
-                class="px-8 py-4 bg-white dark:bg-[#2d161b] text-primary border-2 border-primary rounded-lg font-bold text-lg hover:bg-primary hover:text-white transition-all"
+                class="px-8 py-4 bg-white text-primary border-2 border-primary rounded-lg font-bold text-lg hover:bg-primary hover:text-white transition-all"
               >
                 Xem Khóa Học
               </button>
@@ -472,13 +314,13 @@
         <!-- Testimonials -->
         <div class="mt-16">
           <div class="text-center mb-12">
-            <h3 class="text-3xl font-black text-[#1c0d11] dark:text-white mb-4">
+            <h3 class="text-3xl font-black text-[#1c0d11] mb-4">
               Học Viên Nói Gì Về HLV
             </h3>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white dark:bg-[#2d161b] rounded-xl p-6 shadow-lg">
+            <div class="bg-white rounded-xl p-6 shadow-lg">
               <div class="flex gap-1 mb-4 text-primary">
                 <span class="material-symbols-outlined fill-heart">star</span>
                 <span class="material-symbols-outlined fill-heart">star</span>
@@ -486,7 +328,7 @@
                 <span class="material-symbols-outlined fill-heart">star</span>
                 <span class="material-symbols-outlined fill-heart">star</span>
               </div>
-              <p class="text-[#9c495e] dark:text-pink-300 mb-4">
+              <p class="text-[#9c495e] mb-4">
                 "Coach Nam rất nhiệt tình và chuyên nghiệp. Nhờ coach mà tôi đã
                 giảm được 15kg trong 4 tháng!"
               </p>
@@ -502,7 +344,7 @@
               </div>
             </div>
 
-            <div class="bg-white dark:bg-[#2d161b] rounded-xl p-6 shadow-lg">
+            <div class="bg-white rounded-xl p-6 shadow-lg">
               <div class="flex gap-1 mb-4 text-primary">
                 <span class="material-symbols-outlined fill-heart">star</span>
                 <span class="material-symbols-outlined fill-heart">star</span>
@@ -510,7 +352,7 @@
                 <span class="material-symbols-outlined fill-heart">star</span>
                 <span class="material-symbols-outlined fill-heart">star</span>
               </div>
-              <p class="text-[#9c495e] dark:text-pink-300 mb-4">
+              <p class="text-[#9c495e] mb-4">
                 "Lớp HIIT của Coach Minh vừa thử thách vừa vui. Cảm thấy năng
                 lượng tràn đầy sau mỗi buổi tập!"
               </p>
@@ -526,7 +368,7 @@
               </div>
             </div>
 
-            <div class="bg-white dark:bg-[#2d161b] rounded-xl p-6 shadow-lg">
+            <div class="bg-white rounded-xl p-6 shadow-lg">
               <div class="flex gap-1 mb-4 text-primary">
                 <span class="material-symbols-outlined fill-heart">star</span>
                 <span class="material-symbols-outlined fill-heart">star</span>
@@ -534,7 +376,7 @@
                 <span class="material-symbols-outlined fill-heart">star</span>
                 <span class="material-symbols-outlined fill-heart">star</span>
               </div>
-              <p class="text-[#9c495e] dark:text-pink-300 mb-4">
+              <p class="text-[#9c495e] mb-4">
                 "Coach Linh dạy Yoga rất tâm huyết. Tôi cảm thấy thư giãn và cân
                 bằng hơn trong cuộc sống."
               </p>
@@ -612,7 +454,7 @@
               const reviews = getReviews(coach.full_name);
 
               return `
-              <div class="bg-white dark:bg-[#2d161b] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
+              <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
                 <div class="h-80 overflow-hidden">
                   <img
                     src="${coach.avatar_url || "https://ui-avatars.com/api/?name=" + encodeURIComponent(coach.full_name) + "&background=f42559&color=fff&size=400"}"
@@ -625,7 +467,7 @@
                   <p class="text-primary font-semibold mb-2">
                     ${specialties.title}
                   </p>
-                  <p class="text-[#9c495e] dark:text-pink-300 text-sm mb-3">
+                  <p class="text-[#9c495e] text-sm mb-3">
                     ${specialties.experience}
                   </p>
                   <div class="flex gap-2 flex-wrap mb-4">
@@ -637,8 +479,8 @@
                       )
                       .join("")}
                   </div>
-                  <div class="border-t border-[#f4e7ea] dark:border-[#3d1a24] pt-4">
-                    <p class="text-sm text-[#9c495e] dark:text-pink-300 mb-3">
+                  <div class="border-t border-[#f4e7ea] pt-4">
+                    <p class="text-sm text-[#9c495e] mb-3">
                       ${coach.bio || "Huấn luyện viên chuyên nghiệp tại GymHeart Fitness."}
                     </p>
                     <div class="flex items-center gap-2 text-sm">
@@ -724,19 +566,6 @@
       // Load coaches when page loads
       window.addEventListener("DOMContentLoaded", loadCoaches);
     </script>
-    <script>
-      (function () {
-        var toggle = document.getElementById("dark-mode-toggle");
-        if (!toggle) return;
-        toggle.addEventListener("click", function () {
-          var isDark = document.documentElement.classList.toggle("dark");
-          localStorage.setItem("gymheart-theme", isDark ? "dark" : "light");
-          toggle.style.transform = "scale(0.92)";
-          setTimeout(function () {
-            toggle.style.transform = "scale(1)";
-          }, 180);
-        });
-      })();
-    </script>
+    
   </body>
 </html>
