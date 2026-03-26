@@ -18,7 +18,6 @@
     />
     <script id="tailwind-config">
       tailwind.config = {
-
         theme: {
           extend: {
             colors: {
@@ -57,9 +56,14 @@
       .fill-heart {
         font-variation-settings: "FILL" 1;
       }
+      .nav-link.nav-link-active {
+        color: #f42559 !important;
+        font-weight: 700 !important;
+        border-color: #f42559 !important;
+      }
 
       /* ====================== LUXURY DARK MODE ====================== */
-      
+
       *,
       *::before,
       *::after {
@@ -72,11 +76,8 @@
 
       /* Toggle button */
     </style>
-    
   </head>
-  <body
-    class="bg-background-light text-[#1c0d11] min-h-screen"
-  >
+  <body class="bg-background-light text-[#1c0d11] min-h-screen">
     <!-- Top Navigation Bar -->
     <header
       class="w-full border-b border-solid border-[#f4e7ea] bg-white/80 backdrop-blur-md sticky top-0 z-50"
@@ -99,57 +100,49 @@
         </div>
         <nav class="hidden md:flex items-center gap-8">
           <a
-            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
+            class="nav-link text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors border-b-2 border-transparent pb-1"
             href="index.html"
             >Trang chủ</a
           >
           <a
-            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
-            href="index.html#courses"
-            >Khóa học</a
-          >
-          <a
-            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
+            class="nav-link text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors border-b-2 border-transparent pb-1"
             href="facilities.html"
             >Cơ sở vật chất</a
           >
           <a
-            class="text-primary text-sm font-bold border-b-2 border-primary"
+            class="nav-link text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors border-b-2 border-transparent pb-1"
             href="coaches.html"
             >HLV</a
           >
           <a
-            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
+            class="nav-link text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors border-b-2 border-transparent pb-1"
             href="services.html"
             >Dịch vụ</a
           >
           <a
-            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
+            class="nav-link text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors border-b-2 border-transparent pb-1"
             href="index.html#community"
             >Cộng đồng</a
           >
           <a
-            class="text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors"
+            class="nav-link text-[#1c0d11] text-sm font-medium hover:text-primary transition-colors border-b-2 border-transparent pb-1"
             href="index.html#contact"
             >Liên hệ</a
           >
         </nav>
         <div class="flex gap-3 items-center">
-          
           <button
             onclick="window.location.href = 'auth.html'"
             class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
           >
-            Đăng nhập
+            Đăng Nhập
           </button>
         </div>
       </div>
     </header>
 
     <!-- Coaches Content -->
-    <section
-      class="py-20 bg-background-light min-h-screen"
-    >
+    <section class="py-20 bg-background-light min-h-screen">
       <div class="max-w-[1200px] mx-auto px-4 sm:px-10">
         <div class="text-center mb-12">
           <h2 class="text-4xl font-black text-[#1c0d11] mb-4">
@@ -221,9 +214,7 @@
         </div>
 
         <!-- Why Choose Our Coaches -->
-        <div
-          class="border-t border-[#f4e7ea] pt-16 mb-16"
-        >
+        <div class="border-t border-[#f4e7ea] pt-16 mb-16">
           <div class="text-center mb-12">
             <h3 class="text-3xl font-black text-[#1c0d11] mb-4">
               Tại Sao Chọn HLV Của Chúng Tôi?
@@ -234,9 +225,7 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div
-              class="text-center p-6 bg-white rounded-xl shadow-lg"
-            >
+            <div class="text-center p-6 bg-white rounded-xl shadow-lg">
               <span class="material-symbols-outlined text-5xl text-primary mb-4"
                 >workspace_premium</span
               >
@@ -246,9 +235,7 @@
               </p>
             </div>
 
-            <div
-              class="text-center p-6 bg-white rounded-xl shadow-lg"
-            >
+            <div class="text-center p-6 bg-white rounded-xl shadow-lg">
               <span class="material-symbols-outlined text-5xl text-primary mb-4"
                 >psychology</span
               >
@@ -258,9 +245,7 @@
               </p>
             </div>
 
-            <div
-              class="text-center p-6 bg-white rounded-xl shadow-lg"
-            >
+            <div class="text-center p-6 bg-white rounded-xl shadow-lg">
               <span class="material-symbols-outlined text-5xl text-primary mb-4"
                 >support_agent</span
               >
@@ -270,9 +255,7 @@
               </p>
             </div>
 
-            <div
-              class="text-center p-6 bg-white rounded-xl shadow-lg"
-            >
+            <div class="text-center p-6 bg-white rounded-xl shadow-lg">
               <span class="material-symbols-outlined text-5xl text-primary mb-4"
                 >trending_up</span
               >
@@ -563,9 +546,26 @@
         return reviews[name] || "150";
       }
 
+      function setActiveNavItem() {
+        const navLinks = document.querySelectorAll("header nav a.nav-link");
+        const currentPage = (
+          window.location.pathname.split("/").pop() || "coaches.html"
+        ).toLowerCase();
+
+        navLinks.forEach((link) => {
+          link.classList.remove("nav-link-active");
+          const href = (link.getAttribute("href") || "").toLowerCase();
+          if (href === currentPage) {
+            link.classList.add("nav-link-active");
+          }
+        });
+      }
+
       // Load coaches when page loads
-      window.addEventListener("DOMContentLoaded", loadCoaches);
+      window.addEventListener("DOMContentLoaded", () => {
+        setActiveNavItem();
+        loadCoaches();
+      });
     </script>
-    
   </body>
 </html>
