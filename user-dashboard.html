@@ -16,7 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script id="tailwind-config">
       tailwind.config = {
-
         theme: {
           extend: {
             colors: {
@@ -1065,7 +1064,7 @@
 
     <!-- JavaScript -->
     <script src="js/supabase-config.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="js/auth.js?v=20260408"></script>
     <script>
       // Check authentication
       const currentUser = requireAuth();
@@ -1706,7 +1705,7 @@
         try {
           // IMPORTANT: Clear any previous cart/course state first
           pendingCourse = null;
-          
+
           // Get course details
           const { data: course } = await supabaseClient
             .from("courses")
@@ -1748,11 +1747,13 @@
 
           // Display course info in payment page
           const courseInfo = document.getElementById("payment-course-info");
-          
+
           // Check if paying for cart (multiple courses) or single course
           // Since we cleared pendingCourse and set it to course from DB, isCart should be undefined/false
           if (pendingCourse.isCart) {
-            console.log("ERROR: pendingCourse still has isCart property! This should not happen.");
+            console.log(
+              "ERROR: pendingCourse still has isCart property! This should not happen.",
+            );
             // This branch should NOT execute for single course payment
             // Fetch all courses in cart
             const { data: cartCourses } = await supabaseClient
@@ -1763,7 +1764,9 @@
             courseInfo.innerHTML = `
               <div class="space-y-3">
                 <h4 class="font-bold text-lg mb-3">Thanh toán ${cartCourses.length} khóa học</h4>
-                ${cartCourses.map(c => `
+                ${cartCourses
+                  .map(
+                    (c) => `
                   <div class="flex gap-3 p-3 bg-pink-50 rounded-lg">
                     <img src="${c.image_url || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200"}"
                          alt="${c.course_name}"
@@ -1779,7 +1782,9 @@
                       </p>
                     </div>
                   </div>
-                `).join('')}
+                `,
+                  )
+                  .join("")}
                 <div class="border-t-2 border-primary pt-3 mt-3">
                   <div class="flex justify-between items-center">
                     <span class="font-bold text-lg">Tổng cộng:</span>
@@ -1804,7 +1809,12 @@
             document.getElementById("card-amount").textContent = formattedPrice;
           } else {
             // Single course payment
-            console.log("Rendering single course payment for:", course.course_name, "ID:", course.id);
+            console.log(
+              "Rendering single course payment for:",
+              course.course_name,
+              "ID:",
+              course.id,
+            );
             courseInfo.innerHTML = `
               <div class="flex gap-4">
                 <div class="w-32 h-32 rounded-lg overflow-hidden">
@@ -1992,8 +2002,10 @@
           }
         }
 
-        const paymentAmount = pendingCourse.isCart ? pendingCourse.amount : pendingCourse.price;
-        
+        const paymentAmount = pendingCourse.isCart
+          ? pendingCourse.amount
+          : pendingCourse.price;
+
         console.log("processPayment - pendingCourse:", pendingCourse);
         console.log("processPayment - isCart:", pendingCourse.isCart);
         console.log("processPayment - payment amount:", paymentAmount);
@@ -2001,7 +2013,10 @@
         try {
           // Check if paying for cart (multiple courses)
           if (pendingCourse.isCart) {
-            console.log("Processing CART payment for courses:", pendingCourse.courseIds);
+            console.log(
+              "Processing CART payment for courses:",
+              pendingCourse.courseIds,
+            );
             // Enroll in all courses
             let successCount = 0;
             for (const courseId of pendingCourse.courseIds) {
@@ -2029,18 +2044,16 @@
                     .eq("course_id", courseId);
                 } else {
                   // Create new enrollment
-                  await supabaseClient
-                    .from("class_enrollments")
-                    .insert({
-                      user_id: currentUser.id,
-                      course_id: courseId,
-                      enrollment_date: new Date().toISOString(),
-                      status: "active",
-                      payment_status: "paid",
-                      payment_method: selectedPaymentMethod,
-                      payment_date: new Date().toISOString(),
-                      notes: `Thanh toán qua ${selectedPaymentMethod === "qr" ? "QR Code" : "Thẻ tín dụng"}`,
-                    });
+                  await supabaseClient.from("class_enrollments").insert({
+                    user_id: currentUser.id,
+                    course_id: courseId,
+                    enrollment_date: new Date().toISOString(),
+                    status: "active",
+                    payment_status: "paid",
+                    payment_method: selectedPaymentMethod,
+                    payment_date: new Date().toISOString(),
+                    notes: `Thanh toán qua ${selectedPaymentMethod === "qr" ? "QR Code" : "Thẻ tín dụng"}`,
+                  });
                 }
 
                 // Update course student count
@@ -2053,13 +2066,20 @@
 
             // Clear cart
             shoppingCart = [];
-            localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+            localStorage.setItem("gymheart_cart", JSON.stringify(shoppingCart));
             updateCartCount();
 
-            alert(`✅ Thanh toán thành công! Bạn đã đăng ký ${successCount} khóa học.`);
+            alert(
+              `✅ Thanh toán thành công! Bạn đã đăng ký ${successCount} khóa học.`,
+            );
           } else {
             // Single course payment
-            console.log("Processing SINGLE course payment for:", pendingCourse.course_name, "ID:", pendingCourse.id);
+            console.log(
+              "Processing SINGLE course payment for:",
+              pendingCourse.course_name,
+              "ID:",
+              pendingCourse.id,
+            );
             const { data: existingEnrollment } = await supabaseClient
               .from("class_enrollments")
               .select("*")
@@ -2113,8 +2133,13 @@
 
             // Remove from cart if it was in cart
             if (shoppingCart.includes(pendingCourse.id)) {
-              shoppingCart = shoppingCart.filter(id => id !== pendingCourse.id);
-              localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+              shoppingCart = shoppingCart.filter(
+                (id) => id !== pendingCourse.id,
+              );
+              localStorage.setItem(
+                "gymheart_cart",
+                JSON.stringify(shoppingCart),
+              );
               updateCartCount();
             }
 
@@ -2271,24 +2296,23 @@
 
       function displayMyCourses(courses) {
         const container = document.getElementById("my-courses-grid");
-        
+
         if (!courses || courses.length === 0) {
           let emptyMessage = "Bạn chưa đăng ký khóa học nào";
-          if (currentCourseTab === 'active') {
+          if (currentCourseTab === "active") {
             emptyMessage = "Bạn chưa có khóa học đang học";
-          } else if (currentCourseTab === 'completed') {
+          } else if (currentCourseTab === "completed") {
             emptyMessage = "Bạn chưa hoàn thành khóa học nào";
-          } else if (currentCourseTab === 'pending') {
+          } else if (currentCourseTab === "pending") {
             emptyMessage = "Không có khóa học chờ thanh toán";
           }
           container.innerHTML = `<p class="col-span-2 text-[#9c495e] text-center py-8">${emptyMessage}</p>`;
           return;
         }
 
-        container.innerHTML =
-          courses
-            ?.map(
-              (e) => `
+        container.innerHTML = courses
+          ?.map(
+            (e) => `
                     <div class="bg-white rounded-xl border border-pink-100 shadow-sm overflow-hidden">
                         <div class="h-40 bg-cover bg-center" style="background-image: url('${e.courses.image_url}')"></div>
                         <div class="p-6">
@@ -2321,15 +2345,19 @@
                                 </div>
                             </div>
                             <div class="flex gap-2">
-                                ${currentCourseTab !== 'pending' ? `
+                                ${
+                                  currentCourseTab !== "pending"
+                                    ? `
                                 <button onclick="showRoadmap('${e.course_id}', '${e.courses.course_name}')" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all">
-                                    ${currentCourseTab === 'completed' ? 'Xem lại' : 'Tiếp tục học'}
+                                    ${currentCourseTab === "completed" ? "Xem lại" : "Tiếp tục học"}
                                 </button>
-                                ` : `
+                                `
+                                    : `
                                 <button onclick="goToPayment('${e.course_id}')" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all">
                                     Thanh toán ngay
                                 </button>
-                                `}
+                                `
+                                }
                                 ${
                                   e.status === "active"
                                     ? `
@@ -2343,28 +2371,36 @@
                         </div>
                     </div>
                 `,
-            )
-            .join("");
+          )
+          .join("");
       }
 
-      let currentCourseTab = 'active'; // Track current tab
+      let currentCourseTab = "active"; // Track current tab
 
       async function switchCourseTab(tab) {
         currentCourseTab = tab;
-        
+
         // Update tab styles
-        ['tab-active', 'tab-completed', 'tab-pending'].forEach(id => {
+        ["tab-active", "tab-completed", "tab-pending"].forEach((id) => {
           const btn = document.getElementById(id);
-          btn.classList.remove('font-bold', 'text-primary', 'border-primary');
-          btn.classList.add('font-medium', 'text-[#9c495e]', 'border-transparent');
+          btn.classList.remove("font-bold", "text-primary", "border-primary");
+          btn.classList.add(
+            "font-medium",
+            "text-[#9c495e]",
+            "border-transparent",
+          );
         });
-        
+
         const activeTab = document.getElementById(`tab-${tab}`);
-        activeTab.classList.remove('font-medium', 'text-[#9c495e]', 'border-transparent');
-        activeTab.classList.add('font-bold', 'text-primary', 'border-primary');
-        
+        activeTab.classList.remove(
+          "font-medium",
+          "text-[#9c495e]",
+          "border-transparent",
+        );
+        activeTab.classList.add("font-bold", "text-primary", "border-primary");
+
         // If pending tab, load cart items
-        if (tab === 'pending') {
+        if (tab === "pending") {
           await loadCartItemsForTab();
         } else {
           // Filter and display enrolled courses
@@ -2374,7 +2410,7 @@
 
       async function loadCartItemsForTab() {
         const container = document.getElementById("my-courses-grid");
-        
+
         if (shoppingCart.length === 0) {
           container.innerHTML = `
             <div class="col-span-2 text-center py-12">
@@ -2400,7 +2436,9 @@
 
           if (error) throw error;
 
-          container.innerHTML = courses.map(course => `
+          container.innerHTML = courses
+            .map(
+              (course) => `
             <div class="bg-white rounded-xl border border-pink-100 shadow-sm overflow-hidden">
               <div class="h-40 bg-cover bg-center" style="background-image: url('${course.image_url}')"></div>
               <div class="p-6">
@@ -2442,11 +2480,13 @@
                 </div>
               </div>
             </div>
-          `).join('');
-
+          `,
+            )
+            .join("");
         } catch (error) {
           console.error("Error loading cart items:", error);
-          container.innerHTML = '<p class="col-span-2 text-red-500 text-center py-8">Không thể tải giỏ hàng. Vui lòng thử lại!</p>';
+          container.innerHTML =
+            '<p class="col-span-2 text-red-500 text-center py-8">Không thể tải giỏ hàng. Vui lòng thử lại!</p>';
         }
       }
 
@@ -2458,12 +2498,14 @@
         let filtered = myCoursesData;
 
         // Filter by tab status
-        if (currentCourseTab === 'active') {
-          filtered = filtered.filter(e => e.status === 'active');
-        } else if (currentCourseTab === 'completed') {
-          filtered = filtered.filter(e => e.status === 'completed');
-        } else if (currentCourseTab === 'pending') {
-          filtered = filtered.filter(e => e.payment_status === 'pending' || e.status === 'pending');
+        if (currentCourseTab === "active") {
+          filtered = filtered.filter((e) => e.status === "active");
+        } else if (currentCourseTab === "completed") {
+          filtered = filtered.filter((e) => e.status === "completed");
+        } else if (currentCourseTab === "pending") {
+          filtered = filtered.filter(
+            (e) => e.payment_status === "pending" || e.status === "pending",
+          );
         }
 
         // Filter by search term
@@ -2850,16 +2892,11 @@
             avatar_url: avatarValue ? avatarValue : null,
           };
 
-          console.log("Updating profile with data:", updateData);
-          console.log("User ID:", currentUser.id);
-
           const { data, error } = await supabaseClient
             .from("users")
             .update(updateData)
             .eq("id", currentUser.id)
             .select();
-
-          console.log("Update result:", { data, error });
 
           if (error) throw error;
 
@@ -2914,21 +2951,21 @@
       async function showRoadmap(courseId, courseName) {
         const modal = document.getElementById("roadmap-modal");
         const modalTitle = document.getElementById("modal-course-title");
-        
+
         // Show modal
         modal.classList.remove("hidden");
         modalTitle.textContent = courseName;
 
         // Reset to roadmap tab
-        switchCourseDetailTab('roadmap');
+        switchCourseDetailTab("roadmap");
 
         // Load roadmap
         await loadCourseRoadmap(courseId);
-        
+
         // Load schedule
         await loadCourseSchedule(courseId);
       }
-      
+
       function switchCourseDetailTab(tab) {
         // Update tab buttons
         document.querySelectorAll("[id^='tab-']").forEach((btn) => {
@@ -2950,7 +2987,7 @@
           .getElementById(`tab-content-${tab}`)
           .classList.remove("hidden");
       }
-      
+
       async function loadCourseRoadmap(courseId) {
         const loading = document.getElementById("roadmap-loading");
         const content = document.getElementById("roadmap-content");
@@ -3017,7 +3054,7 @@
           content.classList.remove("hidden");
         }
       }
-      
+
       async function loadCourseSchedule(courseId) {
         const loading = document.getElementById("schedule-loading");
         const content = document.getElementById("schedule-content");
@@ -3041,13 +3078,13 @@
 
           if (schedules && schedules.length > 0) {
             const daysMap = {
-              0: 'Chủ Nhật',
-              1: 'Thứ Hai',
-              2: 'Thứ Ba',
-              3: 'Thứ Tư',
-              4: 'Thứ Năm',
-              5: 'Thứ Sáu',
-              6: 'Thứ Bảy'
+              0: "Chủ Nhật",
+              1: "Thứ Hai",
+              2: "Thứ Ba",
+              3: "Thứ Tư",
+              4: "Thứ Năm",
+              5: "Thứ Sáu",
+              6: "Thứ Bảy",
             };
 
             content.innerHTML = schedules
@@ -3065,18 +3102,26 @@
                       <span class="material-symbols-outlined text-primary text-sm">schedule</span>
                       <span class="font-bold text-[#1c0d11]">${schedule.start_time} - ${schedule.end_time}</span>
                     </div>
-                    ${schedule.location ? `
+                    ${
+                      schedule.location
+                        ? `
                       <div class="flex items-center gap-2 mb-2">
                         <span class="material-symbols-outlined text-primary text-sm">location_on</span>
                         <span class="text-[#9c495e] text-sm">${schedule.location}</span>
                       </div>
-                    ` : ''}
-                    ${schedule.notes ? `
+                    `
+                        : ""
+                    }
+                    ${
+                      schedule.notes
+                        ? `
                       <div class="flex items-start gap-2">
                         <span class="material-symbols-outlined text-primary text-sm">info</span>
                         <span class="text-[#9c495e] text-sm">${schedule.notes}</span>
                       </div>
-                    ` : ''}
+                    `
+                        : ""
+                    }
                   </div>
                 </div>
               </div>
@@ -3100,9 +3145,10 @@
       }
 
       // ==================== Shopping Cart Functions ====================
-      
+
       // Initialize cart from localStorage
-      let shoppingCart = JSON.parse(localStorage.getItem('gymheart_cart')) || [];
+      let shoppingCart =
+        JSON.parse(localStorage.getItem("gymheart_cart")) || [];
       updateCartCount();
 
       // Add course to cart
@@ -3129,9 +3175,9 @@
 
           // Add to cart
           shoppingCart.push(courseId);
-          localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+          localStorage.setItem("gymheart_cart", JSON.stringify(shoppingCart));
           updateCartCount();
-          
+
           // Show success message
           alert("✅ Đã thêm khóa học vào giỏ hàng!");
         } catch (error) {
@@ -3142,40 +3188,40 @@
 
       // Update cart count badge
       function updateCartCount() {
-        const badge = document.getElementById('cart-count');
+        const badge = document.getElementById("cart-count");
         if (shoppingCart.length > 0) {
           badge.textContent = shoppingCart.length;
-          badge.classList.remove('hidden');
+          badge.classList.remove("hidden");
         } else {
-          badge.classList.add('hidden');
+          badge.classList.add("hidden");
         }
       }
 
       // Open cart modal
       async function openCartModal() {
-        document.getElementById('cart-modal').classList.remove('hidden');
+        document.getElementById("cart-modal").classList.remove("hidden");
         await loadCartItems();
       }
 
       // Close cart modal
       function closeCartModal() {
-        document.getElementById('cart-modal').classList.add('hidden');
+        document.getElementById("cart-modal").classList.add("hidden");
       }
 
       // Load cart items
       async function loadCartItems() {
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartEmpty = document.getElementById('cart-empty');
-        const cartTotal = document.getElementById('cart-total');
+        const cartItemsContainer = document.getElementById("cart-items");
+        const cartEmpty = document.getElementById("cart-empty");
+        const cartTotal = document.getElementById("cart-total");
 
         if (shoppingCart.length === 0) {
-          cartItemsContainer.classList.add('hidden');
-          cartEmpty.classList.remove('hidden');
+          cartItemsContainer.classList.add("hidden");
+          cartEmpty.classList.remove("hidden");
           return;
         }
 
-        cartEmpty.classList.add('hidden');
-        cartItemsContainer.classList.remove('hidden');
+        cartEmpty.classList.add("hidden");
+        cartItemsContainer.classList.remove("hidden");
 
         try {
           // Fetch course details
@@ -3187,9 +3233,10 @@
           if (error) throw error;
 
           let total = 0;
-          cartItemsContainer.innerHTML = courses.map(course => {
-            total += course.price;
-            return `
+          cartItemsContainer.innerHTML = courses
+            .map((course) => {
+              total += course.price;
+              return `
               <div class="flex gap-4 bg-white border border-pink-100 rounded-xl p-4 hover:shadow-md transition-shadow">
                 <img
                   src="${course.image_url}"
@@ -3231,16 +3278,17 @@
                 </div>
               </div>
             `;
-          }).join('');
+            })
+            .join("");
 
           cartTotal.textContent = new Intl.NumberFormat("vi-VN", {
             style: "currency",
             currency: "VND",
           }).format(total);
-
         } catch (error) {
           console.error("Error loading cart items:", error);
-          cartItemsContainer.innerHTML = '<p class="text-red-500 text-center py-8">Không thể tải giỏ hàng. Vui lòng thử lại!</p>';
+          cartItemsContainer.innerHTML =
+            '<p class="text-red-500 text-center py-8">Không thể tải giỏ hàng. Vui lòng thử lại!</p>';
         }
       }
 
@@ -3248,9 +3296,9 @@
       function removeFromCart(courseId) {
         console.log("Removing from cart:", courseId);
         console.log("Cart before:", shoppingCart);
-        shoppingCart = shoppingCart.filter(id => id !== courseId);
+        shoppingCart = shoppingCart.filter((id) => id !== courseId);
         console.log("Cart after:", shoppingCart);
-        localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+        localStorage.setItem("gymheart_cart", JSON.stringify(shoppingCart));
         updateCartCount();
         loadCartItems();
       }
@@ -3258,10 +3306,10 @@
       // Clear entire cart
       function clearCart() {
         if (shoppingCart.length === 0) return;
-        
+
         if (confirm("Bạn có chắc muốn xóa tất cả khóa học khỏi giỏ hàng?")) {
           shoppingCart = [];
-          localStorage.setItem('gymheart_cart', JSON.stringify(shoppingCart));
+          localStorage.setItem("gymheart_cart", JSON.stringify(shoppingCart));
           updateCartCount();
           loadCartItems();
         }
@@ -3287,13 +3335,16 @@
           pendingCourse = {
             isCart: true,
             courseIds: [...shoppingCart],
-            amount: total
+            amount: total,
           };
-          
-          console.log("Checkout cart - set pendingCourse for multiple courses:", pendingCourse);
+
+          console.log(
+            "Checkout cart - set pendingCourse for multiple courses:",
+            pendingCourse,
+          );
 
           closeCartModal();
-          showSection('payment');
+          showSection("payment");
         } catch (error) {
           console.error("Error preparing checkout:", error);
           alert("Không thể thanh toán. Vui lòng thử lại!");
@@ -3311,7 +3362,7 @@
         if (e.target === roadmapModal) {
           closeRoadmapModal();
         }
-        
+
         const cartModal = document.getElementById("cart-modal");
         if (e.target === cartModal) {
           closeCartModal();
@@ -3331,7 +3382,9 @@
           class="p-6 border-b border-pink-100 flex items-center justify-between"
         >
           <div class="flex items-center gap-3">
-            <span class="material-symbols-outlined text-3xl text-primary">shopping_cart</span>
+            <span class="material-symbols-outlined text-3xl text-primary"
+              >shopping_cart</span
+            >
             <h3 class="text-2xl font-bold text-[#1c0d11]">Giỏ hàng của bạn</h3>
           </div>
           <button
@@ -3347,13 +3400,15 @@
             <!-- Cart items will be loaded here -->
           </div>
           <div id="cart-empty" class="hidden text-center py-12">
-            <span
-              class="material-symbols-outlined text-6xl text-[#9c495e] mb-4"
+            <span class="material-symbols-outlined text-6xl text-[#9c495e] mb-4"
               >shopping_cart</span
             >
             <p class="text-[#9c495e] text-lg">Giỏ hàng của bạn đang trống</p>
             <button
-              onclick="closeCartModal(); showSection('available-courses')"
+              onclick="
+                closeCartModal();
+                showSection('available-courses');
+              "
               class="mt-4 px-6 py-2 bg-primary text-white rounded-lg font-bold hover:bg-opacity-90 transition-all"
             >
               Khám phá khóa học
@@ -3365,7 +3420,9 @@
         <div class="p-6 border-t border-pink-100 bg-pink-50">
           <div class="flex items-center justify-between mb-4">
             <span class="text-lg font-bold text-[#1c0d11]">Tổng cộng:</span>
-            <span id="cart-total" class="text-2xl font-black text-primary">0 ₫</span>
+            <span id="cart-total" class="text-2xl font-black text-primary"
+              >0 ₫</span
+            >
           </div>
           <div class="flex gap-3">
             <button

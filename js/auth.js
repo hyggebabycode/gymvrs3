@@ -2,6 +2,24 @@
 // AUTHENTICATION HANDLERS
 // =====================================================
 
+const SESSION_DURATION_MS = 12 * 60 * 60 * 1000;
+const DASHBOARD_VERSION = "20260408e";
+
+function generateSessionToken() {
+  const bytes = new Uint8Array(24);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function sha256Hex(input) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(input);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
 // Get supabase client
 const supabaseClient = window.supabaseClient;
 
@@ -36,12 +54,23 @@ function showAlert(message, type = "error") {
     alertDiv.classList.add("bg-red-100", "text-red-700");
   }
 
-  alertDiv.innerHTML = `
-        <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined">${type === "success" ? "check_circle" : type === "info" ? "info" : "error"}</span>
-            <span>${message}</span>
-        </div>
-    `;
+  const iconName =
+    type === "success" ? "check_circle" : type === "info" ? "info" : "error";
+
+  alertDiv.textContent = "";
+  const wrapper = document.createElement("div");
+  wrapper.className = "flex items-center gap-2";
+
+  const icon = document.createElement("span");
+  icon.className = "material-symbols-outlined";
+  icon.textContent = iconName;
+
+  const text = document.createElement("span");
+  text.textContent = message;
+
+  wrapper.appendChild(icon);
+  wrapper.appendChild(text);
+  alertDiv.appendChild(wrapper);
   alertDiv.classList.remove("hidden");
 
   // Auto hide after 5 seconds
@@ -50,25 +79,16 @@ function showAlert(message, type = "error") {
   }, 5000);
 }
 
-// Hash password (simple version - in production use backend hashing)
-async function hashPassword(password) {
-  // For demo, we'll use a simple hash
-  // In production, use bcrypt on backend
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-  const hash = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hash))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
 // =====================================================
 // LOGIN HANDLER
 // =====================================================
 document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const email = document.getElementById("login-email").value;
+  const email = document
+    .getElementById("login-email")
+    .value.trim()
+    .toLowerCase();
   const password = document.getElementById("login-password").value;
   const btnText = document.getElementById("login-btn-text");
 
@@ -84,15 +104,24 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   // Show loading
   btnText.textContent = "Đang đăng nhập...";
 
+  if (typeof bcrypt === "undefined" || !bcrypt || !bcrypt.compare) {
+    showAlert(
+      "Lỗi hệ thống: Không tải được bộ xác thực mật khẩu. Vui lòng tải lại trang.",
+      "error",
+    );
+    btnText.textContent = "Đăng nhập";
+    return;
+  }
+
   try {
     // Query user from database
     const { data: users, error } = await supabaseClient
       .from("users")
-      .select("*")
+      .select(
+        "id, email, password_hash, full_name, phone, avatar_url, date_of_birth, gender, address, role, is_active, bio, specialization, years_of_experience, certification, requested_role, created_at, updated_at",
+      )
       .eq("email", email)
-      .eq("is_active", true);
-
-    console.log("Query result:", { users, error }); // Debug log
+      .limit(1);
 
     if (error) {
       console.error("Database error:", error);
@@ -109,40 +138,55 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
 
     const user = users[0];
 
-    // Check password with bcrypt or plaintext
+    if (!user.is_active) {
+      showAlert(
+        "Tài khoản đã bị vô hiệu hóa. Vui lòng liên hệ quản trị viên.",
+        "error",
+      );
+      btnText.textContent = "Đăng nhập";
+      return;
+    }
+
+    // Check password and auto-upgrade legacy plaintext hashes
     let passwordMatch = false;
 
     try {
-      // Check if password is a bcrypt hash
-      if (
-        user.password_hash.startsWith("$2a$") ||
-        user.password_hash.startsWith("$2b$")
-      ) {
-        // It's a bcrypt hash - check if bcrypt is available
-        if (typeof bcrypt !== "undefined" && bcrypt && bcrypt.compare) {
-          passwordMatch = await bcrypt.compare(password, user.password_hash);
-          console.log("✅ Used bcrypt comparison");
-        } else {
-          console.warn(
-            "⚠️ Bcrypt not available, cannot verify hashed password",
-          );
-          showAlert(
-            "Lỗi hệ thống: Không thể xác thực mật khẩu được mã hóa. Vui lòng thử lại sau.",
-            "error",
-          );
-          btnText.textContent = "Đăng nhập";
-          return;
-        }
+      const hashValue = user.password_hash || "";
+      const isBcryptHash = /^\$2[abxy]\$[0-9]{2}\$.{53}$/.test(hashValue);
+      const isSha256Hash = /^[a-f0-9]{64}$/i.test(hashValue);
+
+      if (isBcryptHash) {
+        passwordMatch = await bcrypt.compare(password, user.password_hash);
       } else {
-        // It's plaintext (for backward compatibility)
-        passwordMatch = user.password_hash === password;
-        console.log("✅ Used plaintext comparison");
+        // Legacy fallback: support plaintext and old SHA-256 hashes.
+        if (isSha256Hash) {
+          const passwordSha256 = await sha256Hex(password);
+          passwordMatch = hashValue.toLowerCase() === passwordSha256;
+        } else {
+          passwordMatch =
+            hashValue === password || hashValue.trim() === password;
+        }
+
+        if (passwordMatch) {
+          const upgradedHash = await bcrypt.hash(password, 10);
+          const { error: upgradeError } = await supabaseClient
+            .from("users")
+            .update({ password_hash: upgradedHash })
+            .eq("id", user.id);
+
+          if (upgradeError) {
+            console.warn("Legacy password upgrade failed:", upgradeError);
+          }
+        }
       }
     } catch (error) {
       console.error("Password comparison error:", error);
-      // Fallback to plaintext comparison
-      passwordMatch = user.password_hash === password;
-      console.log("⚠️ Fallback to plaintext comparison");
+      showAlert(
+        "Lỗi hệ thống: Không thể xác thực mật khẩu an toàn. Vui lòng thử lại sau.",
+        "error",
+      );
+      btnText.textContent = "Đăng nhập";
+      return;
     }
 
     if (!passwordMatch) {
@@ -151,17 +195,25 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
       return;
     }
 
-    // Store user info in localStorage
-    localStorage.setItem("gymheart_user", JSON.stringify(user));
-    localStorage.setItem("gymheart_token", "demo_token_" + user.id);
+    // Store user info in localStorage (never store password hash on client)
+    const { password_hash, ...safeUser } = user;
+    const session = {
+      token: generateSessionToken(),
+      issuedAt: Date.now(),
+      expiresAt: Date.now() + SESSION_DURATION_MS,
+      userId: safeUser.id,
+    };
+
+    localStorage.setItem("gymheart_user", JSON.stringify(safeUser));
+    localStorage.setItem("gymheart_token", JSON.stringify(session));
 
     showAlert("Đăng nhập thành công! Đang chuyển hướng...", "success");
 
     // Redirect based on role
     setTimeout(() => {
-      switch (user.role) {
+      switch (safeUser.role) {
         case "admin":
-          window.location.href = "admin-dashboard.html";
+          window.location.href = `admin-dashboard.html?v=${DASHBOARD_VERSION}`;
           break;
         case "coach":
           window.location.href = "coach-dashboard.html";
@@ -215,6 +267,15 @@ document
     // Show loading
     btnText.textContent = "Đang đăng ký...";
 
+    if (typeof bcrypt === "undefined" || !bcrypt || !bcrypt.hash) {
+      showAlert(
+        "Lỗi hệ thống: Không tải được bộ mã hóa mật khẩu. Vui lòng tải lại trang.",
+        "error",
+      );
+      btnText.textContent = "Đăng ký";
+      return;
+    }
+
     try {
       // Check if email exists
       const { data: existingUser } = await supabaseClient
@@ -251,7 +312,7 @@ document
       const { data: newUser, error } = await supabaseClient
         .from("users")
         .insert([userData])
-        .select()
+        .select("id, email, full_name, role")
         .single();
 
       if (error) {
@@ -298,14 +359,41 @@ document
 // CHECK AUTHENTICATION
 // =====================================================
 function checkAuth() {
-  const token = localStorage.getItem("gymheart_token");
+  const tokenRaw = localStorage.getItem("gymheart_token");
   const user = localStorage.getItem("gymheart_user");
 
-  if (!token || !user) {
+  if (!tokenRaw || !user) {
     return null;
   }
 
-  return JSON.parse(user);
+  try {
+    const parsedToken = JSON.parse(tokenRaw);
+    const now = Date.now();
+
+    if (!parsedToken?.token || !parsedToken?.expiresAt) {
+      throw new Error("Invalid token format");
+    }
+
+    if (now >= parsedToken.expiresAt) {
+      localStorage.removeItem("gymheart_token");
+      localStorage.removeItem("gymheart_user");
+      return null;
+    }
+
+    const parsedUser = JSON.parse(user);
+    if (parsedToken.userId && parsedUser?.id !== parsedToken.userId) {
+      localStorage.removeItem("gymheart_token");
+      localStorage.removeItem("gymheart_user");
+      return null;
+    }
+
+    return parsedUser;
+  } catch (_error) {
+    // Cleanup legacy/corrupted token format
+    localStorage.removeItem("gymheart_token");
+    localStorage.removeItem("gymheart_user");
+    return null;
+  }
 }
 
 // Clear old session when on auth page
@@ -329,7 +417,7 @@ function redirectIfAuthenticated() {
   if (user && window.location.pathname.includes("auth.html")) {
     switch (user.role) {
       case "admin":
-        window.location.href = "admin-dashboard.html";
+        window.location.href = `admin-dashboard.html?v=${DASHBOARD_VERSION}`;
         break;
       case "coach":
         window.location.href = "coach-dashboard.html";

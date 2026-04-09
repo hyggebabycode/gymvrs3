@@ -24,29 +24,27 @@
       (function () {
         const script = document.createElement("script");
         script.src =
-          "https://cdn.rawgit.com/dcodeIO/bcrypt.js/master/dist/bcrypt.min.js";
+          "https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js";
         script.onload = function () {
           if (typeof dcodeIO !== "undefined" && dcodeIO.bcrypt) {
             window.bcrypt = dcodeIO.bcrypt;
             console.log("✅ Bcrypt loaded successfully");
+          } else if (typeof bcrypt !== "undefined") {
+            window.bcrypt = bcrypt;
+            console.log("✅ Bcrypt loaded successfully");
+          } else {
+            console.error("❌ Bcrypt loaded but global object was not found");
           }
         };
         script.onerror = function () {
-          console.warn(
-            "⚠️ Bcrypt CDN failed, using fallback plaintext comparison",
-          );
-          // Create a fallback bcrypt object for plaintext
-          window.bcrypt = {
-            compare: async (password, hash) => password === hash,
-            hash: async (password, rounds) => password, // Fallback: return plaintext
-          };
+          console.error("❌ Bcrypt CDN failed. Authentication is disabled.");
+          window.bcrypt = null;
         };
         document.head.appendChild(script);
       })();
     </script>
     <script id="tailwind-config">
       tailwind.config = {
-
         theme: {
           extend: {
             colors: {
@@ -97,9 +95,7 @@
       }
     </style>
   </head>
-  <body
-    class="bg-background-light text-[#1c0d11] min-h-screen flex flex-col"
-  >
+  <body class="bg-background-light text-[#1c0d11] min-h-screen flex flex-col">
     <!-- Top Navigation Bar -->
     <header
       class="w-full border-b border-solid border-[#f4e7ea] bg-white/80 backdrop-blur-md sticky top-0 z-50"
@@ -240,8 +236,7 @@
           <!-- Login Form -->
           <form id="login-form" class="space-y-5">
             <div class="flex flex-col gap-2">
-              <label
-                class="text-[#1c0d11] text-sm font-semibold"
+              <label class="text-[#1c0d11] text-sm font-semibold"
                 >Địa chỉ Email</label
               >
               <div class="relative">
@@ -260,8 +255,7 @@
             </div>
             <div class="flex flex-col gap-2">
               <div class="flex justify-between items-center">
-                <label
-                  class="text-[#1c0d11] text-sm font-semibold"
+                <label class="text-[#1c0d11] text-sm font-semibold"
                   >Mật khẩu</label
                 >
                 <a
@@ -302,8 +296,7 @@
           <!-- Signup Form -->
           <form id="signup-form" class="space-y-5">
             <div class="flex flex-col gap-2">
-              <label
-                class="text-[#1c0d11] text-sm font-semibold"
+              <label class="text-[#1c0d11] text-sm font-semibold"
                 >Họ và Tên</label
               >
               <div class="relative">
@@ -321,8 +314,7 @@
               </div>
             </div>
             <div class="flex flex-col gap-2">
-              <label
-                class="text-[#1c0d11] text-sm font-semibold"
+              <label class="text-[#1c0d11] text-sm font-semibold"
                 >Địa chỉ Email</label
               >
               <div class="relative">
@@ -340,8 +332,7 @@
               </div>
             </div>
             <div class="flex flex-col gap-2">
-              <label
-                class="text-[#1c0d11] text-sm font-semibold"
+              <label class="text-[#1c0d11] text-sm font-semibold"
                 >Số điện thoại</label
               >
               <div class="relative">
@@ -359,8 +350,7 @@
               </div>
             </div>
             <div class="flex flex-col gap-2">
-              <label
-                class="text-[#1c0d11] text-sm font-semibold"
+              <label class="text-[#1c0d11] text-sm font-semibold"
                 >Mật khẩu</label
               >
               <div class="relative">
@@ -389,8 +379,7 @@
               </p>
             </div>
             <div class="flex flex-col gap-2">
-              <label
-                class="text-[#1c0d11] text-sm font-semibold"
+              <label class="text-[#1c0d11] text-sm font-semibold"
                 >Loại tài khoản</label
               >
               <div class="flex gap-4">
@@ -402,9 +391,7 @@
                     checked
                     class="w-5 h-5 text-primary focus:ring-primary"
                   />
-                  <span class="text-[#1c0d11] font-medium"
-                    >Thành viên</span
-                  >
+                  <span class="text-[#1c0d11] font-medium">Thành viên</span>
                 </label>
                 <label class="flex items-center gap-2 cursor-pointer">
                   <input
@@ -435,9 +422,7 @@
     </main>
 
     <!-- Footer -->
-    <footer
-      class="w-full py-8 border-t border-[#f4e7ea] mt-auto"
-    >
+    <footer class="w-full py-8 border-t border-[#f4e7ea] mt-auto">
       <div
         class="max-w-[1200px] mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-4"
       >
@@ -449,9 +434,7 @@
             >© 2026 GymHeart Fitness. All rights reserved.</span
           >
         </div>
-        <div
-          class="flex gap-6 text-sm text-[#9c495e] font-medium"
-        >
+        <div class="flex gap-6 text-sm text-[#9c495e] font-medium">
           <a class="hover:text-primary transition-colors" href="#"
             >Điều khoản</a
           >
@@ -463,7 +446,7 @@
 
     <!-- JavaScript -->
     <script src="js/supabase-config.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="js/auth.js?v=20260408"></script>
     <script>
       function switchTab(tab) {
         const loginTab = document.getElementById("login-tab");

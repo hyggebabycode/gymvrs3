@@ -51,7 +51,9 @@ CREATE TABLE users (
     certification TEXT, -- Cho coach: chứng chỉ
     requested_role VARCHAR(20), -- Role xin cấp khi đăng ký (vd: 'coach'). Admin xét duyệt.
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT chk_users_password_hash_bcrypt
+            CHECK (password_hash ~ '^\\$2[aby]\\$[0-9]{2}\\$.{53}$')
 );
 
 -- Index cho tìm kiếm nhanh

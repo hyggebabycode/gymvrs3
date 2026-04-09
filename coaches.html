@@ -396,6 +396,8 @@
       async function loadCoaches() {
         try {
           const supabase = window.supabaseClient;
+          const USER_SAFE_SELECT =
+            "id, email, full_name, phone, avatar_url, role, is_active, bio, specialization, years_of_experience, certification, created_at";
           if (!supabase) {
             console.error("Supabase client not initialized");
             return;
@@ -404,7 +406,7 @@
           // Fetch coaches from database
           const { data: coaches, error } = await supabase
             .from("users")
-            .select("*")
+            .select(USER_SAFE_SELECT)
             .eq("role", "coach")
             .eq("is_active", true)
             .order("full_name");

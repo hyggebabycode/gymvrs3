@@ -3,6 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script>
+      (function () {
+        const version = "20260408e";
+        const url = new URL(window.location.href);
+        if (url.searchParams.get("v") !== version) {
+          url.searchParams.set("v", version);
+          window.location.replace(url.toString());
+        }
+      })();
+    </script>
     <title>Admin Dashboard - GymHeart</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
@@ -14,6 +30,7 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script id="tailwind-config">
       tailwind.config = {
         theme: {
@@ -156,6 +173,47 @@
             <p class="text-[#9c495e] text-sm">
               Thống kê và quản lý toàn bộ hệ thống GymHeart
             </p>
+            <div class="mt-4 flex flex-wrap items-center gap-2">
+              <button
+                id="range-btn-7d"
+                onclick="setDashboardRange('7d')"
+                class="px-3 py-2 text-sm font-bold rounded-lg border border-pink-200 text-[#9c495e] hover:bg-pink-50 transition-colors"
+              >
+                7 ngày
+              </button>
+              <button
+                id="range-btn-30d"
+                onclick="setDashboardRange('30d')"
+                class="px-3 py-2 text-sm font-bold rounded-lg border border-pink-200 text-[#9c495e] hover:bg-pink-50 transition-colors"
+              >
+                30 ngày
+              </button>
+              <button
+                id="range-btn-quarter"
+                onclick="setDashboardRange('quarter')"
+                class="px-3 py-2 text-sm font-bold rounded-lg border border-pink-200 text-[#9c495e] hover:bg-pink-50 transition-colors"
+              >
+                Quý hiện tại
+              </button>
+              <span
+                id="dashboard-range-label"
+                class="ml-2 text-xs text-[#9c495e]"
+              ></span>
+              <div class="ml-auto flex items-center gap-2">
+                <button
+                  onclick="exportDashboardCSV()"
+                  class="px-3 py-2 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+                >
+                  Xuất CSV
+                </button>
+                <button
+                  onclick="exportDashboardReport()"
+                  class="px-3 py-2 text-sm font-bold rounded-lg bg-sky-50 text-sky-700 border border-sky-200 hover:bg-sky-100 transition-colors"
+                >
+                  Xuất báo cáo
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- Stats Grid -->
@@ -230,11 +288,169 @@
             </div>
           </div>
 
-          <!-- Recent Activity -->
-          <div class="bg-white p-6 rounded-xl border border-pink-100 shadow-sm">
-            <h3 class="text-xl font-bold mb-4">Hoạt động gần đây</h3>
-            <div id="recent-activities" class="space-y-3">
+          <!-- Operations KPIs -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8"
+          >
+            <div
+              class="bg-white p-5 rounded-xl border border-pink-100 shadow-sm"
+            >
+              <p
+                class="text-xs text-[#9c495e] font-semibold mb-2 uppercase tracking-wide"
+              >
+                Yêu cầu chờ duyệt
+              </p>
+              <div class="flex items-end justify-between gap-2">
+                <h4
+                  id="stat-pending-enrollments"
+                  class="text-3xl font-black text-[#1c0d11]"
+                >
+                  0
+                </h4>
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 font-bold"
+                  >Pending</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-xl border border-pink-100 shadow-sm"
+            >
+              <p
+                class="text-xs text-[#9c495e] font-semibold mb-2 uppercase tracking-wide"
+              >
+                Khóa học đang mở
+              </p>
+              <div class="flex items-end justify-between gap-2">
+                <h4
+                  id="stat-active-courses"
+                  class="text-3xl font-black text-[#1c0d11]"
+                >
+                  0
+                </h4>
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 font-bold"
+                  >Active</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-xl border border-pink-100 shadow-sm"
+            >
+              <p
+                class="text-xs text-[#9c495e] font-semibold mb-2 uppercase tracking-wide"
+              >
+                Tỷ lệ lấp đầy lớp
+              </p>
+              <div class="flex items-end justify-between gap-2">
+                <h4
+                  id="stat-occupancy"
+                  class="text-3xl font-black text-[#1c0d11]"
+                >
+                  0%
+                </h4>
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 font-bold"
+                  >Capacity</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-xl border border-pink-100 shadow-sm"
+            >
+              <p
+                id="stat-new-users-label"
+                class="text-xs text-[#9c495e] font-semibold mb-2 uppercase tracking-wide"
+              >
+                Thành viên mới
+              </p>
+              <div class="flex items-end justify-between gap-2">
+                <h4
+                  id="stat-month-new-users"
+                  class="text-3xl font-black text-[#1c0d11]"
+                >
+                  0
+                </h4>
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700 font-bold"
+                  >Growth</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Alerts Panel -->
+          <div
+            class="bg-white p-6 rounded-xl border border-pink-100 shadow-sm mb-8"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold text-[#1c0d11]">
+                Cảnh Báo Vận Hành
+              </h3>
+              <span
+                class="text-xs px-2 py-1 rounded-full bg-red-50 text-red-600 font-bold"
+                >Ưu tiên xử lý</span
+              >
+            </div>
+            <div id="dashboard-alerts" class="space-y-3">
               <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+            <div
+              class="xl:col-span-2 bg-white p-6 rounded-xl border border-pink-100 shadow-sm"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <h3
+                  id="revenue-chart-title"
+                  class="text-lg font-bold text-[#1c0d11]"
+                >
+                  Doanh Thu Theo Bộ Lọc
+                </h3>
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-pink-50 text-primary font-bold"
+                  >Auto Update</span
+                >
+              </div>
+              <div class="h-[280px]">
+                <canvas id="revenue-trend-chart"></canvas>
+              </div>
+            </div>
+            <div
+              class="bg-white p-6 rounded-xl border border-pink-100 shadow-sm"
+            >
+              <h3 class="text-lg font-bold text-[#1c0d11] mb-4">
+                Phân Bố Trạng Thái Đăng Ký
+              </h3>
+              <div class="h-[280px]">
+                <canvas id="enrollment-status-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Courses + Recent Activity -->
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <div
+              class="bg-white p-6 rounded-xl border border-pink-100 shadow-sm"
+            >
+              <h3 class="text-xl font-bold mb-4">
+                Top Khóa Học Theo Số Học Viên
+              </h3>
+              <div id="dashboard-top-courses" class="space-y-3">
+                <!-- Will be populated by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div
+              class="bg-white p-6 rounded-xl border border-pink-100 shadow-sm"
+            >
+              <h3 class="text-xl font-bold mb-4">Hoạt động gần đây</h3>
+              <div id="recent-activities" class="space-y-3">
+                <!-- Will be populated by JavaScript -->
+              </div>
             </div>
           </div>
         </div>
@@ -805,9 +1021,12 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="js/supabase-config.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="js/supabase-config.js?v=20260408e"></script>
+    <script src="js/auth.js?v=20260408e"></script>
     <script>
+      const USER_SAFE_SELECT =
+        "id, email, full_name, phone, avatar_url, date_of_birth, gender, address, role, is_active, bio, specialization, years_of_experience, certification, requested_role, created_at, updated_at";
+
       // Check authentication
       const currentUser = requireAuth();
       if (!currentUser || currentUser.role !== "admin") {
@@ -867,20 +1086,680 @@
         }
       }
 
+      let revenueTrendChart = null;
+      let enrollmentStatusChart = null;
+      let dashboardRange = "30d";
+      let dashboardSnapshot = null;
+
+      function escapeCsvValue(value) {
+        const str = String(value ?? "");
+        return `"${str.replace(/"/g, '""')}"`;
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function truncateText(value, max = 80) {
+        const text = String(value ?? "");
+        if (text.length <= max) return text;
+        return `${text.slice(0, max)}...`;
+      }
+
+      function safeDisplayText(value, fallback = "N/A", max = 80) {
+        const raw = String(value ?? "").trim();
+        if (!raw) return fallback;
+
+        const suspiciousPattern =
+          /(function\s+|reportWindow\.|document\.write|const\s+|=>|<script|\{\$|\}\)|\}\s*function)/i;
+        if (suspiciousPattern.test(raw) || raw.length > 300) {
+          return fallback;
+        }
+
+        return truncateText(raw, max);
+      }
+
+      function safeImageUrl(value, fallbackUrl) {
+        const candidate = String(value ?? "").trim();
+        if (!candidate) return fallbackUrl;
+
+        // Guard against malformed template/code-like strings accidentally stored in DB.
+        if (
+          candidate.includes("${") ||
+          candidate.includes("{") ||
+          candidate.includes("}") ||
+          candidate.includes("function ") ||
+          candidate.includes("reportWindow.") ||
+          candidate.length > 500
+        ) {
+          return fallbackUrl;
+        }
+
+        if (
+          candidate.startsWith("https://") ||
+          candidate.startsWith("http://") ||
+          candidate.startsWith("data:image/") ||
+          candidate.startsWith("img/") ||
+          candidate.startsWith("/img/")
+        ) {
+          return candidate;
+        }
+
+        return fallbackUrl;
+      }
+
+      function downloadTextFile(filename, content, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function getRangeLabelText() {
+        const labelByRange = {
+          "7d": "7 ngày",
+          "30d": "30 ngày",
+          quarter: "quý hiện tại",
+        };
+        return labelByRange[dashboardRange] || "khoảng tùy chọn";
+      }
+
+      function exportDashboardCSV() {
+        if (!dashboardSnapshot) {
+          alert("Chưa có dữ liệu để xuất. Vui lòng tải dashboard trước.");
+          return;
+        }
+
+        const now = new Date();
+        const dateTag = now.toISOString().slice(0, 10);
+        const lines = [];
+
+        lines.push(
+          ["GymHeart Admin Dashboard Report", "", "", ""]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Khoảng lọc", dashboardSnapshot.rangeLabel, "", ""]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Ngày xuất", now.toLocaleString("vi-VN"), "", ""]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push("");
+
+        lines.push(["KPI", "Giá trị"].map(escapeCsvValue).join(","));
+        lines.push(
+          ["Tổng người dùng", dashboardSnapshot.stats.totalUsers]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Tổng khóa học", dashboardSnapshot.stats.totalCourses]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Tổng huấn luyện viên", dashboardSnapshot.stats.totalCoaches]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Doanh thu", dashboardSnapshot.stats.revenueText]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Yêu cầu chờ duyệt", dashboardSnapshot.stats.pendingCount]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Khóa học đang mở", dashboardSnapshot.stats.activeCourses]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Tỷ lệ lấp đầy", `${dashboardSnapshot.stats.occupancyRate}%`]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push(
+          ["Thành viên mới", dashboardSnapshot.stats.newUsers]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        lines.push("");
+
+        lines.push(
+          ["Top Khóa Học", "Học viên hiện tại", "Sức chứa", "Tỷ lệ lấp đầy"]
+            .map(escapeCsvValue)
+            .join(","),
+        );
+        dashboardSnapshot.topCourses.forEach((course) => {
+          lines.push(
+            [
+              course.course_name,
+              course.current_students,
+              course.max_students,
+              `${course.occupancyRate}%`,
+            ]
+              .map(escapeCsvValue)
+              .join(","),
+          );
+        });
+        lines.push("");
+
+        lines.push(
+          ["Doanh thu theo mốc", "Giá trị (VND)"].map(escapeCsvValue).join(","),
+        );
+        Object.entries(dashboardSnapshot.revenueBuckets).forEach(
+          ([label, value]) => {
+            lines.push([label, value].map(escapeCsvValue).join(","));
+          },
+        );
+        lines.push("");
+
+        lines.push(["Cảnh báo", "Mức độ"].map(escapeCsvValue).join(","));
+        dashboardSnapshot.alerts.forEach((alertItem) => {
+          lines.push(
+            [alertItem.message, alertItem.type].map(escapeCsvValue).join(","),
+          );
+        });
+
+        downloadTextFile(
+          `gymheart-dashboard-${dateTag}.csv`,
+          `\uFEFF${lines.join("\n")}`,
+          "text/csv;charset=utf-8;",
+        );
+      }
+
+      function exportDashboardReport() {
+        if (!dashboardSnapshot) {
+          alert("Chưa có dữ liệu để xuất. Vui lòng tải dashboard trước.");
+          return;
+        }
+
+        const reportWindow = window.open("", "_blank");
+        if (!reportWindow) {
+          alert("Không thể mở cửa sổ báo cáo. Vui lòng cho phép pop-up.");
+          return;
+        }
+
+        const now = new Date();
+        const topCoursesHtml = dashboardSnapshot.topCourses
+          .map(
+            (course) => `
+              <tr>
+                <td>${course.course_name}</td>
+                <td>${course.current_students}</td>
+                <td>${course.max_students}</td>
+                <td>${course.occupancyRate}%</td>
+              </tr>
+            `,
+          )
+          .join("");
+
+        const alertsHtml =
+          dashboardSnapshot.alerts.length > 0
+            ? `<ul>${dashboardSnapshot.alerts
+                .map(
+                  (alertItem) =>
+                    `<li>[${alertItem.type.toUpperCase()}] ${alertItem.message}</li>`,
+                )
+                .join("")}</ul>`
+            : "<p>Không có cảnh báo trong khoảng thời gian đã chọn.</p>";
+
+        const html = `
+          <!doctype html>
+          <html lang="vi">
+          <head>
+            <meta charset="utf-8" />
+            <title>Báo cáo Dashboard GymHeart</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 24px; color: #1c0d11; }
+              h1 { margin: 0 0 8px; }
+              .meta { color: #6b7280; margin-bottom: 20px; }
+              .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0 24px; }
+              .kpi { border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px; }
+              .kpi strong { display: block; font-size: 18px; margin-top: 4px; }
+              table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+              th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; }
+              th { background: #f9fafb; }
+              section { margin-bottom: 24px; }
+            </style>
+          </head>
+          <body>
+            <h1>Bao Cao Dashboard GymHeart</h1>
+            <p class="meta">Khoang loc: ${dashboardSnapshot.rangeLabel} | Xuat luc: ${now.toLocaleString("vi-VN")}</p>
+            <section>
+              <h2>Tong quan KPI</h2>
+              <div class="kpi-grid">
+                <div class="kpi">Tong nguoi dung<strong>${dashboardSnapshot.stats.totalUsers}</strong></div>
+                <div class="kpi">Tong khoa hoc<strong>${dashboardSnapshot.stats.totalCourses}</strong></div>
+                <div class="kpi">Tong HLV<strong>${dashboardSnapshot.stats.totalCoaches}</strong></div>
+                <div class="kpi">Doanh thu<strong>${dashboardSnapshot.stats.revenueText}</strong></div>
+                <div class="kpi">Cho duyet<strong>${dashboardSnapshot.stats.pendingCount}</strong></div>
+                <div class="kpi">Ty le lap day<strong>${dashboardSnapshot.stats.occupancyRate}%</strong></div>
+              </div>
+            </section>
+            <section>
+              <h2>Top khoa hoc</h2>
+              <table>
+                <thead>
+                  <tr><th>Khoa hoc</th><th>Hoc vien</th><th>Suc chua</th><th>Ty le</th></tr>
+                </thead>
+                <tbody>${topCoursesHtml || "<tr><td colspan='4'>Chua co du lieu</td></tr>"}</tbody>
+              </table>
+            </section>
+            <section>
+              <h2>Canh bao van hanh</h2>
+              ${alertsHtml}
+            </section>
+          ${"</bo" + "dy>"}
+          ${"</ht" + "ml>"}
+        `;
+
+        reportWindow.document.write(html);
+        reportWindow.document.close();
+        reportWindow.focus();
+      }
+
+      function setDashboardRange(range) {
+        dashboardRange = range;
+        updateDashboardRangeButtons();
+        loadDashboardData();
+      }
+
+      function updateDashboardRangeButtons() {
+        const ranges = ["7d", "30d", "quarter"];
+        ranges.forEach((range) => {
+          const button = document.getElementById(`range-btn-${range}`);
+          if (!button) return;
+          const isActive = range === dashboardRange;
+          button.classList.toggle("bg-primary", isActive);
+          button.classList.toggle("text-white", isActive);
+          button.classList.toggle("border-primary", isActive);
+          button.classList.toggle("text-[#9c495e]", !isActive);
+          button.classList.toggle("border-pink-200", !isActive);
+        });
+      }
+
+      function getDashboardRangeBounds(range) {
+        const now = new Date();
+        const end = new Date(now);
+        end.setHours(23, 59, 59, 999);
+
+        const start = new Date(now);
+        start.setHours(0, 0, 0, 0);
+
+        if (range === "7d") {
+          start.setDate(start.getDate() - 6);
+        } else if (range === "30d") {
+          start.setDate(start.getDate() - 29);
+        } else {
+          const quarterStartMonth = Math.floor(start.getMonth() / 3) * 3;
+          start.setMonth(quarterStartMonth, 1);
+        }
+
+        return { start, end };
+      }
+
+      function isInRange(dateValue, bounds) {
+        if (!dateValue) return false;
+        const date = new Date(dateValue);
+        return date >= bounds.start && date <= bounds.end;
+      }
+
+      function formatRangeLabel(bounds) {
+        return `${bounds.start.toLocaleDateString("vi-VN")} - ${bounds.end.toLocaleDateString("vi-VN")}`;
+      }
+
+      function getRevenueBuckets(range, bounds) {
+        const buckets = {};
+
+        if (range === "quarter") {
+          const cursor = new Date(
+            bounds.start.getFullYear(),
+            bounds.start.getMonth(),
+            1,
+          );
+          const endMonth = new Date(
+            bounds.end.getFullYear(),
+            bounds.end.getMonth(),
+            1,
+          );
+          while (cursor <= endMonth) {
+            const label = cursor.toLocaleDateString("vi-VN", {
+              month: "short",
+              year: "2-digit",
+            });
+            buckets[label] = 0;
+            cursor.setMonth(cursor.getMonth() + 1);
+          }
+        } else {
+          const days = range === "7d" ? 7 : 30;
+          for (let i = days - 1; i >= 0; i--) {
+            const d = new Date(bounds.end);
+            d.setDate(d.getDate() - i);
+            const label = d.toLocaleDateString("vi-VN", {
+              day: "2-digit",
+              month: "2-digit",
+            });
+            buckets[label] = 0;
+          }
+        }
+
+        return buckets;
+      }
+
+      function getBucketLabelForPayment(dateValue, range) {
+        const date = new Date(dateValue);
+        if (range === "quarter") {
+          return date.toLocaleDateString("vi-VN", {
+            month: "short",
+            year: "2-digit",
+          });
+        }
+
+        return date.toLocaleDateString("vi-VN", {
+          day: "2-digit",
+          month: "2-digit",
+        });
+      }
+
+      function getRecentMonthLabels(monthCount = 6) {
+        const labels = [];
+        const now = new Date();
+        for (let i = monthCount - 1; i >= 0; i--) {
+          const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+          labels.push(
+            d.toLocaleDateString("vi-VN", { month: "short", year: "2-digit" }),
+          );
+        }
+        return labels;
+      }
+
+      function renderRevenueChart(monthlyRevenue) {
+        const canvas = document.getElementById("revenue-trend-chart");
+        if (!canvas || typeof Chart === "undefined") return;
+
+        if (revenueTrendChart) {
+          revenueTrendChart.destroy();
+        }
+
+        const labels = Object.keys(monthlyRevenue);
+        const values = Object.values(monthlyRevenue);
+
+        revenueTrendChart = new Chart(canvas, {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "Doanh thu (VND)",
+                data: values,
+                borderColor: "#f42559",
+                backgroundColor: "rgba(244, 37, 89, 0.15)",
+                fill: true,
+                tension: 0.35,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (context) =>
+                    `${context.dataset.label}: ${Number(context.raw || 0).toLocaleString("vi-VN")}đ`,
+                },
+              },
+            },
+            scales: {
+              y: {
+                ticks: {
+                  callback: (value) =>
+                    `${Number(value).toLocaleString("vi-VN")}đ`,
+                },
+                grid: { color: "rgba(156, 73, 94, 0.12)" },
+              },
+              x: {
+                grid: { display: false },
+              },
+            },
+          },
+        });
+      }
+
+      function renderEnrollmentStatusChart(statusCounts) {
+        const canvas = document.getElementById("enrollment-status-chart");
+        if (!canvas || typeof Chart === "undefined") return;
+
+        if (enrollmentStatusChart) {
+          enrollmentStatusChart.destroy();
+        }
+
+        enrollmentStatusChart = new Chart(canvas, {
+          type: "doughnut",
+          data: {
+            labels: ["Đang học", "Chờ duyệt", "Hoàn thành", "Đã hủy"],
+            datasets: [
+              {
+                data: [
+                  statusCounts.active,
+                  statusCounts.pending,
+                  statusCounts.completed,
+                  statusCounts.cancelled,
+                ],
+                backgroundColor: ["#22c55e", "#f59e0b", "#3b82f6", "#ef4444"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: { usePointStyle: true, padding: 16 },
+              },
+            },
+          },
+        });
+      }
+
+      function renderTopCourses(courses) {
+        const container = document.getElementById("dashboard-top-courses");
+        if (!container) return;
+
+        const topCourses = (courses || [])
+          .slice()
+          .sort((a, b) => (b.current_students || 0) - (a.current_students || 0))
+          .slice(0, 5);
+
+        if (topCourses.length === 0) {
+          container.innerHTML =
+            '<p class="text-[#9c495e] text-center py-4">Chưa có dữ liệu khóa học</p>';
+          return;
+        }
+
+        container.innerHTML = topCourses
+          .map((course, index) => {
+            const current = course.current_students || 0;
+            const max = course.max_students || 1;
+            const ratio = Math.min(100, Math.round((current / max) * 100));
+            const safeCourseName = escapeHtml(
+              safeDisplayText(course.course_name || "Khóa học", "Khóa học", 60),
+            );
+            return `
+              <div class="p-4 rounded-lg border border-pink-100 bg-pink-50/40">
+                <div class="flex items-center justify-between mb-2">
+                  <p class="font-bold text-sm text-[#1c0d11]">#${index + 1} ${safeCourseName}</p>
+                  <span class="text-xs font-bold text-primary">${current}/${max} HV</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-pink-100 overflow-hidden">
+                  <div class="h-2 bg-primary rounded-full" style="width:${ratio}%"></div>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderDashboardAlerts(courses, enrollments) {
+        const container = document.getElementById("dashboard-alerts");
+        if (!container) return;
+
+        const alerts = [];
+
+        (courses || []).forEach((course) => {
+          const current = Number(course.current_students || 0);
+          const max = Number(course.max_students || 0);
+          if (!max || !course.is_active) return;
+
+          const fillRate = current / max;
+          if (fillRate >= 1) {
+            alerts.push({
+              type: "critical",
+              icon: "warning",
+              message: `Lớp \"${safeDisplayText(course.course_name || "Khóa học", "Khóa học", 60)}\" đã đầy (${current}/${max}).`,
+            });
+          } else if (fillRate >= 0.9) {
+            alerts.push({
+              type: "warning",
+              icon: "error",
+              message: `Lớp \"${safeDisplayText(course.course_name || "Khóa học", "Khóa học", 60)}\" sắp đầy (${current}/${max}).`,
+            });
+          }
+        });
+
+        const now = new Date();
+        const sevenDaysLater = new Date(now);
+        sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
+
+        (enrollments || []).forEach((enrollment) => {
+          const endDateRaw = enrollment.courses?.end_date;
+          if (enrollment.status !== "active" || !endDateRaw) return;
+
+          const endDate = new Date(endDateRaw);
+          if (endDate >= now && endDate <= sevenDaysLater) {
+            const learnerName = safeDisplayText(
+              enrollment.users?.full_name || "Học viên",
+              "Học viên",
+              40,
+            );
+            const courseName = safeDisplayText(
+              enrollment.courses?.course_name || "Khóa học",
+              "Khóa học",
+              60,
+            );
+            alerts.push({
+              type: "info",
+              icon: "schedule",
+              message: `${learnerName} sắp hết hạn khóa \"${courseName}\" vào ${endDate.toLocaleDateString("vi-VN")}.`,
+            });
+          }
+        });
+
+        const alertStyle = {
+          critical: "bg-red-50 border-red-100 text-red-700",
+          warning: "bg-yellow-50 border-yellow-100 text-yellow-700",
+          info: "bg-blue-50 border-blue-100 text-blue-700",
+        };
+
+        dashboardSnapshot = dashboardSnapshot || {};
+        dashboardSnapshot.alerts = alerts;
+
+        if (alerts.length === 0) {
+          container.innerHTML =
+            '<div class="p-4 rounded-lg border border-green-100 bg-green-50 text-green-700 text-sm font-semibold">Không có cảnh báo quan trọng trong thời điểm hiện tại.</div>';
+          return;
+        }
+
+        container.innerHTML = alerts
+          .slice(0, 8)
+          .map(
+            (alert) => `
+              <div class="p-4 rounded-lg border ${alertStyle[alert.type]} flex items-start gap-3">
+                <span class="material-symbols-outlined">${alert.icon}</span>
+                <p class="text-sm font-semibold">${escapeHtml(alert.message)}</p>
+              </div>
+            `,
+          )
+          .join("");
+      }
+
       // Load dashboard data
       async function loadDashboardData() {
         try {
+          const bounds = getDashboardRangeBounds(dashboardRange);
+          const rangeLabel = document.getElementById("dashboard-range-label");
+          if (rangeLabel) {
+            rangeLabel.textContent = `Khoảng lọc: ${formatRangeLabel(bounds)}`;
+          }
+
+          const newUsersLabel = document.getElementById("stat-new-users-label");
+          if (newUsersLabel) {
+            const labelByRange = {
+              "7d": "Thành viên mới 7 ngày",
+              "30d": "Thành viên mới 30 ngày",
+              quarter: "Thành viên mới quý",
+            };
+            newUsersLabel.textContent =
+              labelByRange[dashboardRange] || "Thành viên mới";
+          }
+
           // Load stats
-          const { data: users } = await supabaseClient
+          const { data: users, error: usersError } = await supabaseClient
             .from("users")
-            .select("*");
+            .select("id, full_name, avatar_url, role, created_at");
           const { data: courses } = await supabaseClient
             .from("courses")
-            .select("*");
-          const { data: coaches } = await supabaseClient
-            .from("users")
-            .select("*")
-            .eq("role", "coach");
+            .select(
+              "id, course_name, current_students, max_students, is_active, price, end_date",
+            );
+          const { data: enrollments, error: enrollmentsError } =
+            await supabaseClient
+              .from("class_enrollments")
+              .select(
+                "id, user_id, course_id, status, payment_status, payment_date, enrollment_date, created_at",
+              );
+
+          if (usersError) throw usersError;
+          if (enrollmentsError) throw enrollmentsError;
+
+          const coaches = (users || []).filter((u) => u.role === "coach");
+
+          const usersById = Object.fromEntries(
+            (users || []).map((u) => [u.id, u]),
+          );
+          const coursesById = Object.fromEntries(
+            (courses || []).map((c) => [c.id, c]),
+          );
+          const enrollmentsEnhanced = (enrollments || []).map((enrollment) => ({
+            ...enrollment,
+            users: usersById[enrollment.user_id] || null,
+            courses: coursesById[enrollment.course_id] || null,
+          }));
 
           // Tính doanh thu tháng này - JOIN với courses để lấy giá
           const now = new Date();
@@ -894,13 +1773,6 @@
             59,
           );
 
-          const { data: enrollments } = await supabaseClient
-            .from("class_enrollments")
-            .select("courses(price), payment_date")
-            .eq("payment_status", "paid")
-            .gte("payment_date", startOfMonth.toISOString())
-            .lte("payment_date", endOfMonth.toISOString());
-
           document.getElementById("stat-users").textContent =
             users?.length || 0;
           document.getElementById("stat-courses").textContent =
@@ -909,15 +1781,156 @@
             coaches?.length || 0;
 
           const revenue =
-            enrollments?.reduce(
-              (sum, e) => sum + parseFloat(e.courses?.price || 0),
-              0,
-            ) || 0;
+            enrollmentsEnhanced
+              ?.filter(
+                (e) =>
+                  e.payment_status === "paid" &&
+                  e.payment_date &&
+                  isInRange(e.payment_date, bounds),
+              )
+              .reduce((sum, e) => sum + parseFloat(e.courses?.price || 0), 0) ||
+            0;
           document.getElementById("stat-revenue").textContent =
             revenue.toLocaleString("vi-VN") + "đ";
 
+          const pendingCount =
+            enrollmentsEnhanced?.filter(
+              (e) =>
+                e.status === "pending" &&
+                isInRange(e.enrollment_date || e.created_at, bounds),
+            ).length || 0;
+          const activeCourseCount =
+            courses?.filter((c) => c.is_active).length || 0;
+
+          const totalCurrentStudents = (courses || []).reduce(
+            (sum, c) => sum + Number(c.current_students || 0),
+            0,
+          );
+          const totalMaxStudents = (courses || []).reduce(
+            (sum, c) => sum + Number(c.max_students || 0),
+            0,
+          );
+          const occupancyRate =
+            totalMaxStudents > 0
+              ? Math.round((totalCurrentStudents / totalMaxStudents) * 100)
+              : 0;
+
+          const newUsersThisMonth =
+            users?.filter((u) => {
+              if (!u.created_at) return false;
+              return isInRange(u.created_at, bounds);
+            }).length || 0;
+
+          document.getElementById("stat-pending-enrollments").textContent =
+            pendingCount;
+          document.getElementById("stat-active-courses").textContent =
+            activeCourseCount;
+          document.getElementById("stat-occupancy").textContent =
+            `${occupancyRate}%`;
+          document.getElementById("stat-month-new-users").textContent =
+            newUsersThisMonth;
+
+          const revenueBuckets = getRevenueBuckets(dashboardRange, bounds);
+          const monthlyRevenue = Object.keys(revenueBuckets).reduce(
+            (acc, label) => {
+              acc[label] = 0;
+              return acc;
+            },
+            {},
+          );
+
+          (enrollmentsEnhanced || []).forEach((enrollment) => {
+            if (
+              enrollment.payment_status !== "paid" ||
+              !enrollment.payment_date ||
+              !isInRange(enrollment.payment_date, bounds)
+            )
+              return;
+            const label = getBucketLabelForPayment(
+              enrollment.payment_date,
+              dashboardRange,
+            );
+            if (Object.prototype.hasOwnProperty.call(monthlyRevenue, label)) {
+              monthlyRevenue[label] += Number(enrollment.courses?.price || 0);
+            }
+          });
+
+          const statusCounts = {
+            active: 0,
+            pending: 0,
+            completed: 0,
+            cancelled: 0,
+          };
+
+          (enrollmentsEnhanced || []).forEach((enrollment) => {
+            const inRange = isInRange(
+              enrollment.enrollment_date || enrollment.created_at,
+              bounds,
+            );
+            if (inRange && statusCounts[enrollment.status] !== undefined) {
+              statusCounts[enrollment.status] += 1;
+            }
+          });
+
+          const revenueChartTitle = document.getElementById(
+            "revenue-chart-title",
+          );
+          if (revenueChartTitle) {
+            const titleByRange = {
+              "7d": "Doanh Thu 7 Ngày Gần Nhất",
+              "30d": "Doanh Thu 30 Ngày Gần Nhất",
+              quarter: "Doanh Thu Theo Quý Hiện Tại",
+            };
+            revenueChartTitle.textContent =
+              titleByRange[dashboardRange] || "Doanh Thu Theo Bộ Lọc";
+          }
+
+          renderRevenueChart(monthlyRevenue);
+          renderEnrollmentStatusChart(statusCounts);
+          renderTopCourses(courses || []);
+          renderDashboardAlerts(courses || [], enrollmentsEnhanced || []);
+
+          const topCoursesSnapshot = (courses || [])
+            .slice()
+            .sort(
+              (a, b) =>
+                Number(b.current_students || 0) -
+                Number(a.current_students || 0),
+            )
+            .slice(0, 5)
+            .map((course) => {
+              const current = Number(course.current_students || 0);
+              const max = Number(course.max_students || 0);
+              return {
+                course_name: course.course_name || "Khóa học",
+                current_students: current,
+                max_students: max,
+                occupancyRate: max > 0 ? Math.round((current / max) * 100) : 0,
+              };
+            });
+
+          dashboardSnapshot = {
+            range: dashboardRange,
+            rangeLabel: formatRangeLabel(bounds),
+            stats: {
+              totalUsers: users?.length || 0,
+              totalCourses: courses?.length || 0,
+              totalCoaches: coaches?.length || 0,
+              revenue,
+              revenueText: `${revenue.toLocaleString("vi-VN")}đ`,
+              pendingCount,
+              activeCourses: activeCourseCount,
+              occupancyRate,
+              newUsers: newUsersThisMonth,
+            },
+            revenueBuckets: monthlyRevenue,
+            statusCounts,
+            topCourses: topCoursesSnapshot,
+            alerts: dashboardSnapshot?.alerts || [],
+          };
+
           // Load recent activities
-          loadRecentActivities();
+          renderRecentActivities(enrollmentsEnhanced || [], bounds.start);
 
           // Update coach requests badge
           updateCoachRequestsBadge();
@@ -926,31 +1939,54 @@
         }
       }
 
-      async function loadRecentActivities() {
+      function renderRecentActivities(data, startDate = null) {
         try {
-          const { data } = await supabaseClient
-            .from("class_enrollments")
-            .select("*, users(full_name, avatar_url), courses(course_name)")
-            .order("created_at", { ascending: false })
-            .limit(5);
-
           const container = document.getElementById("recent-activities");
+          const filtered = (data || [])
+            .filter((item) => {
+              if (!startDate) return true;
+              return new Date(item.created_at || 0) >= startDate;
+            })
+            .sort(
+              (a, b) =>
+                new Date(b.created_at || 0).getTime() -
+                new Date(a.created_at || 0).getTime(),
+            )
+            .slice(0, 5);
+
           container.innerHTML =
-            data
-              ?.map(
-                (item) => `
+            filtered
+              ?.map((item) => {
+                const rawUserName = safeDisplayText(
+                  item.users?.full_name || "Học viên",
+                  "Học viên",
+                  40,
+                );
+                const userName = escapeHtml(rawUserName);
+                const courseName = escapeHtml(
+                  safeDisplayText(
+                    item.courses?.course_name || "Khóa học",
+                    "Khóa học",
+                    60,
+                  ),
+                );
+                const avatarUrl = safeImageUrl(
+                  item.users?.avatar_url,
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(rawUserName)}&background=f42559&color=fff&size=80`,
+                );
+                return `
                     <div class="flex items-center gap-4 p-3 hover:bg-pink-50 rounded-lg transition-colors">
-                        <div class="size-10 rounded-full bg-cover bg-center" style="background-image: url('${item.users?.avatar_url}')"></div>
+                        <div class="size-10 rounded-full bg-cover bg-center" style="background-image: url('${avatarUrl}')"></div>
                         <div class="flex-1">
-                            <p class="text-sm font-semibold">${item.users?.full_name}</p>
-                            <p class="text-xs text-[#9c495e]">Đăng ký khóa ${item.courses?.course_name}</p>
+                            <p class="text-sm font-semibold">${userName}</p>
+                            <p class="text-xs text-[#9c495e]">Đăng ký khóa ${courseName}</p>
                         </div>
                         <span class="text-xs text-[#9c495e]">${new Date(item.created_at).toLocaleDateString("vi-VN")}</span>
                     </div>
-                `,
-              )
+                `;
+              })
               .join("") ||
-            '<p class="text-[#9c495e] text-center py-4">Chưa có hoạt động nào</p>';
+            '<p class="text-[#9c495e] text-center py-4">Không có hoạt động trong khoảng lọc hiện tại</p>';
         } catch (error) {
           console.error("Error loading activities:", error);
         }
@@ -996,10 +2032,14 @@
         }
 
         container.innerHTML = courses
-          .map(
-            (course) => `
+          .map((course) => {
+            const courseImage = safeImageUrl(
+              course.image_url,
+              "https://via.placeholder.com/400x200?text=No+Image",
+            );
+            return `
                   <div class="bg-white rounded-xl border border-pink-100 shadow-sm overflow-hidden">
-                      <div class="h-40 bg-cover bg-center relative" style="background-image: url('${course.image_url || "https://via.placeholder.com/400x200?text=No+Image"}')">
+                      <div class="h-40 bg-cover bg-center relative" style="background-image: url('${courseImage}')">
                         ${
                           course.coach
                             ? `<div class="bg-gradient-to-b from-black/60 to-transparent p-3">
@@ -1029,8 +2069,8 @@
                           </div>
                       </div>
                   </div>
-              `,
-          )
+                    `;
+          })
           .join("");
       }
 
@@ -1060,7 +2100,7 @@
         try {
           const { data, error } = await supabaseClient
             .from("users")
-            .select("*")
+            .select(USER_SAFE_SELECT)
             .order("created_at", { ascending: false });
 
           if (error) {
@@ -1080,12 +2120,16 @@
         const tbody = document.getElementById("users-table-body");
         tbody.innerHTML =
           users
-            ?.map(
-              (user) => `
+            ?.map((user) => {
+              const avatarUrl = safeImageUrl(
+                user.avatar_url,
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(user.full_name || "User")}&background=f42559&color=fff&size=80`,
+              );
+              return `
                     <tr>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                <div class="size-8 rounded-full bg-cover bg-center" style="background-image: url('${user.avatar_url}')"></div>
+                                <div class="size-8 rounded-full bg-cover bg-center" style="background-image: url('${avatarUrl}')"></div>
                                 <span class="font-semibold">${user.full_name}</span>
                             </div>
                         </td>
@@ -1131,8 +2175,8 @@
                             }
                         </td>
                     </tr>
-                `,
-            )
+                    `;
+            })
             .join("") ||
           '<tr><td colspan="6" class="px-6 py-8 text-center text-[#9c495e]">Chưa có người dùng nào</td></tr>';
       }
@@ -1163,7 +2207,7 @@
         try {
           const { data, error } = await supabaseClient
             .from("users")
-            .select("*")
+            .select(USER_SAFE_SELECT)
             .eq("role", "coach")
             .order("created_at", { ascending: false });
 
@@ -1183,11 +2227,15 @@
         const container = document.getElementById("coaches-grid");
         container.innerHTML =
           coaches
-            ?.map(
-              (coach) => `
+            ?.map((coach) => {
+              const coachAvatar = safeImageUrl(
+                coach.avatar_url,
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(coach.full_name || "Coach")}&background=f42559&color=fff`,
+              );
+              return `
                   <div class="bg-white p-6 rounded-xl border border-pink-100 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center gap-4 mb-4">
-                      <div class="size-16 rounded-full bg-cover bg-center border-2 border-primary/20" style="background-image: url('${coach.avatar_url || "https://ui-avatars.com/api/?name=" + encodeURIComponent(coach.full_name) + "&background=f42559&color=fff"}')"></div>
+                      <div class="size-16 rounded-full bg-cover bg-center border-2 border-primary/20" style="background-image: url('${coachAvatar}')"></div>
                       <div class="flex-1">
                         <h3 class="font-bold text-lg">${coach.full_name}</h3>
                         <p class="text-xs text-[#9c495e]">${coach.email}</p>
@@ -1222,8 +2270,8 @@
                       </div>
                     </div>
                   </div>
-                `,
-            )
+                `;
+            })
             .join("") ||
           '<div class="col-span-3 text-center py-12 text-[#9c495e]">Chưa có huấn luyện viên nào</div>';
       }
@@ -1316,7 +2364,7 @@
         try {
           const { count, error } = await supabaseClient
             .from("users")
-            .select("*", { count: "exact", head: true })
+            .select("id", { count: "exact", head: true })
             .eq("requested_role", "coach")
             .neq("role", "coach");
 
@@ -1455,7 +2503,7 @@
           // Load user info
           const { data: user, error: userError } = await supabaseClient
             .from("users")
-            .select("*")
+            .select(USER_SAFE_SELECT)
             .eq("id", userId)
             .single();
 
@@ -1835,12 +2883,16 @@
         const tbody = document.getElementById("enrollments-table-body");
         tbody.innerHTML =
           enrollments
-            ?.map(
-              (enrollment) => `
+            ?.map((enrollment) => {
+              const enrollmentAvatar = safeImageUrl(
+                enrollment.users?.avatar_url,
+                "https://ui-avatars.com/api/?name=User&background=f42559&color=fff",
+              );
+              return `
                     <tr>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                <div class="size-8 rounded-full bg-cover bg-center" style="background-image: url('${enrollment.users?.avatar_url || "https://ui-avatars.com/api/?name=User&background=f42559&color=fff"}')"></div>
+                                <div class="size-8 rounded-full bg-cover bg-center" style="background-image: url('${enrollmentAvatar}')"></div>
                                 <div>
                                     <div class="font-semibold text-sm">${enrollment.users?.full_name || "N/A"}</div>
                                     <div class="text-xs text-[#9c495e]">${enrollment.users?.email || ""}</div>
@@ -1886,8 +2938,8 @@
                             </div>
                         </td>
                     </tr>
-                `,
-            )
+                    `;
+            })
             .join("") ||
           '<tr><td colspan="6" class="px-6 py-8 text-center text-[#9c495e]">Chưa có đăng ký nào</td></tr>';
       }
@@ -2384,6 +3436,7 @@
       }
 
       // Load initial data
+      updateDashboardRangeButtons();
       loadDashboardData();
     </script>
   </body>

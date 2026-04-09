@@ -146,7 +146,7 @@
     <!-- Hero Section -->
     <section
       id="home"
-      class="relative min-h-[700px] flex items-center justify-center overflow-hidden"
+      class="relative h-screen min-h-screen flex items-center justify-start overflow-hidden"
     >
       <!-- Background Image -->
       <div class="absolute inset-0">
@@ -185,8 +185,8 @@
         </div>
       </div>
 
-      <div class="max-w-[1200px] mx-auto px-4 sm:px-10 py-20 relative z-10">
-        <div class="max-w-3xl">
+      <div class="w-full max-w-[1200px] px-4 sm:px-10 py-20 relative z-10">
+        <div class="max-w-none text-left ml-2 sm:ml-4 md:ml-6">
           <div
             class="inline-block px-4 py-2 bg-primary/20 backdrop-blur-sm rounded-full mb-8 border border-primary/40"
           >
@@ -197,12 +197,12 @@
 
           <h1 class="mb-8">
             <span
-              class="block text-4xl md:text-6xl font-black text-white mb-4 leading-tight"
+              class="block whitespace-nowrap text-[3rem] md:text-[4.95rem] font-black text-white mb-4 leading-tight"
             >
               Thay Đổi Bản Thân
             </span>
             <span
-              class="block text-4xl md:text-6xl font-black text-primary leading-tight"
+              class="block whitespace-nowrap text-[3rem] md:text-[4.95rem] font-black text-primary leading-tight"
             >
               Mỗi Ngày Một Chút
             </span>
@@ -231,19 +231,25 @@
 
           <!-- Quick Stats -->
           <div
-            class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/20"
+            class="inline-grid grid-cols-3 gap-x-8 md:gap-x-10 gap-y-2 mt-12 pt-8 border-t border-white/20"
           >
             <div>
-              <div class="text-3xl font-black text-white mb-1">500+</div>
-              <div class="text-white/70 text-sm">Học viên</div>
+              <div class="text-xl md:text-2xl font-black text-white mb-1">
+                500+
+              </div>
+              <div class="text-white/70 text-[11px] md:text-xs">Học viên</div>
             </div>
             <div>
-              <div class="text-3xl font-black text-white mb-1">20+</div>
-              <div class="text-white/70 text-sm">HLV Pro</div>
+              <div class="text-xl md:text-2xl font-black text-white mb-1">
+                20+
+              </div>
+              <div class="text-white/70 text-[11px] md:text-xs">HLV Pro</div>
             </div>
             <div>
-              <div class="text-3xl font-black text-white mb-1">15+</div>
-              <div class="text-white/70 text-sm">Khóa học</div>
+              <div class="text-xl md:text-2xl font-black text-white mb-1">
+                15+
+              </div>
+              <div class="text-white/70 text-[11px] md:text-xs">Khóa học</div>
             </div>
           </div>
         </div>
